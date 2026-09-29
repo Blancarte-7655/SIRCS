@@ -1,37 +1,39 @@
 /*
   Tokens del sistema de diseño SIRCS
-  Paleta azul maya con destellos verde y rojo de la bandera y detalles mayas; día blanco, noche casi negro.
+  Estilo formal. Día: grafito cálido y bronce. Noche: carbón y jade. La credencial tiene 4 colores a elegir.
   Todo color de la interfaz sale de aquí. No escribas colores sueltos en los componentes.
 */
 :root {
   /* Superficies y texto */
   --bg: #FFFFFF;
   --surface: #FFFFFF;
-  --surface-2: #F5F9FA;
-  --muted: #EAF2F4;
-  --fg: #13202A;
-  --fg-2: #3A4A53;
-  --fg-3: #5E6E77;
-  --border: #DCE6E9;
-  --border-strong: #B3C5CB;
+  --surface-2: #F8F4EE;
+  --muted: #F0EAE2;
+  --fg: #1E1B18;
+  --fg-2: #47413B;
+  --fg-3: #6C645C;
+  --border: #E7E0D7;
+  --border-strong: #C7BCAF;
 
-  /* Marca: azul maya + destellos de la bandera */
-  --primary: #1F6F8B;        /* azul maya: botones y superficies */
-  --primary-hover: #185A71;
-  --primary-ink: #1F6F8B;    /* azul maya para texto e íconos */
+  /* Día: grafito cálido y bronce. Noche: carbón y jade. El color solo aparece al pasar el cursor. */
+  --primary: #2E2A26;        /* grafito cálido: botones (día) */
+  --primary-hover: #8C6239;  /* bronce: solo aparece al pasar el cursor */
+  --primary-ink: #2E2A26;    /* texto de enlaces e íconos activos */
+  --hover-ink: #8C6239;      /* bronce al pasar el cursor sobre enlaces */
   --on-primary: #FFFFFF;
-  --primary-soft: #E3F1F5;
-  --deep: #0F3B4A;           /* azul maya profundo: franja superior y tarjetas oscuras */
-  --deep-hover: #0A2D39;
+  --primary-soft: #F1EAE1;
+  --deep: #2E2A26;           /* grafito: franja superior y piezas oscuras */
+  --deep-hover: #8C6239;
   --on-deep: #FFFFFF;
   --flag-green: #3F8F6B;     /* destello verde bandera */
   --flag-red: #C4474F;       /* destello rojo bandera */
+  --earth: #9C6B47;          /* tierra: esquinas escalonadas */
   --accent: #C4474F;
   --accent-hover: #A7383F;
   --on-accent: #FFFFFF;
   --accent-soft: #FBEAEB;
-  --band: #0F3B4A;
-  --card-border: #1F6F8B;
+  --band: #221F1C;
+  --card-border: #C7BCAF;
 
   /* Estados (no son color de marca) */
   --ok: #2F7D57;
@@ -40,19 +42,27 @@
   --warn-soft: #FDF1DC;
   --danger: #B3121F;
   --danger-soft: #FCE4E6;
-  --ring: #1F6F8B;
+  --ring: #8C6239;
 
   /* Portada */
   --hero-a: #FFFFFF;
-  --hero-b: #EAF3F6;
+  --hero-b: #F7F2EB;
   --hero-glow: rgba(255, 255, 255, .95);
-  --hero-glow-2: rgba(31, 111, 139, .12);
-  --sky-ink: #0F3B4A;
+  --hero-glow-2: rgba(31, 107, 85, .05);
+  --sky-ink: #8C8378;
   --glass: rgba(255, 255, 255, .9);
-  --glass-border: #DCE6E9;
-  --feature-a: #247C99;
-  --feature-b: #0F3B4A;
-  --feature-glow: #3A9BB8;
+  --glass-border: #E7E0D7;
+  --feature-a: #36302A;
+  --feature-b: #1B1815;
+  --feature-glow: rgba(255, 255, 255, .07);
+
+  /* Credencial (objeto físico: igual en día y noche) */
+  --card-a: #36312B;         /* franja formal (la persona puede cambiarla) */
+  --card-b: #1E1B17;
+  --card-glow: rgba(255, 255, 255, .08);
+  --card-accent: #3A4046;    /* datos y sellos: neutro */
+  --card-maya: #2A7FA0;      /* azul maya: solo greca y trama */
+  --card-name: #1A1C1E;
 
   /* Sombras */
   --shadow: 0 1px 2px rgba(10, 30, 40, .05), 0 6px 18px rgba(10, 30, 40, .06);
@@ -73,38 +83,38 @@
 /* Modo oscuro: sigue al sistema, salvo que se fuerce claro */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #08090A; --surface: #121516; --surface-2: #0E1112; --muted: #1B2124;
-    --fg: #EEF3F5; --fg-2: #C6D0D4; --fg-3: #95A3A9;
-    --border: #22292C; --border-strong: #3A4448;
-    --primary: #1B7F9E; --primary-hover: #2290B2; --primary-ink: #6CC3DD; --on-primary: #FFFFFF; --primary-soft: #0F2830;
-    --deep: #121719; --deep-hover: #1A2124; --on-deep: #FFFFFF;
-    --flag-green: #4FBF8B; --flag-red: #F0616B;
+    --bg: #0B0C0D; --surface: #151718; --surface-2: #111314; --muted: #1E2123;
+    --fg: #F1EFEC; --fg-2: #CCC8C3; --fg-3: #9C9892;
+    --border: #2A2D30; --border-strong: #43474B;
+    --primary: #ECE8E2; --primary-hover: #1F7F63; --primary-ink: #ECE8E2; --hover-ink: #6FCBA8; --on-primary: #16181A; --primary-soft: #1E2123;
+    --deep: #262A2E; --deep-hover: #1F7F63; --on-deep: #FFFFFF;
+    --flag-green: #4FBF8B; --flag-red: #F0616B; --earth: #C9936B;
     --accent: #F0616B; --accent-hover: #F37F87; --on-accent: #1A0508; --accent-soft: #3A1519;
-    --band: #000000; --card-border: #1B7F9E;
+    --band: #000000; --card-border: #43474B;
     --ok: #4ADE80; --ok-soft: #12341F; --warn: #FACC15; --warn-soft: #3A2F0A;
-    --danger: #F87171; --danger-soft: #3B1515; --ring: #6CC3DD;
-    --hero-a: #08090A; --hero-b: #0C1214; --hero-glow: rgba(255, 255, 255, .02); --hero-glow-2: rgba(27, 127, 158, .22);
-    --sky-ink: #7FB1C2; --glass: rgba(18, 21, 22, .92); --glass-border: #22292C;
-    --feature-a: #17708C; --feature-b: #0A2A35; --feature-glow: #2A93B4;
+    --danger: #F87171; --danger-soft: #3B1515; --ring: #6FCBA8;
+    --hero-a: #0B0C0D; --hero-b: #101213; --hero-glow: rgba(255, 255, 255, .02); --hero-glow-2: rgba(31, 127, 99, .1);
+    --sky-ink: #8C8378; --glass: rgba(21, 23, 24, .92); --glass-border: #2A2D30;
+    --feature-a: #24292D; --feature-b: #121416; --feature-glow: rgba(255, 255, 255, .05);
     --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 6px 18px rgba(0, 0, 0, .45);
     --shadow-lg: 0 1px 2px rgba(0, 0, 0, .4), 0 14px 32px -16px rgba(0, 0, 0, .8);
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
-  --bg: #08090A; --surface: #121516; --surface-2: #0E1112; --muted: #1B2124;
-  --fg: #EEF3F5; --fg-2: #C6D0D4; --fg-3: #95A3A9;
-  --border: #22292C; --border-strong: #3A4448;
-  --primary: #1B7F9E; --primary-hover: #2290B2; --primary-ink: #6CC3DD; --on-primary: #FFFFFF; --primary-soft: #0F2830;
-  --deep: #121719; --deep-hover: #1A2124; --on-deep: #FFFFFF;
-  --flag-green: #4FBF8B; --flag-red: #F0616B;
+  --bg: #0B0C0D; --surface: #151718; --surface-2: #111314; --muted: #1E2123;
+  --fg: #F1EFEC; --fg-2: #CCC8C3; --fg-3: #9C9892;
+  --border: #2A2D30; --border-strong: #43474B;
+  --primary: #ECE8E2; --primary-hover: #1F7F63; --primary-ink: #ECE8E2; --hover-ink: #6FCBA8; --on-primary: #16181A; --primary-soft: #1E2123;
+  --deep: #262A2E; --deep-hover: #1F7F63; --on-deep: #FFFFFF;
+  --flag-green: #4FBF8B; --flag-red: #F0616B; --earth: #C9936B;
   --accent: #F0616B; --accent-hover: #F37F87; --on-accent: #1A0508; --accent-soft: #3A1519;
-  --band: #000000; --card-border: #1B7F9E;
+  --band: #000000; --card-border: #43474B;
   --ok: #4ADE80; --ok-soft: #12341F; --warn: #FACC15; --warn-soft: #3A2F0A;
-  --danger: #F87171; --danger-soft: #3B1515; --ring: #6CC3DD;
-  --hero-a: #08090A; --hero-b: #0C1214; --hero-glow: rgba(255, 255, 255, .02); --hero-glow-2: rgba(27, 127, 158, .22);
-  --sky-ink: #7FB1C2; --glass: rgba(18, 21, 22, .92); --glass-border: #22292C;
-  --feature-a: #17708C; --feature-b: #0A2A35; --feature-glow: #2A93B4;
+  --danger: #F87171; --danger-soft: #3B1515; --ring: #6FCBA8;
+  --hero-a: #0B0C0D; --hero-b: #101213; --hero-glow: rgba(255, 255, 255, .02); --hero-glow-2: rgba(31, 127, 99, .1);
+  --sky-ink: #8C8378; --glass: rgba(21, 23, 24, .92); --glass-border: #2A2D30;
+  --feature-a: #24292D; --feature-b: #121416; --feature-glow: rgba(255, 255, 255, .05);
   --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 6px 18px rgba(0, 0, 0, .45);
   --shadow-lg: 0 1px 2px rgba(0, 0, 0, .4), 0 14px 32px -16px rgba(0, 0, 0, .8);
   color-scheme: dark;

@@ -18,7 +18,9 @@ function drawPattern(canvas) {
   canvas.height = h * dpr
   const g = canvas.getContext('2d')
   g.scale(dpr, dpr)
-  g.strokeStyle = 'rgba(31,111,139,.35)'
+  const acc = getComputedStyle(canvas).getPropertyValue('--card-maya').trim() || '#2A7FA0'
+  g.strokeStyle = acc
+  g.globalAlpha = 0.35
   g.lineWidth = 0.5
   for (let k = 0; k < 14; k++) {
     g.beginPath()
@@ -77,9 +79,32 @@ function useTilt(ref) {
     }
     el.addEventListener('pointermove', move)
     el.addEventListener('pointerleave', leave)
+
+    // En celular (sin mouse) la tarjeta se inclina y brilla según su posición al hacer scroll
+    const touch = window.matchMedia?.('(hover: none)').matches
+    let frame = 0
+    const onScroll = () => {
+      if (frame) return
+      frame = requestAnimationFrame(() => {
+        frame = 0
+        const r = el.getBoundingClientRect()
+        const t = Math.max(-1, Math.min(1, (r.top + r.height / 2 - window.innerHeight / 2) / (window.innerHeight / 2)))
+        el.style.setProperty('--mx', `${50 + t * 40}%`)
+        el.style.setProperty('--my', `${50 - t * 30}%`)
+        el.style.setProperty('--sx', `${50 + t * 50}%`)
+        if (!reduce) {
+          el.style.setProperty('--rx', `${t * 8}deg`)
+          el.style.setProperty('--ry', `${-t * 6}deg`)
+        }
+      })
+    }
+    if (touch) { window.addEventListener('scroll', onScroll, { passive: true }); onScroll() }
+
     return () => {
       el.removeEventListener('pointermove', move)
       el.removeEventListener('pointerleave', leave)
+      window.removeEventListener('scroll', onScroll)
+      cancelAnimationFrame(frame)
     }
   }, [ref])
 }

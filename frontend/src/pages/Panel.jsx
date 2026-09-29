@@ -1,6 +1,8 @@
 import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Icon from '../components/Icon.jsx'
+import { EmptyState, ErrorState, Skeleton } from '../components/States.jsx'
+import useFakeRequest from '../hooks/useFakeRequest.js'
 import { bitacora, estados, indicadores, municipios, operador, registros } from '../data/mock.js'
 
 const fmt = new Intl.NumberFormat('es-MX')
@@ -26,15 +28,19 @@ export default function Panel() {
   const [estado, setEstado] = useState('')
   const [municipio, setMunicipio] = useState('')
   const [seleccion, setSeleccion] = useState(['RG-26-004817', 'RG-26-004809'])
+  // Simula GET /api/registros e /api/indicadores (con estado de carga y de error)
+  const req = useFakeRequest(() => ({ registros, indicadores }))
+  const lista = req.data?.registros ?? []
+  const limpiar = () => { setQ(''); setEstado(''); setMunicipio('') }
 
   // En el sistema real este filtro lo hace la API: GET /api/registros?q=&estado=&municipio=
   const filas = useMemo(() => {
     const t = q.trim().toLowerCase()
-    return registros.filter((r) =>
+    return lista.filter((r) =>
       (!t || r.nombre.toLowerCase().includes(t) || r.folio.toLowerCase().includes(t)) &&
       (!estado || r.estado === estado) &&
       (!municipio || r.municipio === municipio))
-  }, [q, estado, municipio])
+  }, [q, estado, municipio, lista])
 
   const todos = filas.length > 0 && filas.every((r) => seleccion.includes(r.folio))
   const algunos = filas.some((r) => seleccion.includes(r.folio))
@@ -60,15 +66,15 @@ export default function Panel() {
 
         <div className="panel-main">
           <div className="panel-head">
-            <div><h1>Registro de personas</h1><p style={{ textTransform: 'capitalize' }}>{hoy}</p></div>
+            <div><h1>Registro de personas</h1><p>{hoy.charAt(0).toUpperCase() + hoy.slice(1)}</p></div>
             <Link className="btn btn-primary" to="/registro"><Icon name="plus" />Nuevo registro</Link>
           </div>
 
           <div className="kpis">
-            <div className="kpi"><span className="label">Registros activos</span><span className="value">{fmt.format(indicadores.activos)}</span><span className="delta">+{indicadores.activosSemana} esta semana</span></div>
-            <div className="kpi"><span className="label">Pendientes de validar</span><span className="value">{indicadores.pendientes}</span><span className="delta">{indicadores.pendientesViejos} con más de 48 h</span></div>
-            <div className="kpi alert"><span className="label">Posibles duplicados</span><span className="value">{indicadores.duplicados}</span><span className="delta">Requieren revisión manual</span></div>
-            <div className="kpi"><span className="label">Credenciales emitidas hoy</span><span className="value">{indicadores.emitidasHoy}</span><Sparkline values={indicadores.emitidas7dias} /></div>
+            <div className="kpi"><span className="label">Registros activos</span><span className="value">{req.loading ? <Skeleton w="70%" h={30} /> : fmt.format(indicadores.activos)}</span><span className="delta">+{indicadores.activosSemana} esta semana</span></div>
+            <div className="kpi"><span className="label">Pendientes de validar</span><span className="value">{req.loading ? <Skeleton w="40%" h={30} /> : indicadores.pendientes}</span><span className="delta">{indicadores.pendientesViejos} con más de 48 h</span></div>
+            <div className="kpi alert"><span className="label">Posibles duplicados</span><span className="value">{req.loading ? <Skeleton w="30%" h={30} /> : indicadores.duplicados}</span><span className="delta">Requieren revisión manual</span></div>
+            <div className="kpi"><span className="label">Credenciales emitidas hoy</span><span className="value">{req.loading ? <Skeleton w="40%" h={30} /> : indicadores.emitidasHoy}</span><Sparkline values={indicadores.emitidas7dias} /></div>
           </div>
 
           <div className="toolbar">
@@ -121,12 +127,29 @@ export default function Panel() {
                     </tr>
                   )
                 })}
-                {filas.length === 0 && <tr className="empty-row"><td colSpan={7}>No hay registros con esos filtros.</td></tr>}
+                {req.loading && Array.from({ length: 5 }, (_, i) => (
+                  <tr key={`sk${i}`} aria-hidden="true">
+                    <td><Skeleton w={18} h={18} r={4} /></td>
+                    <td><Skeleton w="70%" /><Skeleton w="40%" h={10} className="mt" /></td>
+                    <td><Skeleton w={96} /></td><td><Skeleton w="80%" /></td><td><Skeleton w={120} /></td>
+                    <td><Skeleton w={90} h={22} r={99} /></td><td><Skeleton w={70} h={32} /></td>
+                  </tr>
+                ))}
+                {req.error && (
+                  <tr className="state-row"><td colSpan={7}><ErrorState onRetry={req.retry} /></td></tr>
+                )}
+                {!req.loading && !req.error && filas.length === 0 && (
+                  <tr className="state-row"><td colSpan={7}>
+                    <EmptyState title="No encontramos registros" action={<button className="btn btn-outline btn-sm" type="button" onClick={limpiar}>Limpiar filtros</button>}>
+                      Prueba con otro nombre, folio o quita algún filtro.
+                    </EmptyState>
+                  </td></tr>
+                )}
               </tbody>
             </table>
           </div>
           <div className="table-foot">
-            <span>Mostrando {filas.length} de {fmt.format(indicadores.activos)} registros</span>
+            <span aria-live="polite">{req.loading ? 'Cargando registros…' : `Mostrando ${filas.length} de ${fmt.format(indicadores.activos)} registros`}</span>
             <div className="pager">
               <button type="button" aria-label="Página anterior">‹</button>
               <button type="button" aria-current="page">1</button>

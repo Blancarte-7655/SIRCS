@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import Icon from './Icon.jsx'
 import useAccessibility from '../hooks/useAccessibility.js'
@@ -39,6 +39,16 @@ export default function TopBar() {
   const { pathname } = useLocation()
   const [mega, setMega] = useState(false)
   const [megaHeight, setMegaHeight] = useState(210)
+  const [drawer, setDrawer] = useState(false)
+
+  // Cierra el menú de celular al cambiar de página
+  useEffect(() => { setDrawer(false) }, [pathname])
+  useEffect(() => {
+    if (!drawer) return
+    const onKey = (e) => e.key === 'Escape' && setDrawer(false)
+    document.addEventListener('keydown', onKey)
+    return () => document.removeEventListener('keydown', onKey)
+  }, [drawer])
   const navRef = useRef(null)
   const closeTimer = useRef(null)
 
@@ -71,13 +81,13 @@ export default function TopBar() {
           </div>
           <div className="util-actions">
             <button type="button" onClick={a11y.nextSize} aria-pressed={a11y.sizeIsLarge} aria-label={`Tamaño de texto: ${a11y.sizeLabel}. Cambiar`}>
-              <Icon name="text" />Texto {a11y.sizeLabel}
+              <Icon name="text" /><span className="lbl">Texto</span> {a11y.sizeLabel}
             </button>
-            <button type="button" onClick={a11y.toggleContrast} aria-pressed={a11y.contrast}>
-              <Icon name="contrast" />Alto contraste
+            <button type="button" onClick={a11y.toggleContrast} aria-pressed={a11y.contrast} aria-label="Alto contraste">
+              <Icon name="contrast" /><span className="lbl">Alto contraste</span>
             </button>
             <button type="button" onClick={toggleTheme} aria-pressed={isDark} aria-label={isDark ? 'Cambiar a tema claro' : 'Cambiar a tema oscuro'}>
-              <Icon name={isDark ? 'sun' : 'moon'} />{isDark ? 'Día' : 'Noche'}
+              <Icon name={isDark ? 'sun' : 'moon'} /><span className="lbl">{isDark ? 'Día' : 'Noche'}</span>
             </button>
             <FlagBadge />
             <label htmlFor="idioma" className="sr-only">Idioma</label>
@@ -129,8 +139,35 @@ export default function TopBar() {
             <b>Hora del centro de México</b>
             <time dateTime={clock.iso}>{clock.texto}</time>
           </div>
+
+          <button
+            type="button" className="menu-btn" onClick={() => setDrawer((d) => !d)}
+            aria-expanded={drawer} aria-controls="menu-movil" aria-label={drawer ? 'Cerrar menú' : 'Abrir menú'}
+          >
+            <Icon name={drawer ? 'close' : 'menu'} /><span>Menú</span>
+          </button>
         </div>
         <div className="mega-bg" aria-hidden="true" />
+
+        {/* Menú de celular: todas las secciones con sus subsecciones */}
+        <nav id="menu-movil" className={`drawer${drawer ? ' open' : ''}`} aria-label="Menú" hidden={!drawer}>
+          <div className="container drawer-grid">
+            {MENU.map((sec) => (
+              <div key={sec.label} className="drawer-sec">
+                <Link to={sec.to} className={`drawer-title${sec.match.includes(pathname) ? ' active' : ''}`}>
+                  {sec.label}<Icon name="chevronRight" />
+                </Link>
+                <ul>
+                  {sec.items.map((it) => <li key={it.label}><Link to={it.to} onClick={() => setDrawer(false)}>{it.label}</Link></li>)}
+                </ul>
+              </div>
+            ))}
+            <div className="drawer-foot">
+              <span><Icon name="clock" />Atención lun a sáb · 8:00 a 20:00</span>
+              <Link to="/login" className="btn btn-primary">Acceso operativo</Link>
+            </div>
+          </div>
+        </nav>
       </header>
     </div>
   )

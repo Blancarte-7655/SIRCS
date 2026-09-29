@@ -1,7 +1,11 @@
-import { useMemo, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useEffect, useMemo, useRef, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import Icon from '../components/Icon.jsx'
-import { FlagBadge, Greca, MayaNumber, Pyramid } from '../components/Maya.jsx'
+import { ErrorState, Skeleton } from '../components/States.jsx'
+import useFakeRequest from '../hooks/useFakeRequest.js'
+import useCardColor from '../hooks/useCardColor.js'
+import { FlagBadge, Greca, MayaNumber } from '../components/Maya.jsx'
+import Panorama from '../components/Panorama.jsx'
 import { IdCardFront } from '../components/IdCard.jsx'
 import { avisos, credencial, pasosRegistro, preguntas, tramites } from '../data/mock.js'
 
@@ -57,21 +61,53 @@ function Asistente() {
 }
 
 function Consulta() {
+  const navigate = useNavigate()
   const [modo, setModo] = useState('folio')
+  const [valor, setValor] = useState('')
+  const [estado, setEstado] = useState({ tipo: '', msg: '' })
+  const [buscando, setBuscando] = useState(false)
   const esFolio = modo === 'folio'
+
+  // Simula GET /api/tramites?folio= o ?correo=
+  function consultar(e) {
+    e.preventDefault()
+    const v = valor.trim()
+    if (!v) return setEstado({ tipo: 'error', msg: esFolio ? 'Escribe tu folio de trámite.' : 'Escribe tu correo electrónico.' })
+    if (esFolio && !/^TR-\d{4}-\d{6}$/i.test(v)) return setEstado({ tipo: 'error', msg: 'El folio tiene el formato TR-2026-004817.' })
+    if (!esFolio && !/^\S+@\S+\.\S+$/.test(v)) return setEstado({ tipo: 'error', msg: 'Revisa que el correo esté completo.' })
+    setBuscando(true); setEstado({ tipo: '', msg: '' })
+    setTimeout(() => {
+      setBuscando(false)
+      if (v.toUpperCase() === 'TR-2026-004817' || v.toLowerCase() === 'mfernanda.ochoa@correo-demo.mx') navigate('/credencial')
+      else setEstado({ tipo: 'empty', msg: 'No encontramos un trámite con ese dato. Revisa que esté bien escrito.' })
+    }, 700)
+  }
+
   return (
-    <article className="tile tile-outline" id="consulta">
+    <form className="tile tile-outline" id="consulta" onSubmit={consultar} noValidate>
       <TileHead icon="search" title="Consultar trámite" sub="Avance o corrección de datos" />
       <div className="segmented" role="group" aria-label="Buscar por">
-        <button type="button" aria-pressed={esFolio} onClick={() => setModo('folio')}>Folio</button>
-        <button type="button" aria-pressed={!esFolio} onClick={() => setModo('correo')}>Correo</button>
+        <button type="button" aria-pressed={esFolio} onClick={() => { setModo('folio'); setEstado({ tipo: '', msg: '' }) }}>Folio</button>
+        <button type="button" aria-pressed={!esFolio} onClick={() => { setModo('correo'); setEstado({ tipo: '', msg: '' }) }}>Correo</button>
       </div>
-      <div className="field">
+      <div className={`field${estado.tipo === 'error' ? ' has-error' : ''}`}>
         <label htmlFor="consulta-valor" className="sr-only">{esFolio ? 'Folio de trámite' : 'Correo electrónico'}</label>
-        <input id="consulta-valor" type={esFolio ? 'text' : 'email'} className={esFolio ? 'mono' : undefined} placeholder={esFolio ? 'TR-2026-004817' : 'tu.correo@ejemplo.mx'} />
+        <input
+          id="consulta-valor" value={valor} onChange={(e) => setValor(e.target.value)}
+          type={esFolio ? 'text' : 'email'} className={esFolio ? 'mono' : undefined}
+          placeholder={esFolio ? 'TR-2026-004817' : 'tu.correo@ejemplo.mx'}
+          aria-invalid={estado.tipo === 'error'} aria-describedby="consulta-msg"
+        />
+        {estado.msg && (
+          <p id="consulta-msg" className={estado.tipo === 'error' ? 'error-msg' : 'hint'} role="status">
+            {estado.tipo === 'error' && <Icon name="alert" />}<span>{estado.msg}</span>
+          </p>
+        )}
       </div>
-      <Link className="btn btn-primary" to="/credencial">Consultar <Icon name="arrowRight" /></Link>
-    </article>
+      <button className="btn btn-primary" type="submit" disabled={buscando}>
+        {buscando ? 'Buscando…' : 'Consultar'} <Icon name="arrowRight" />
+      </button>
+    </form>
   )
 }
 
@@ -92,7 +128,8 @@ function Citas() {
 
 function Avisos() {
   const [tab, setTab] = useState('avisos')
-  const lista = tab === 'avisos' ? avisos : preguntas
+  const req = useFakeRequest(() => ({ avisos, preguntas }), { delay: 600 }) // GET /api/avisos
+  const lista = req.data ? (tab === 'avisos' ? req.data.avisos : req.data.preguntas) : []
   return (
     <article className="tile span-3" id="avisos">
       <div className="tile-head between">
@@ -105,7 +142,11 @@ function Avisos() {
           <button role="tab" aria-selected={tab === 'preguntas'} onClick={() => setTab('preguntas')}>Preguntas</button>
         </div>
       </div>
-      <ul className="notice-list" role="tabpanel">
+      {req.error && <ErrorState onRetry={req.retry} />}
+      <ul className="notice-list" role="tabpanel" aria-busy={req.loading}>
+        {req.loading && Array.from({ length: 4 }, (_, i) => (
+          <li key={i} aria-hidden="true"><Skeleton w={`${70 - i * 8}%`} /><Skeleton w={56} h={10} /></li>
+        ))}
         {lista.map((a) => (
           <li key={a.id}>
             <Link to="/">{a.nuevo && <span className="tag-new">Nuevo</span>}{a.titulo}</Link>
@@ -117,11 +158,31 @@ function Avisos() {
   )
 }
 
+// Efecto de profundidad: al hacer scroll, cada capa del fondo se mueve a su propio ritmo
+function useParallax(ref) {
+  useEffect(() => {
+    const el = ref.current
+    if (!el || window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return
+    let frame = 0
+    const update = () => {
+      frame = 0
+      el.style.setProperty('--py', `${Math.min(window.scrollY, 800)}px`)
+    }
+    const onScroll = () => { if (!frame) frame = requestAnimationFrame(update) }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    update()
+    return () => { window.removeEventListener('scroll', onScroll); cancelAnimationFrame(frame) }
+  }, [ref])
+}
+
 export default function Portal() {
+  const heroRef = useRef(null)
+  useParallax(heroRef)
+  const card = useCardColor()
   return (
     <>
-      <section className="hero">
-        <Pyramid />
+      <section className="hero" ref={heroRef}>
+        <Panorama />
         <div className="container hero-inner">
           <div className="hero-copy">
             <span className="kicker"><Icon name="sparkle" />Credencial digital con verificación por QR</span>
@@ -139,7 +200,7 @@ export default function Portal() {
           </div>
           <div className="hero-visual" aria-hidden="true">
             <div className="orb" />
-            <div className="float-card"><IdCardFront data={credencial} /></div>
+            <div className="float-card" style={card.style}><IdCardFront data={credencial} /></div>
             <div className="float-badge"><span><Icon name="check" /></span><div><b>Registro validado</b><small>RG-26-004817</small></div></div>
           </div>
         </div>
@@ -151,10 +212,10 @@ export default function Portal() {
           <Consulta />
           <Citas />
           <Avisos />
-          <article className="tile tile-deep">
+          <article className="tile tile-stone">
             <TileHead icon="users" title="Acceso operativo" sub="Personal de módulo y supervisión" />
             <p className="tile-text">Valida registros, emite credenciales y revisa la bitácora.</p>
-            <Link className="btn btn-light" to="/login">Entrar al panel <Icon name="arrowRight" /></Link>
+            <Link className="btn btn-outline" to="/login">Entrar al panel <Icon name="arrowRight" /></Link>
           </article>
         </div>
       </section>

@@ -11,9 +11,10 @@ sircs/
 ├── frontend/                React + Vite (lo visual, con datos ficticios)
 │   └── src/
 │       ├── styles/          tokens.css (colores y fuentes), base, layout, portal, pages
-│       ├── components/      TopBar (barra fija + menú), Footer, Layout, IdCard, Icon, Maya (greca, números mayas, pirámide, bandera)
-│       ├── pages/           Portal, Login, Registro, Panel, Credencial
-│       ├── hooks/           accesibilidad (texto y contraste), tema día/noche y reloj
+│       ├── components/      TopBar (barra fija, menú grande y menú de celular), Footer, Layout,
+│       │                    IdCard, Panorama (fondo ilustrado), Maya, States (carga/vacío/error), Icon
+│       ├── pages/           Portal, Login, Registro (4 pasos), Panel, Credencial, NotFound (404)
+│       ├── hooks/           accesibilidad, tema día/noche, reloj, color de credencial y useFakeRequest
 │       └── data/mock.js     datos ficticios = contrato de lo que devolverá la API
 ├── backend/                 Node + Express + PostgreSQL (siguiente etapa)
 ├── deploy/nginx-sircs.conf   ejemplo de sitio para el servidor
@@ -39,9 +40,10 @@ Para compilar como quedará en el servidor: `npm run build` (genera `frontend/di
 |---|---|
 | `/` | Portal ciudadano |
 | `/login` | Inicio de sesión (ciudadano u operativo) |
-| `/registro` | Registro, paso 1 de 4 |
+| `/registro` | Registro en 4 pasos: datos, domicilio, foto y firma, revisión |
 | `/panel` | Panel del operador |
 | `/credencial` | Credencial digital simulada |
+| cualquier otra | Página 404 |
 
 ## Cómo trabajar en equipo
 
@@ -73,4 +75,4 @@ En el servidor, usa `deploy/nginx-sircs.conf` como base: sirve la carpeta, manda
 
 ## Diseño
 
-Sistema de diseño en `frontend/src/styles/tokens.css` (azul maya `#1F6F8B` con destellos de la bandera y detalles mayas; tema día y noche). Ver `docs/diseno.md`.
+Sistema de diseño en `frontend/src/styles/tokens.css` (formal: de día grafito y bronce, de noche carbón y jade; el color aparece al pasar el cursor; credencial crema con 4 colores a elegir). Ver `docs/diseno.md`.

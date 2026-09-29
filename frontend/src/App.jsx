@@ -5,6 +5,7 @@ import Login from './pages/Login.jsx'
 import Registro from './pages/Registro.jsx'
 import Panel from './pages/Panel.jsx'
 import Credencial from './pages/Credencial.jsx'
+import NotFound from './pages/NotFound.jsx'
 
 export default function App() {
   return (
@@ -16,7 +17,7 @@ export default function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/registro" element={<Registro />} />
           <Route path="/credencial" element={<Credencial />} />
-          <Route path="*" element={<Portal />} />
+          <Route path="*" element={<NotFound />} />
         </Route>
         {/* Panel del operador: sin pie de página */}
         <Route element={<Layout withFooter={false} />}>

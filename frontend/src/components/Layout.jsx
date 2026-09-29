@@ -20,7 +20,8 @@ export default function Layout({ withFooter = true }) {
     <>
       <TopBar />
       <main id="main" tabIndex={-1}>
-        <Outlet />
+        {/* key cambia en cada página: dispara la transición suave */}
+        <div className="page-fade" key={pathname}><Outlet /></div>
       </main>
       {withFooter && <Footer />}
     </>

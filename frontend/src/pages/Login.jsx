@@ -19,7 +19,7 @@ export default function Login() {
     <div className="container page">
       <div className="panel-box login">
         <div className="login-side">
-          <div className="brand"><span className="seal">SI</span><span><b>SIRCS</b><small>Sistema de Registro Ciudadano Simulado</small></span></div>
+          <div className="brand"><span><b>SIRCS</b><small>Sistema de Registro Ciudadano Simulado</small></span></div>
           <div>
             <h1>Tu identidad, registrada con orden y transparencia.</h1>
             <p>Consulta el estado de tu registro, actualiza tu domicilio y descarga tu credencial de muestra desde un solo lugar.</p>

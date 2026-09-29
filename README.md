@@ -2,7 +2,7 @@
 
 Proyecto académico del **Equipo INE · Tlaquepaque**. Simula el registro y la credencialización de personas con **datos 100 % ficticios**.
 
-> **No es un sistema oficial.** No tiene relación con el INE ni con ninguna institución pública. Todas las credenciales llevan la marca **MUESTRA**, y el sitio se publica con usuario/contraseña y sin indexar en buscadores.
+> **No es un sistema oficial.** No tiene relación con el INE ni con ninguna institución pública. La interfaz no muestra avisos, pero la credencial siempre lleva la marca de agua **MUESTRA**, y el sitio se publica con usuario/contraseña y sin indexar en buscadores.
 
 ## Estructura
 
@@ -11,9 +11,9 @@ sircs/
 ├── frontend/                React + Vite (lo visual, con datos ficticios)
 │   └── src/
 │       ├── styles/          tokens.css (colores y fuentes), base, layout, portal, pages
-│       ├── components/      TopBar (barra fija + menú), Footer, Layout, IdCard, Icon, Skyline
+│       ├── components/      TopBar (barra fija + menú), Footer, Layout, IdCard, Icon, Maya (greca, números mayas, pirámide, bandera)
 │       ├── pages/           Portal, Login, Registro, Panel, Credencial
-│       ├── hooks/           accesibilidad (texto y contraste) y reloj
+│       ├── hooks/           accesibilidad (texto y contraste), tema día/noche y reloj
 │       └── data/mock.js     datos ficticios = contrato de lo que devolverá la API
 ├── backend/                 Node + Express + PostgreSQL (siguiente etapa)
 ├── deploy/nginx-sircs.conf   ejemplo de sitio para el servidor
@@ -73,4 +73,4 @@ En el servidor, usa `deploy/nginx-sircs.conf` como base: sirve la carpeta, manda
 
 ## Diseño
 
-Sistema de diseño en `frontend/src/styles/tokens.css` (verde `#006847`, rojo `#CE1126`, blanco). Ver `docs/diseno.md`.
+Sistema de diseño en `frontend/src/styles/tokens.css` (azul maya `#1F6F8B` con destellos de la bandera y detalles mayas; tema día y noche). Ver `docs/diseno.md`.

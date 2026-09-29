@@ -4,6 +4,7 @@ import Icon from '../components/Icon.jsx'
 import { bitacora, estados, indicadores, municipios, operador, registros } from '../data/mock.js'
 
 const fmt = new Intl.NumberFormat('es-MX')
+const hoy = new Intl.DateTimeFormat('es-MX', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric', timeZone: 'America/Mexico_City' }).format(new Date())
 const DOT = { danger: 'var(--danger)', ok: 'var(--ok)', primary: 'var(--primary)', warn: 'var(--warn)' }
 
 function Sparkline({ values }) {
@@ -42,7 +43,6 @@ export default function Panel() {
 
   return (
     <>
-      <div className="demo-bar">Simulación académica · Sin validez oficial</div>
       <div className="panel">
         <aside className="panel-side">
           <div>
@@ -60,7 +60,7 @@ export default function Panel() {
 
         <div className="panel-main">
           <div className="panel-head">
-            <div><h1>Registro de personas</h1><p>Datos de muestra</p></div>
+            <div><h1>Registro de personas</h1><p style={{ textTransform: 'capitalize' }}>{hoy}</p></div>
             <Link className="btn btn-primary" to="/registro"><Icon name="plus" />Nuevo registro</Link>
           </div>
 

@@ -62,9 +62,11 @@ img, svg { max-width: 100%; }
 .btn:disabled { opacity: .7; cursor: progress; }
 .btn-primary { background: var(--primary); color: var(--on-primary); }
 .btn-primary:hover { background: var(--primary-hover); }
+.btn-deep { background: var(--deep); color: var(--on-deep); }
+.btn-deep:hover { background: var(--deep-hover); }
 .btn-accent { background: var(--accent); color: var(--on-accent); }
 .btn-accent:hover { background: var(--accent-hover); }
-.btn-ghost { background: transparent; color: var(--primary); border-color: var(--border-strong); }
+.btn-ghost { background: transparent; color: var(--primary-ink); border-color: var(--border-strong); }
 .btn-ghost:hover { background: var(--primary-soft); }
 .btn-dark { background: #555050; color: #FFFFFF; }
 .btn-dark:hover { background: #433F3F; }
@@ -96,7 +98,7 @@ input[type="checkbox"], input[type="radio"] { width: 18px; height: 18px; min-hei
   appearance: none; border: 0; background: transparent; font: 700 .9rem var(--f-body);
   color: var(--fg-2); padding: 9px; border-radius: 7px; cursor: pointer; min-height: 40px;
 }
-.segmented button[aria-pressed="true"] { background: var(--surface); color: var(--primary); box-shadow: 0 1px 3px rgba(0, 0, 0, .15); }
+.segmented button[aria-pressed="true"] { background: var(--surface); color: var(--primary-ink); box-shadow: 0 1px 3px rgba(0, 0, 0, .15); }
 
 /* Etiquetas de estado */
 .pill { display: inline-flex; gap: 6px; align-items: center; font-size: .78rem; font-weight: 700; padding: 3px 10px; border-radius: 999px; white-space: nowrap; }
@@ -104,17 +106,30 @@ input[type="checkbox"], input[type="radio"] { width: 18px; height: 18px; min-hei
 .pill-ok { background: var(--ok-soft); color: var(--ok); }
 .pill-warn { background: var(--warn-soft); color: var(--warn); }
 .pill-bad { background: var(--danger-soft); color: var(--danger); }
-.pill-info { background: var(--primary-soft); color: var(--primary); }
+.pill-info { background: var(--primary-soft); color: var(--primary-ink); }
 
 /* Sello de marca */
 .brand { display: flex; gap: 10px; align-items: center; color: inherit; text-decoration: none; }
 .seal {
   width: 38px; height: 38px; border-radius: 50%; flex: none; display: grid; place-items: center;
-  background: linear-gradient(135deg, #006847 0 50%, #CE1126 50%); color: #FFFFFF;
+  background: var(--primary); color: var(--on-primary); box-shadow: inset 0 -4px 0 var(--flag-green);
   font: 800 .95rem var(--f-display);
 }
-.brand b { font-family: var(--f-display); font-size: 1.2rem; font-weight: 800; display: block; line-height: 1.1; }
+.brand b { font: 600 1.25rem/1.1 var(--f-card); letter-spacing: .05em; display: block; color: var(--primary-ink); }
 .brand small { color: var(--fg-3); font-size: .75rem; display: block; }
+
+/* ---------- Detalles mayas y de la bandera ---------- */
+/* Greca escalonada: toma el color de "background" */
+.greca {
+  height: 12px; background: var(--primary); opacity: .9;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 12'%3E%3Cpath d='M1 11V1h10v7H4V4h4M11 11h13M13 11V9h2V7h2V5h2V3h2V1h3' fill='none' stroke='black' stroke-width='2' stroke-linecap='square'/%3E%3C/svg%3E") repeat-x left center / 24px 12px;
+          mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 12'%3E%3Cpath d='M1 11V1h10v7H4V4h4M11 11h13M13 11V9h2V7h2V5h2V3h2V1h3' fill='none' stroke='black' stroke-width='2' stroke-linecap='square'/%3E%3C/svg%3E") repeat-x left center / 24px 12px;
+}
+.flag-badge { width: 30px; height: 20px; flex: none; display: block; border-radius: 3px; box-shadow: 0 1px 3px rgba(0, 0, 0, .18); }
+.maya-num { width: 16px; height: auto; display: block; }
+/* Esquina escalonada (escalinata maya) */
+.step-corner { position: absolute; left: 12px; top: 12px; width: 12px; height: 12px; background: var(--accent);
+  clip-path: polygon(0 0, 100% 0, 100% 33%, 67% 33%, 67% 67%, 33% 67%, 33% 100%, 0 100%); }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition: none !important; animation: none !important; scroll-behavior: auto !important; }

@@ -1,8 +1,9 @@
 import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Icon from '../components/Icon.jsx'
-import Skyline from '../components/Skyline.jsx'
-import { avisos, preguntas, pasosRegistro, tramites } from '../data/mock.js'
+import { FlagBadge, Greca, MayaNumber, Pyramid } from '../components/Maya.jsx'
+import { IdCardFront } from '../components/IdCard.jsx'
+import { avisos, credencial, pasosRegistro, preguntas, tramites } from '../data/mock.js'
 
 const MESES = ['ENE', 'FEB', 'MAR', 'ABR', 'MAY', 'JUN', 'JUL', 'AGO', 'SEP', 'OCT', 'NOV', 'DIC']
 const DIAS = ['dom', 'lun', 'mar', 'mié', 'jue', 'vie', 'sáb']
@@ -19,27 +20,38 @@ function proximasFechas() {
   return out
 }
 
+function TileHead({ icon, title, sub }) {
+  return (
+    <div className="tile-head">
+      <span className="tile-icon"><Icon name={icon} /></span>
+      <div><h2>{title}</h2>{sub && <p>{sub}</p>}</div>
+    </div>
+  )
+}
+
 function Asistente() {
   const [marcados, setMarcados] = useState([])
-  const [resultado, setResultado] = useState('Marca al menos una opción.')
+  const [resultado, setResultado] = useState('')
   const toggle = (id) => setMarcados((m) => (m.includes(id) ? m.filter((x) => x !== id) : [...m, id]))
   const ver = () => {
     const t = tramites.filter((x) => marcados.includes(x.id)).map((x) => x.tramite)
     setResultado(t.length ? `Tu trámite: ${t.join(' + ')}. Puedes hacerlo en línea.` : 'Marca al menos una opción.')
   }
   return (
-    <article className="hcard navigator" id="asistente">
-      <h2><Icon name="send" />¿Qué trámite necesito?</h2>
-      <p>Marca lo que aplica a tu caso y te decimos qué hacer.</p>
-      <div className="options">
+    <article className="tile tile-feature span-2" id="asistente">
+      <TileHead icon="send" title="¿Qué trámite necesito?" sub="Marca lo que aplica a tu caso." />
+      <div className="choice-row">
         {tramites.map((t) => (
-          <label key={t.id} htmlFor={`tr-${t.id}`}>
-            <input type="checkbox" id={`tr-${t.id}`} checked={marcados.includes(t.id)} onChange={() => toggle(t.id)} /> {t.etiqueta}
+          <label key={t.id} htmlFor={`tr-${t.id}`} className="choice">
+            <input type="checkbox" id={`tr-${t.id}`} checked={marcados.includes(t.id)} onChange={() => toggle(t.id)} />
+            {t.etiqueta}
           </label>
         ))}
       </div>
-      <p className="result" aria-live="polite">{resultado}</p>
-      <button className="btn btn-block" type="button" onClick={ver}>Ver mi trámite <Icon name="chevronRight" /></button>
+      <div className="tile-foot">
+        <p className="result" aria-live="polite">{resultado}</p>
+        <button className="btn btn-light" type="button" onClick={ver}>Ver mi trámite <Icon name="arrowRight" /></button>
+      </div>
     </article>
   )
 }
@@ -48,18 +60,32 @@ function Consulta() {
   const [modo, setModo] = useState('folio')
   const esFolio = modo === 'folio'
   return (
-    <article className="hcard glass" id="consulta">
-      <div className="hcard-head"><div><h2>Consultar mi trámite</h2><p className="who">Revisa el avance o corrige tus datos</p></div></div>
+    <article className="tile tile-outline" id="consulta">
+      <TileHead icon="search" title="Consultar trámite" sub="Avance o corrección de datos" />
       <div className="segmented" role="group" aria-label="Buscar por">
         <button type="button" aria-pressed={esFolio} onClick={() => setModo('folio')}>Folio</button>
         <button type="button" aria-pressed={!esFolio} onClick={() => setModo('correo')}>Correo</button>
       </div>
       <div className="field">
-        <label htmlFor="consulta-valor">{esFolio ? 'Folio de trámite' : 'Correo electrónico'}</label>
+        <label htmlFor="consulta-valor" className="sr-only">{esFolio ? 'Folio de trámite' : 'Correo electrónico'}</label>
         <input id="consulta-valor" type={esFolio ? 'text' : 'email'} className={esFolio ? 'mono' : undefined} placeholder={esFolio ? 'TR-2026-004817' : 'tu.correo@ejemplo.mx'} />
       </div>
-      <div className="spacer" />
-      <Link className="btn btn-dark btn-block" to="/credencial">Consultar <Icon name="chevronRight" /></Link>
+      <Link className="btn btn-primary" to="/credencial">Consultar <Icon name="arrowRight" /></Link>
+    </article>
+  )
+}
+
+function Citas() {
+  const fechas = useMemo(proximasFechas, [])
+  return (
+    <article className="tile tile-outline">
+      <TileHead icon="calendar" title="Citas disponibles" sub="Módulo 03 · Tlaquepaque" />
+      <div className="date-chips">
+        {fechas.map((f) => (
+          <span className="date-chip" key={f.key}><small>{f.semana}</small><b>{f.dia}</b><span>{f.mes}</span></span>
+        ))}
+      </div>
+      <Link className="link-arrow" to="/registro">Agendar cita <Icon name="arrowRight" /></Link>
     </article>
   )
 }
@@ -68,16 +94,22 @@ function Avisos() {
   const [tab, setTab] = useState('avisos')
   const lista = tab === 'avisos' ? avisos : preguntas
   return (
-    <article className="hcard glass" id="avisos">
-      <div className="notice-tabs" role="tablist" aria-label="Avisos y preguntas">
-        <button role="tab" aria-selected={tab === 'avisos'} onClick={() => setTab('avisos')}>Avisos</button>
-        <button role="tab" aria-selected={tab === 'preguntas'} onClick={() => setTab('preguntas')}>Preguntas</button>
+    <article className="tile span-3" id="avisos">
+      <div className="tile-head between">
+        <div className="tile-head">
+          <span className="tile-icon"><Icon name="log" /></span>
+          <h2>Avisos y ayuda</h2>
+        </div>
+        <div className="pill-tabs" role="tablist" aria-label="Avisos y preguntas">
+          <button role="tab" aria-selected={tab === 'avisos'} onClick={() => setTab('avisos')}>Avisos</button>
+          <button role="tab" aria-selected={tab === 'preguntas'} onClick={() => setTab('preguntas')}>Preguntas</button>
+        </div>
       </div>
       <ul className="notice-list" role="tabpanel">
         {lista.map((a) => (
           <li key={a.id}>
             <Link to="/">{a.nuevo && <span className="tag-new">Nuevo</span>}{a.titulo}</Link>
-            <time>{a.fecha ?? 'FAQ'}</time>
+            {a.fecha ? <time>{a.fecha}</time> : <Icon name="chevronRight" />}
           </li>
         ))}
       </ul>
@@ -86,77 +118,77 @@ function Avisos() {
 }
 
 export default function Portal() {
-  const fechas = useMemo(proximasFechas, [])
   return (
     <>
       <section className="hero">
-        <Skyline />
-        <div className="container hero-grid">
-          <div className="intro">
-            <p className="eyebrow">Portal ciudadano</p>
-            <h1>Registro de identificación ciudadana</h1>
-            <ul className="facts">
-              <li><Icon name="check" />Trámite gratuito</li>
-              <li><Icon name="check" />Se llena en unos 10 minutos</li>
-              <li><Icon name="check" />Recoge tu credencial con tu folio</li>
+        <Pyramid />
+        <div className="container hero-inner">
+          <div className="hero-copy">
+            <span className="kicker"><Icon name="sparkle" />Credencial digital con verificación por QR</span>
+            <h1>Tu identidad, <em>en línea</em> y sin filas.</h1>
+            <p className="lead">Registra tus datos, agenda tu cita y consulta tu credencial desde cualquier dispositivo.</p>
+            <div className="hero-cta">
+              <Link className="btn btn-primary btn-lg" to="/registro">Iniciar registro <Icon name="arrowRight" /></Link>
+              <Link className="btn btn-outline btn-lg" to="/#consulta">Consultar mi trámite</Link>
+            </div>
+            <ul className="hero-facts">
+              <li><Icon name="check" />Gratuito</li>
+              <li><Icon name="clock" />10 minutos</li>
+              <li><Icon name="shield" />Detección de duplicados</li>
             </ul>
-            <div className="dates">
-              <p><Icon name="calendar" />Próximas fechas con citas disponibles</p>
-              <div className="date-chips">
-                {fechas.map((f) => (
-                  <span className="date-chip" key={f.key}><span>{f.mes}</span><b>{f.dia}</b><small>{f.semana}</small></span>
-                ))}
-              </div>
-            </div>
           </div>
-
-          <article className="hcard">
-            <div className="hcard-head">
-              <div><h2>Nuevo registro</h2><p className="who">Ciudadanía · primera vez</p></div>
-              <div className="badge-icon"><span><Icon name="user" /></span>Mayores de 18</div>
-            </div>
-            <p className="desc">Ten a la mano tu acta de nacimiento, un comprobante de domicilio y un correo.</p>
-            <div className="spacer" />
-            <Link className="btn btn-primary btn-block" to="/registro">Iniciar registro <Icon name="chevronRight" /></Link>
-          </article>
-
-          <article className="hcard">
-            <div className="hcard-head">
-              <div><h2>Acceso operativo</h2><p className="who">Personal de módulo y supervisión</p></div>
-              <div className="badge-icon"><span><Icon name="users" /></span>Con credenciales</div>
-            </div>
-            <p className="desc">Valida registros, emite credenciales y revisa la bitácora del módulo.</p>
-            <div className="spacer" />
-            <Link className="btn btn-accent btn-block" to="/login">Entrar al panel <Icon name="chevronRight" /></Link>
-          </article>
-
-          <Asistente />
-          <Consulta />
-          <Avisos />
+          <div className="hero-visual" aria-hidden="true">
+            <div className="orb" />
+            <div className="float-card"><IdCardFront data={credencial} /></div>
+            <div className="float-badge"><span><Icon name="check" /></span><div><b>Registro validado</b><small>RG-26-004817</small></div></div>
+          </div>
         </div>
       </section>
 
+      <section className="tiles-wrap">
+        <div className="container tiles">
+          <Asistente />
+          <Consulta />
+          <Citas />
+          <Avisos />
+          <article className="tile tile-deep">
+            <TileHead icon="users" title="Acceso operativo" sub="Personal de módulo y supervisión" />
+            <p className="tile-text">Valida registros, emite credenciales y revisa la bitácora.</p>
+            <Link className="btn btn-light" to="/login">Entrar al panel <Icon name="arrowRight" /></Link>
+          </article>
+        </div>
+      </section>
+
+      <div className="container divider" aria-hidden="true"><Greca /><FlagBadge /><Greca /></div>
+
       <section className="section" id="pasos">
         <div className="container">
-          <h2 className="section-title">Cómo es el registro</h2>
+          <div className="section-head">
+            <p className="eyebrow">Paso a paso</p>
+            <h2>Cómo es el registro</h2>
+          </div>
           <ol className="steps-flow">
             {pasosRegistro.map((p, i) => (
               <li key={p.titulo}>
-                <span className="bubble"><Icon name={p.icon} /></span>
-                <b>Paso {i + 1}</b>
-                <span>{p.titulo}<small>({p.nota})</small></span>
+                <span className="bubble"><Icon name={p.icon} /><span className="num" title={`Paso ${i + 1}`}><MayaNumber n={i + 1} /></span></span>
+                <span className="step-n">Paso {i + 1}</span>
+                <b>{p.titulo}</b>
+                <span>{p.nota}</span>
               </li>
             ))}
           </ol>
         </div>
       </section>
 
-      <section className="section" style={{ paddingTop: 8 }}>
+      <section className="section section-alt">
         <div className="container">
-          <h2 className="section-title">Guía en video</h2>
+          <div className="section-head">
+            <p className="eyebrow">Guía en video</p>
+            <h2>¿Prefieres verlo?</h2>
+          </div>
           <div className="videos">
-            <a href="#pasos"><span className="play"><Icon name="video" /></span><span>Conoce el trámite paso a paso.<b>Ver video (español)</b></span></a>
-            <a href="#pasos"><span className="play"><Icon name="video" /></span><span>El mismo recorrido, interpretado.<b>Ver video (lengua de señas)</b></span></a>
+            <a href="#pasos"><span className="play"><Icon name="play" /></span><span>Conoce el trámite paso a paso<b>Ver video en español</b></span></a>
+            <a href="#pasos"><span className="play"><Icon name="play" /></span><span>El mismo recorrido, interpretado<b>Ver video en lengua de señas</b></span></a>
           </div>
         </div>
       </section>

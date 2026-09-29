@@ -3,6 +3,8 @@ import { Link, useLocation } from 'react-router-dom'
 import Icon from './Icon.jsx'
 import useAccessibility from '../hooks/useAccessibility.js'
 import useClock from '../hooks/useClock.js'
+import useTheme from '../hooks/useTheme.js'
+import { FlagBadge } from './Maya.jsx'
 
 // Menú principal. Cada sección abre sus subsecciones en el panel desplegable.
 const MENU = [
@@ -33,6 +35,7 @@ const IDIOMAS = ['Español', 'English', 'Náhuatl', 'Wixárika', 'Maya']
 export default function TopBar() {
   const a11y = useAccessibility()
   const clock = useClock()
+  const { isDark, toggleTheme } = useTheme()
   const { pathname } = useLocation()
   const [mega, setMega] = useState(false)
   const [megaHeight, setMegaHeight] = useState(210)
@@ -62,7 +65,10 @@ export default function TopBar() {
 
       <div className="util">
         <div className="container">
-          <span className="demo-flag">Sitio de simulación académica · Sin validez oficial</span>
+          <div className="util-info">
+            <span className="hours"><Icon name="clock" />Atención lun a sáb · 8:00 a 20:00</span>
+            <span><Icon name="help" /><Link to="/#avisos">Centro de ayuda</Link></span>
+          </div>
           <div className="util-actions">
             <button type="button" onClick={a11y.nextSize} aria-pressed={a11y.sizeIsLarge} aria-label={`Tamaño de texto: ${a11y.sizeLabel}. Cambiar`}>
               <Icon name="text" />Texto {a11y.sizeLabel}
@@ -70,7 +76,10 @@ export default function TopBar() {
             <button type="button" onClick={a11y.toggleContrast} aria-pressed={a11y.contrast}>
               <Icon name="contrast" />Alto contraste
             </button>
-            <span className="tricolor" aria-hidden="true"><i /><i /><i /></span>
+            <button type="button" onClick={toggleTheme} aria-pressed={isDark} aria-label={isDark ? 'Cambiar a tema claro' : 'Cambiar a tema oscuro'}>
+              <Icon name={isDark ? 'sun' : 'moon'} />{isDark ? 'Día' : 'Noche'}
+            </button>
+            <FlagBadge />
             <label htmlFor="idioma" className="sr-only">Idioma</label>
             <select id="idioma" defaultValue="Español">
               {IDIOMAS.map((i) => <option key={i}>{i}</option>)}
@@ -87,7 +96,6 @@ export default function TopBar() {
       >
         <div className="container">
           <Link to="/" className="brand" aria-label="SIRCS, inicio">
-            <span className="seal">SI</span>
             <span><b>SIRCS</b><small>Sistema de Registro Ciudadano Simulado</small></span>
           </Link>
 

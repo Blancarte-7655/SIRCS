@@ -28,7 +28,6 @@ export default function Registro() {
 
   return (
     <>
-      <div className="demo-bar">Simulación académica · Sin validez oficial</div>
       <div className="container page">
         <div className="panel-box reg">
           <aside className="reg-steps" aria-label="Pasos del trámite">
@@ -76,7 +75,7 @@ export default function Registro() {
 
             <div className="grid-2">
               <div className={`field${errorClave ? ' has-error' : ''}`}>
-                <label htmlFor="r-clave">Clave de población (ficticia) *</label>
+                <label htmlFor="r-clave">Clave de población *</label>
                 <input
                   id="r-clave" ref={claveRef} className="mono" maxLength={18} value={clave}
                   onChange={(e) => setClave(e.target.value.toUpperCase())}
@@ -84,7 +83,7 @@ export default function Registro() {
                   aria-invalid={!!errorClave} aria-describedby="r-clave-err r-clave-hint"
                 />
                 {errorClave && <p className="error-msg" id="r-clave-err"><Icon name="alert" /><span>{errorClave}</span></p>}
-                <p className="hint" id="r-clave-hint">En la simulación se genera a partir de tus datos. Puedes corregirla.</p>
+                <p className="hint" id="r-clave-hint">Se genera a partir de tus datos. Puedes corregirla.</p>
               </div>
               <div className="field">
                 <label htmlFor="r-correo">Correo electrónico *</label>
@@ -102,7 +101,7 @@ export default function Registro() {
 
             <div className="form-actions">
               <button className="btn btn-ghost" type="button">Guardar y continuar después</button>
-              <button className="btn btn-accent" type="submit">Continuar a domicilio <Icon name="arrowRight" /></button>
+              <button className="btn btn-primary" type="submit">Continuar a domicilio <Icon name="arrowRight" /></button>
             </div>
           </form>
         </div>

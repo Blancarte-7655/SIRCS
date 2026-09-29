@@ -1,0 +1,134 @@
+/* Barra superior fija, encabezado con menú desplegable y pie de página */
+
+.topfix { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 30; box-shadow: 0 6px 16px -12px rgba(0, 0, 0, .35); }
+
+/* Franja de accesibilidad */
+.util { background: var(--band); color: #E9EFEB; font-size: .8rem; }
+.util .container { display: flex; justify-content: space-between; align-items: center; gap: 8px 16px; flex-wrap: wrap; padding-block: 7px; }
+.util .demo-flag { display: flex; gap: 8px; align-items: center; font-weight: 700; color: #FFFFFF; }
+.util .demo-flag::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: #FFFFFF; box-shadow: 0 0 0 3px rgba(255, 255, 255, .25); }
+.util-actions { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+.util-actions button, .util-actions select {
+  appearance: none; font: 700 .85rem var(--f-body); min-height: 38px; padding: 6px 12px;
+  border-radius: var(--radius-sm); cursor: pointer; display: inline-flex; gap: 6px; align-items: center;
+  background: transparent; color: #E9EFEB; border: 1px solid rgba(255, 255, 255, .22); width: auto;
+}
+.util-actions button .icon { width: 15px; height: 15px; }
+.util-actions button[aria-pressed="true"] { background: #FFFFFF; color: #004D33; border-color: #FFFFFF; }
+.util-actions select {
+  background: #CE1126 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2.5'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") no-repeat right 10px center / 14px;
+  border-color: #CE1126; color: #FFFFFF; padding-right: 30px;
+}
+.util-actions select option { color: #121A16; background: #FFFFFF; }
+.tricolor { display: inline-flex; height: 12px; width: 22px; border-radius: 2px; overflow: hidden; box-shadow: 0 0 0 1px rgba(255, 255, 255, .4); }
+.tricolor i { flex: 1; }
+.tricolor i:nth-child(1) { background: #006847; }
+.tricolor i:nth-child(2) { background: #FFFFFF; }
+.tricolor i:nth-child(3) { background: #CE1126; }
+
+/* Encabezado */
+.site-header { background: var(--surface); border-bottom: 2px solid var(--primary); position: relative; }
+.site-header .container { display: flex; align-items: stretch; justify-content: space-between; gap: 16px 28px; flex-wrap: wrap; }
+.site-header .brand, .clock { align-self: center; padding-block: 12px; }
+.main-nav { display: flex; align-self: stretch; }
+.nav-item { position: relative; display: flex; align-items: center; justify-content: center; min-width: 140px; }
+.nav-item + .nav-item { border-left: 1px solid var(--border); }
+.nav-item > a {
+  position: relative; color: var(--fg); text-decoration: none; font: 800 1rem var(--f-display);
+  padding: 22px 14px; display: flex; align-items: center; min-height: 44px;
+}
+.nav-item > a:hover { color: var(--primary); }
+.nav-item > a.active { color: var(--accent); }
+.nav-item > a.active::after { content: ""; position: absolute; left: 14px; right: 14px; bottom: 12px; height: 3px; border-radius: 3px; background: var(--accent); }
+.clock { text-align: right; font-size: .78rem; color: var(--fg-2); line-height: 1.3; }
+.clock b { display: block; color: var(--fg); font-size: .8rem; }
+.clock time { font: 500 .9rem var(--f-mono); color: var(--accent); font-variant-numeric: tabular-nums; }
+
+/* Menú desplegable: se abren todas las columnas a la vez */
+.submenu {
+  position: absolute; top: calc(100% + 2px); left: 0; right: 0;
+  list-style: none; margin: 0; padding: 18px 16px 22px; display: none; gap: 14px; z-index: 2;
+}
+.nav-item + .nav-item .submenu { border-left: 1px solid var(--border); left: -1px; }
+.submenu li { min-width: 0; overflow-wrap: anywhere; }
+.submenu a { color: var(--fg); font-weight: 700; text-decoration: none; font-size: .95rem; line-height: 1.3; display: block; padding: 2px 0; }
+.submenu a:hover { color: var(--accent); text-decoration: underline; }
+.mega-bg {
+  position: absolute; left: 0; right: 0; top: calc(100% + 2px); height: var(--mega-h, 210px);
+  background: var(--surface); border-bottom: 2px solid var(--primary);
+  box-shadow: 0 18px 30px -18px rgba(0, 0, 0, .35); display: none; z-index: 1;
+}
+.site-header.mega-open .submenu { display: grid; }
+.site-header.mega-open .mega-bg { display: block; }
+
+@media (min-width: 1100px) {
+  .site-header .container { flex-wrap: nowrap; }
+}
+@media (max-width: 1099px) {
+  .submenu, .mega-bg { display: none !important; }
+  .nav-item { min-width: 0; }
+  .nav-item > a { padding: 10px 14px; }
+  .nav-item > a.active::after { bottom: 4px; }
+  .main-nav { flex-wrap: wrap; }
+  .clock { text-align: left; }
+}
+
+/* Sitios relacionados */
+.related { background: var(--surface); padding-block: 8px 34px; }
+.related .container { display: flex; gap: 10px; align-items: center; }
+.related-track {
+  display: grid; grid-auto-flow: column; grid-auto-columns: minmax(170px, 1fr); gap: 16px;
+  overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; flex: 1; padding: 2px;
+}
+.related-track::-webkit-scrollbar { display: none; }
+.related-track a {
+  scroll-snap-align: start; display: flex; gap: 10px; align-items: center; justify-content: center;
+  border: 1px solid var(--border-strong); min-height: 62px; padding: 10px 14px;
+  color: var(--fg); text-decoration: none; font-weight: 800; font-size: .9rem; background: var(--surface);
+}
+.related-track a:hover { border-color: var(--primary); color: var(--primary); }
+.related-track .icon { width: 24px; height: 24px; color: var(--accent); }
+.arrow-btn {
+  appearance: none; border: 0; background: transparent; color: var(--fg-2);
+  width: 44px; height: 44px; border-radius: 50%; cursor: pointer; display: grid; place-items: center; flex: none;
+}
+.arrow-btn:hover { background: var(--muted); }
+.arrow-btn .icon { width: 26px; height: 26px; }
+
+/* Pie */
+.site-footer { background: var(--surface-2); border-top: 1px solid var(--border); position: relative; }
+.site-footer .container { padding-block: 22px 26px; display: grid; gap: 22px; }
+.footer-row { display: flex; justify-content: space-between; align-items: center; gap: 14px 24px; flex-wrap: wrap; }
+.footer-links { display: flex; flex-wrap: wrap; list-style: none; margin: 0; padding: 0; }
+.footer-links li + li { border-left: 1px solid var(--border-strong); }
+.footer-links a { display: block; padding: 4px 18px; color: var(--fg); font-weight: 800; text-decoration: none; font-size: .92rem; }
+.footer-links li:first-child a { padding-left: 0; }
+.footer-links .privacy { color: var(--accent); }
+.footer-links .contact { color: var(--primary); }
+.footer-selects { display: flex; gap: 8px; flex-wrap: wrap; }
+.footer-selects select { width: auto; min-width: 170px; min-height: 40px; font-size: .88rem; color: var(--fg-2); }
+.footer-copy { font-size: .82rem; color: var(--fg-2); font-weight: 700; text-align: center; flex: 1; }
+.social { display: flex; gap: 10px; }
+.social a { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; color: #FFFFFF; background: var(--primary); }
+.social a:nth-child(2) { background: var(--accent); }
+.social a:nth-child(3) { background: #34403A; }
+.social .icon { width: 20px; height: 20px; }
+.to-top {
+  position: absolute; right: 20px; top: -22px; width: 46px; height: 46px; border-radius: 50%;
+  background: var(--surface); border: 1px solid var(--border); box-shadow: var(--shadow);
+  display: grid; place-items: center; color: var(--fg); cursor: pointer;
+}
+
+/* Celular: barra fija compacta para que no tape la pantalla */
+@media (max-width: 760px) {
+  .util .container { padding-block: 5px; gap: 6px; }
+  .util .demo-flag { font-size: .72rem; width: 100%; }
+  .util-actions button, .util-actions select { min-height: 34px; padding: 4px 9px; font-size: .8rem; }
+  .util-actions select { padding-right: 26px; }
+  .site-header .container { gap: 0 12px; }
+  .site-header .brand { padding-block: 8px; }
+  .site-header .brand small, .clock { display: none; }
+  .main-nav { flex-wrap: nowrap; overflow-x: auto; width: 100%; scrollbar-width: none; border-top: 1px solid var(--border); }
+  .main-nav::-webkit-scrollbar { display: none; }
+  .nav-item { flex: none; }
+}

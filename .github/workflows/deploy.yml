@@ -1,0 +1,42 @@
+# Publica el frontend en el servidor cada vez que se hace Push a main.
+# Requiere 3 secretos en GitHub (Settings → Secrets and variables → Actions):
+#   SSH_HOST  IP o dominio del servidor
+#   SSH_USER  usuario con permiso de escritura en /var/www/sircs (p. ej. deploy)
+#   SSH_KEY   llave privada SSH de ese usuario (contenido completo)
+name: Desplegar frontend
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "frontend/**"
+      - ".github/workflows/deploy.yml"
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Instalar y compilar
+        working-directory: frontend
+        run: |
+          npm install --no-audit --no-fund
+          npm run build
+
+      - name: Subir al servidor
+        env:
+          SSH_KEY: ${{ secrets.SSH_KEY }}
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "$SSH_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -H "$SSH_HOST" >> ~/.ssh/known_hosts
+          rsync -az --delete frontend/dist/ "$SSH_USER@$SSH_HOST:/var/www/sircs/"

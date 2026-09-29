@@ -1,0 +1,105 @@
+/*
+  Tokens del sistema de diseño SIRCS
+  Paleta verde · blanco · rojo, base "Accesible y ético" (UI UX Pro Max).
+  Todo color de la interfaz sale de aquí. No escribas colores sueltos en los componentes.
+*/
+:root {
+  /* Superficies y texto */
+  --bg: #F3F5F3;
+  --surface: #FFFFFF;
+  --surface-2: #F7F9F7;
+  --muted: #ECF1ED;
+  --fg: #121A16;
+  --fg-2: #34403A;
+  --fg-3: #5E6B64;
+  --border: #D6DFD9;
+  --border-strong: #A9B8AF;
+
+  /* Marca */
+  --primary: #006847;        /* verde */
+  --primary-hover: #00543A;
+  --on-primary: #FFFFFF;
+  --primary-soft: #E3F1EA;
+  --accent: #CE1126;         /* rojo */
+  --accent-hover: #A80D1F;
+  --on-accent: #FFFFFF;
+  --accent-soft: #FBE7EA;
+  --band: #004D33;           /* franja superior y encabezados de fecha */
+  --card-border: #004D33;
+
+  /* Estados (no son color de marca) */
+  --ok: #1E7B46;
+  --ok-soft: #E1F3E8;
+  --warn: #8F5400;
+  --warn-soft: #FDF1DC;
+  --danger: #B3121F;
+  --danger-soft: #FCE4E6;
+  --ring: #CE1126;
+
+  /* Portada */
+  --hero-a: #FFFFFF;
+  --hero-b: #E6EFE9;
+  --hero-glow: rgba(255, 255, 255, .95);
+  --hero-glow-2: rgba(206, 17, 38, .12);
+  --sky-ink: #1F3A2E;
+  --glass: rgba(255, 255, 255, .86);
+  --glass-border: rgba(0, 77, 51, .18);
+
+  /* Sombras */
+  --shadow: 0 1px 2px rgba(20, 16, 16, .06), 0 6px 18px rgba(20, 16, 16, .07);
+  --shadow-lg: 0 1px 2px rgba(20, 16, 16, .06), 0 14px 32px -16px rgba(20, 16, 16, .3);
+
+  /* Tipografía */
+  --f-display: "Manrope", "Segoe UI", system-ui, sans-serif;
+  --f-body: "Public Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+  --f-card: "Unbounded", var(--f-display);
+
+  /* Medidas */
+  --container: 1200px;
+  --radius: 10px;
+  --radius-sm: 6px;
+}
+
+/* Modo oscuro: sigue al sistema, salvo que se fuerce claro */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0F0F10; --surface: #1A1A1B; --surface-2: #151516; --muted: #262627;
+    --fg: #F3F1F0; --fg-2: #CFCACA; --fg-3: #A29C9B;
+    --border: #333132; --border-strong: #4F4B4C;
+    --primary: #4CC38A; --primary-hover: #6BD3A1; --on-primary: #04160E; --primary-soft: #12291F;
+    --accent: #F0506A; --accent-hover: #F46D83; --on-accent: #1A0508; --accent-soft: #3A1219;
+    --band: #003523; --card-border: #2F6B51;
+    --ok: #4ADE80; --ok-soft: #12341F; --warn: #FACC15; --warn-soft: #3A2F0A;
+    --danger: #F87171; --danger-soft: #3B1515; --ring: #F0506A;
+    --hero-a: #131313; --hero-b: #16201B; --hero-glow: rgba(255, 255, 255, .04); --hero-glow-2: rgba(76, 195, 138, .14);
+    --sky-ink: #9AB5A8; --glass: rgba(26, 26, 27, .86); --glass-border: rgba(255, 255, 255, .1);
+    --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 6px 18px rgba(0, 0, 0, .35);
+    --shadow-lg: 0 1px 2px rgba(0, 0, 0, .3), 0 14px 32px -16px rgba(0, 0, 0, .7);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0F0F10; --surface: #1A1A1B; --surface-2: #151516; --muted: #262627;
+  --fg: #F3F1F0; --fg-2: #CFCACA; --fg-3: #A29C9B;
+  --border: #333132; --border-strong: #4F4B4C;
+  --primary: #4CC38A; --primary-hover: #6BD3A1; --on-primary: #04160E; --primary-soft: #12291F;
+  --accent: #F0506A; --accent-hover: #F46D83; --on-accent: #1A0508; --accent-soft: #3A1219;
+  --band: #003523; --card-border: #2F6B51;
+  --ok: #4ADE80; --ok-soft: #12341F; --warn: #FACC15; --warn-soft: #3A2F0A;
+  --danger: #F87171; --danger-soft: #3B1515; --ring: #F0506A;
+  --hero-a: #131313; --hero-b: #16201B; --hero-glow: rgba(255, 255, 255, .04); --hero-glow-2: rgba(76, 195, 138, .14);
+  --sky-ink: #9AB5A8; --glass: rgba(26, 26, 27, .86); --glass-border: rgba(255, 255, 255, .1);
+  --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 6px 18px rgba(0, 0, 0, .35);
+  --shadow-lg: 0 1px 2px rgba(0, 0, 0, .3), 0 14px 32px -16px rgba(0, 0, 0, .7);
+  color-scheme: dark;
+}
+
+/* Alto contraste (botón de la barra superior) */
+:root.hc {
+  --fg-2: var(--fg);
+  --fg-3: var(--fg);
+  --border: #5F6B65;
+  --border-strong: #3C4741;
+  --glass: var(--surface);
+}

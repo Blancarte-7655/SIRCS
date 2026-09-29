@@ -1,0 +1,1195 @@
+<title>Maqueta SIRCS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600&family=Manrope:wght@600;700;800&family=Public+Sans:wght@400;600;700;800;900&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: una barra de pantallas arriba; cada pantalla es un "lienzo" de app independiente dentro de un marco. */
+:root{
+  --bg:#F3F5F3; --surface:#FFFFFF; --surface-2:#F7F9F7; --muted:#ECF1ED;
+  --fg:#121A16; --fg-2:#34403A; --fg-3:#5E6B64;
+  --border:#D6DFD9; --border-strong:#A9B8AF;
+  --primary:#006847; --primary-hover:#00543A; --on-primary:#FFFFFF; --primary-soft:#E3F1EA; --primary-2:#0B7A54;
+  --secondary:#C8102E;
+  --accent:#CE1126; --accent-hover:#A80D1F; --on-accent:#FFFFFF; --accent-soft:#FBE7EA;
+  --ok:#1E7B46; --ok-soft:#E1F3E8;
+  --warn:#8F5400; --warn-soft:#FDF1DC;
+  --danger:#B3121F; --danger-soft:#FCE4E6;
+  --ring:#CE1126;
+  --demo:#CE1126; --demo-soft:#FBE7EA;
+  --card-a:#061A13; --card-b:#0A2A20; --card-ink:#FAF7F6; --card-line:rgba(255,255,255,.22);
+  --navy:#004D33; --navy-fixed:#004D33; --bright:#CE1126; --bright-2:#E0263F;
+  --primary-glow:rgba(0,0,0,.3); --accent-glow:rgba(200,16,46,.4);
+  --hero-a:#FFFFFF; --hero-b:#E6EFE9; --hero-glow:rgba(255,255,255,.95); --hero-glow-2:rgba(206,17,38,.12);
+  --sky-ink:#1F3A2E; --glass:rgba(255,255,255,.86); --glass-border:rgba(0,77,51,.18); --card-border:#004D33;
+  --shadow:0 1px 2px rgba(20,16,16,.06),0 6px 18px rgba(20,16,16,.07);
+  --shadow-lg:0 1px 2px rgba(20,16,16,.06),0 14px 32px -16px rgba(20,16,16,.3);
+  --f-display:"Manrope","Segoe UI",system-ui,sans-serif;
+  --f-body:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0F0F10; --surface:#1A1A1B; --surface-2:#151516; --muted:#262627;
+  --fg:#F3F1F0; --fg-2:#CFCACA; --fg-3:#A29C9B;
+  --border:#333132; --border-strong:#4F4B4C;
+  --primary:#4CC38A; --primary-hover:#6BD3A1; --on-primary:#04160E; --primary-soft:#12291F; --primary-2:#6BD3A1;
+  --secondary:#F0506A;
+  --accent:#F0506A; --accent-hover:#F46D83; --on-accent:#1A0508; --accent-soft:#3A1219;
+  --ok:#4ADE80; --ok-soft:#12341F;
+  --warn:#FACC15; --warn-soft:#3A2F0A;
+  --danger:#F87171; --danger-soft:#3B1515;
+  --ring:#F0506A;
+  --demo:#F0506A; --demo-soft:#3A1219;
+  --card-a:#061A13; --card-b:#0A2A20;
+  --navy:#003523; --navy-fixed:#004D33; --bright:#D81E3A; --bright-2:#EA3B55;
+  --primary-glow:rgba(0,0,0,.6); --accent-glow:rgba(0,0,0,.5);
+  --hero-a:#131313; --hero-b:#1D1818; --hero-glow:rgba(255,255,255,.04); --hero-glow-2:rgba(76,195,138,.14);
+  --sky-ink:#9A8E8E; --glass:rgba(26,26,27,.86); --glass-border:rgba(255,255,255,.1); --card-border:#2F6B51;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 18px rgba(0,0,0,.35);
+  --shadow-lg:0 1px 2px rgba(0,0,0,.3),0 14px 32px -16px rgba(0,0,0,.7);
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0F0F10; --surface:#1A1A1B; --surface-2:#151516; --muted:#262627;
+  --fg:#F3F1F0; --fg-2:#CFCACA; --fg-3:#A29C9B;
+  --border:#333132; --border-strong:#4F4B4C;
+  --primary:#4CC38A; --primary-hover:#6BD3A1; --on-primary:#04160E; --primary-soft:#12291F; --primary-2:#6BD3A1;
+  --secondary:#F0506A;
+  --accent:#F0506A; --accent-hover:#F46D83; --on-accent:#1A0508; --accent-soft:#3A1219;
+  --ok:#4ADE80; --ok-soft:#12341F;
+  --warn:#FACC15; --warn-soft:#3A2F0A;
+  --danger:#F87171; --danger-soft:#3B1515;
+  --ring:#F0506A;
+  --demo:#F0506A; --demo-soft:#3A1219;
+  --card-a:#061A13; --card-b:#0A2A20;
+  --navy:#003523; --navy-fixed:#004D33; --bright:#D81E3A; --bright-2:#EA3B55;
+  --primary-glow:rgba(0,0,0,.6); --accent-glow:rgba(0,0,0,.5);
+  --hero-a:#131313; --hero-b:#1D1818; --hero-glow:rgba(255,255,255,.04); --hero-glow-2:rgba(76,195,138,.14);
+  --sky-ink:#9A8E8E; --glass:rgba(26,26,27,.86); --glass-border:rgba(255,255,255,.1); --card-border:#2F6B51;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 18px rgba(0,0,0,.35);
+  --shadow-lg:0 1px 2px rgba(0,0,0,.3),0 14px 32px -16px rgba(0,0,0,.7);
+  color-scheme:dark}
+
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:16px;line-height:1.5;padding-inline:16px;padding-block:20px 48px}
+.wrap{max-width:1180px;margin-inline:auto;display:grid;gap:20px}
+h1,h2,h3{font-family:var(--f-display);font-weight:600;line-height:1.15;text-wrap:balance;margin:0;color:var(--fg)}
+p{margin:0}
+:focus-visible{outline:3px solid var(--ring);outline-offset:2px;border-radius:4px}
+svg.i{width:20px;height:20px;flex:none;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* Encabezado de la maqueta */
+.top{display:flex;flex-wrap:wrap;gap:12px 24px;align-items:end;justify-content:space-between}
+.top h1{font-size:clamp(1.6rem,3.2vw,2.2rem)}
+.top p{color:var(--fg-3);font-size:.95rem;max-width:60ch}
+.tabs{display:flex;flex-wrap:wrap;gap:6px;padding:4px;background:var(--surface);border:1px solid var(--border);border-radius:12px}
+.tab{appearance:none;border:0;background:transparent;color:var(--fg-2);font:700 .9rem var(--f-body);padding:10px 14px;border-radius:8px;cursor:pointer;min-height:44px;transition:background .15s,color .15s}
+.tab:hover{background:var(--muted)}
+.tab[aria-selected="true"]{background:var(--primary);color:var(--on-primary)}
+
+/* Marco de pantalla */
+.frame{background:var(--surface);border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow);overflow:hidden}
+.demo-bar{display:flex;gap:8px;align-items:center;justify-content:center;background:var(--demo-soft);color:var(--demo);font-size:.8rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:6px 12px;border-bottom:1px solid var(--border);text-align:center}
+.brand{display:flex;gap:10px;align-items:center}
+.seal{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:var(--primary);color:var(--on-primary);font:700 .95rem var(--f-display);letter-spacing:.02em;flex:none}
+.brand b{font-family:var(--f-display);font-size:1.15rem;font-weight:700;display:block;line-height:1.1}
+.brand small{color:var(--fg-3);font-size:.75rem;display:block}
+
+/* Controles */
+label{font-weight:700;font-size:.9rem;color:var(--fg);display:block}
+.hint{font-size:.8rem;color:var(--fg-3);margin-top:2px}
+.field{display:grid;gap:6px;min-width:0}
+input,select{width:100%;font:400 1rem var(--f-body);color:var(--fg);background:var(--surface);border:1.5px solid var(--border-strong);border-radius:8px;padding:10px 12px;min-height:46px;transition:border-color .15s,box-shadow .15s}
+input:hover,select:hover{border-color:var(--primary)}
+input:focus,select:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-soft)}
+.field.err input{border-color:var(--danger)}
+.err-msg{display:flex;gap:6px;align-items:flex-start;color:var(--danger);font-size:.85rem;font-weight:700}
+.err-msg svg{width:16px;height:16px;margin-top:2px}
+.ok-msg{display:flex;gap:6px;align-items:center;color:var(--ok);font-size:.85rem;font-weight:700}
+.ok-msg svg{width:16px;height:16px}
+.btn{appearance:none;display:inline-flex;gap:8px;align-items:center;justify-content:center;font:700 .95rem var(--f-body);border-radius:8px;padding:10px 18px;min-height:46px;cursor:pointer;border:1.5px solid transparent;transition:background .15s,border-color .15s;text-decoration:none}
+.btn-primary{background:var(--primary);color:var(--on-primary)}
+.btn-primary:hover{background:var(--primary-hover)}
+.btn-accent{background:var(--accent);color:var(--on-accent)}
+.btn-accent:hover{background:var(--accent-hover)}
+.btn-ghost{background:transparent;color:var(--primary);border-color:var(--border-strong)}
+.btn-ghost:hover{background:var(--primary-soft)}
+.btn-sm{min-height:38px;padding:6px 12px;font-size:.85rem}
+.pill{display:inline-flex;gap:6px;align-items:center;font-size:.78rem;font-weight:700;padding:3px 10px;border-radius:999px;white-space:nowrap}
+.pill::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor}
+.p-ok{background:var(--ok-soft);color:var(--ok)}
+.p-warn{background:var(--warn-soft);color:var(--warn)}
+.p-bad{background:var(--danger-soft);color:var(--danger)}
+.p-info{background:var(--primary-soft);color:var(--primary)}
+.mono{font-family:var(--f-mono);font-size:.88em;letter-spacing:.01em}
+
+/* 1 · Login */
+.login{display:grid;grid-template-columns:1.05fr 1fr;min-height:560px}
+.login-side{background:var(--primary);color:var(--on-primary);padding:40px;display:flex;flex-direction:column;justify-content:space-between;gap:32px;position:relative;overflow:hidden}
+.login-side .brand small,.login-side .brand b{color:var(--on-primary)}
+.login-side .seal{background:var(--on-primary);color:var(--primary)}
+.login-side h2{color:var(--on-primary);font-size:clamp(1.7rem,3vw,2.4rem);max-width:16ch}
+.login-side p{opacity:.88;max-width:42ch;margin-top:12px}
+.login-side ul{list-style:none;padding:0;margin:0;display:grid;gap:12px;font-size:.95rem}
+.login-side li{display:flex;gap:10px;align-items:flex-start}
+.guilloche{position:absolute;right:-120px;bottom:-120px;width:380px;height:380px;opacity:.16;pointer-events:none}
+.login-form{padding:40px;display:flex;flex-direction:column;justify-content:center;gap:22px;max-width:460px;width:100%;margin-inline:auto}
+.login-form h3{font-size:1.7rem}
+.seg{display:grid;grid-template-columns:1fr 1fr;background:var(--muted);border-radius:10px;padding:4px;gap:4px}
+.seg button{appearance:none;border:0;background:transparent;font:700 .9rem var(--f-body);color:var(--fg-2);padding:10px;border-radius:7px;cursor:pointer;min-height:42px}
+.seg button[aria-pressed="true"]{background:var(--surface);color:var(--primary);box-shadow:0 1px 3px rgba(23,37,84,.15)}
+.pw{position:relative}
+.pw input{padding-right:56px}
+.pw button{position:absolute;right:4px;top:50%;transform:translateY(-50%);border:0;background:transparent;color:var(--fg-3);width:44px;height:40px;border-radius:6px;cursor:pointer;display:grid;place-items:center}
+.pw button:hover{color:var(--primary)}
+.row-between{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;font-size:.9rem}
+.row-between a{color:var(--accent);font-weight:700}
+.check{display:flex;gap:8px;align-items:center;font-weight:400}
+.check input{width:20px;height:20px;min-height:0;accent-color:var(--primary)}
+.foot-note{font-size:.8rem;color:var(--fg-3);border-top:1px solid var(--border);padding-top:14px}
+
+/* 2 · Registro */
+.appbar{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 24px;border-bottom:1px solid var(--border);flex-wrap:wrap}
+.user-chip{display:flex;gap:10px;align-items:center;font-size:.9rem;color:var(--fg-2)}
+.avatar{width:34px;height:34px;border-radius:50%;background:var(--primary-soft);color:var(--primary);display:grid;place-items:center;font-weight:900;font-size:.8rem}
+.reg{display:grid;grid-template-columns:250px 1fr;gap:0}
+.steps{padding:28px 24px;border-right:1px solid var(--border);background:var(--surface-2)}
+.steps ol{list-style:none;margin:16px 0 0;padding:0;display:grid;gap:4px}
+.steps li{display:flex;gap:12px;align-items:center;padding:10px;border-radius:8px;font-size:.92rem;color:var(--fg-3)}
+.steps li .n{width:28px;height:28px;border-radius:50%;border:2px solid var(--border-strong);display:grid;place-items:center;font-weight:900;font-size:.8rem;flex:none}
+.steps li.done{color:var(--fg-2)}
+.steps li.done .n{background:var(--ok);border-color:var(--ok);color:var(--surface)}
+.steps li.now{background:var(--primary-soft);color:var(--primary);font-weight:700}
+.steps li.now .n{background:var(--primary);border-color:var(--primary);color:var(--on-primary)}
+.eyebrow{font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;font-weight:900;color:var(--fg-3)}
+.reg-main{padding:28px 32px;display:grid;gap:22px;min-width:0}
+.reg-main h2{font-size:1.8rem}
+.progress{height:6px;background:var(--muted);border-radius:99px;overflow:hidden}
+.progress span{display:block;height:100%;width:25%;background:var(--primary);border-radius:99px}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.dup{display:flex;gap:12px;align-items:flex-start;background:var(--ok-soft);border:1px solid color-mix(in srgb,var(--ok) 35%,transparent);border-radius:10px;padding:14px 16px;color:var(--fg)}
+.dup svg{color:var(--ok);margin-top:2px}
+.dup b{display:block}
+.dup span{font-size:.88rem;color:var(--fg-2)}
+.form-actions{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;border-top:1px solid var(--border);padding-top:20px}
+.radio-row{display:flex;gap:10px;flex-wrap:wrap}
+.radio{display:flex;gap:8px;align-items:center;border:1.5px solid var(--border-strong);border-radius:8px;padding:0 14px;min-height:46px;cursor:pointer;font-weight:400}
+.radio:has(input:checked){border-color:var(--primary);background:var(--primary-soft);color:var(--primary);font-weight:700}
+.radio input{width:18px;height:18px;min-height:0;accent-color:var(--primary);margin:0}
+
+/* 3 · Panel */
+.panel{display:grid;grid-template-columns:230px 1fr;min-height:640px}
+.side{background:var(--surface-2);border-right:1px solid var(--border);padding:20px 14px;display:flex;flex-direction:column;gap:22px}
+.nav{display:grid;gap:2px}
+.nav a{display:flex;gap:10px;align-items:center;padding:10px 12px;border-radius:8px;color:var(--fg-2);text-decoration:none;font-size:.92rem;font-weight:700;min-height:44px}
+.nav a:hover{background:var(--muted)}
+.nav a[aria-current="page"]{background:var(--primary-soft);color:var(--primary)}
+.nav .count{margin-left:auto;background:var(--warn-soft);color:var(--warn);font-size:.75rem;padding:1px 8px;border-radius:99px}
+.side .eyebrow{padding-inline:12px}
+.main{padding:24px 28px;display:grid;gap:22px;align-content:start;min-width:0}
+.main-head{display:flex;justify-content:space-between;align-items:end;gap:12px;flex-wrap:wrap}
+.main-head h2{font-size:1.8rem}
+.main-head p{color:var(--fg-3);font-size:.9rem}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.kpi{border:1px solid var(--border);border-radius:10px;padding:14px 16px;display:grid;gap:4px;background:var(--surface)}
+.kpi .lbl{font-size:.82rem;color:var(--fg-3);font-weight:700}
+.kpi .val{font:600 2rem/1.1 var(--f-display);font-variant-numeric:tabular-nums;color:var(--fg)}
+.kpi .delta{font-size:.8rem;color:var(--fg-3)}
+.kpi.alert{border-color:color-mix(in srgb,var(--warn) 50%,var(--border));background:var(--warn-soft)}
+.kpi.alert .val{color:var(--warn)}
+.spark{height:28px;width:100%}
+.split{display:grid;grid-template-columns:minmax(0,1fr);gap:18px;align-items:start}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.search{position:relative;flex:1 1 220px}
+.search svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--fg-3);width:18px;height:18px}
+.search input{padding-left:38px}
+.toolbar select{width:auto;flex:0 1 180px}
+.bulk{display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:var(--primary-soft);color:var(--primary);border-radius:8px;padding:8px 12px;font-size:.88rem;font-weight:700}
+.table-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:10px}
+table{border-collapse:collapse;width:100%;min-width:860px;font-size:.9rem}
+th{text-align:left;font-size:.76rem;letter-spacing:.06em;text-transform:uppercase;color:var(--fg-3);font-weight:900;background:var(--surface-2);padding:10px 12px;border-bottom:1px solid var(--border);white-space:nowrap}
+td{padding:11px 12px;border-bottom:1px solid var(--border);vertical-align:middle;color:var(--fg-2)}
+tr:last-child td{border-bottom:0}
+tbody tr:hover td{background:var(--surface-2)}
+tr.sel td{background:var(--primary-soft)}
+td b{color:var(--fg);font-weight:700;display:block;white-space:nowrap}
+td.mono,td.num{white-space:nowrap}
+td small{color:var(--fg-3)}
+td input[type=checkbox],th input[type=checkbox]{width:18px;height:18px;min-height:0;accent-color:var(--primary)}
+.num{font-variant-numeric:tabular-nums}
+.tbl-foot{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;font-size:.85rem;color:var(--fg-3)}
+.pager{display:flex;gap:4px}
+.pager button{min-width:38px;min-height:38px;border:1px solid var(--border);background:var(--surface);color:var(--fg-2);border-radius:6px;font:700 .85rem var(--f-body);cursor:pointer}
+.pager button[aria-current="page"]{background:var(--primary);color:var(--on-primary);border-color:var(--primary)}
+.log{border:1px solid var(--border);border-radius:10px;padding:16px;display:grid;gap:14px;justify-items:start}
+.log ol{width:100%}
+.log h3{font-size:1.2rem}
+.log ol{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:4px 20px}
+.log li{display:grid;grid-template-columns:12px 1fr;gap:10px;padding-bottom:14px;position:relative}
+.log li::before{content:"";width:10px;height:10px;border-radius:50%;background:var(--dot,var(--primary));margin-top:6px}
+.log li:not(:last-child)::after{display:none;content:"";position:absolute;left:4.5px;top:18px;bottom:0;width:1px;background:var(--border)}
+.log li p{font-size:.86rem;color:var(--fg-2)}
+.log li p b{color:var(--fg)}
+.log time{font-size:.76rem;color:var(--fg-3);font-family:var(--f-mono)}
+
+/* 4 · Credencial */
+.cred-stage{padding:32px;display:grid;gap:28px}
+.cred-head{display:flex;justify-content:space-between;align-items:end;gap:12px;flex-wrap:wrap}
+.cred-head h2{font-size:1.8rem}
+.cred-head p{color:var(--fg-3);font-size:.9rem;max-width:60ch}
+.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px;justify-items:center}
+.cardcap{display:grid;gap:10px;width:100%;max-width:480px}
+.cardcap .eyebrow{text-align:center}
+.idcard{position:relative;width:100%;max-width:480px;aspect-ratio:85.6/54;border-radius:16px;overflow:hidden;color:var(--card-ink);background:linear-gradient(135deg,var(--card-a),var(--card-b));box-shadow:0 12px 30px rgba(23,37,84,.28);container-type:inline-size}
+.idcard canvas.pattern{position:absolute;inset:0;width:100%;height:100%;opacity:.35}
+.idcard .inner{position:absolute;inset:0;padding:5cqw 5.5cqw;display:grid;grid-template-rows:auto 1fr auto;gap:3cqw}
+.idcard .c-top{display:flex;justify-content:space-between;align-items:center;gap:3cqw}
+.idcard .c-brand{display:flex;gap:2.4cqw;align-items:center}
+.idcard .c-seal{width:8.5cqw;height:8.5cqw;border-radius:50%;border:.5cqw solid var(--card-ink);display:grid;place-items:center;font:700 3.2cqw var(--f-display)}
+.idcard .c-brand b{font:700 4cqw/1 var(--f-display);display:block}
+.idcard .c-brand small{font-size:2.2cqw;letter-spacing:.14em;text-transform:uppercase;opacity:.85}
+.idcard .c-tag{font-size:2.2cqw;font-weight:900;letter-spacing:.12em;text-transform:uppercase;border:.3cqw solid var(--card-line);border-radius:99px;padding:.6cqw 2cqw;white-space:nowrap}
+.idcard .c-body{display:grid;grid-template-columns:24cqw 1fr;gap:4cqw;align-items:start;min-height:0}
+.idcard .photo{width:24cqw;aspect-ratio:3/4;border-radius:2cqw;background:rgba(255,255,255,.16);border:.35cqw solid var(--card-line);display:grid;place-items:end center;overflow:hidden}
+.idcard .photo svg{width:88%;height:auto;fill:rgba(255,255,255,.55)}
+.idcard dl{margin:0;display:grid;grid-template-columns:1fr 1fr;gap:1.6cqw 3cqw;min-width:0}
+.idcard dl div{min-width:0}
+.idcard dl .wide{grid-column:1/-1}
+.idcard dt{font-size:1.9cqw;letter-spacing:.12em;text-transform:uppercase;opacity:.75;font-weight:700}
+.idcard dd{margin:0;font-size:3.1cqw;font-weight:700;line-height:1.2;overflow-wrap:anywhere}
+.idcard dd.mono{font-family:var(--f-mono);font-weight:500;font-size:2.8cqw}
+.idcard .c-foot{display:flex;justify-content:space-between;align-items:end;gap:3cqw;font-size:2.1cqw;opacity:.9}
+.idcard .sig{font:italic 500 4.4cqw var(--f-display);border-bottom:.25cqw solid var(--card-line);padding-inline:1cqw;opacity:.9}
+.idcard .wm{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none}
+.idcard .wm span{transform:rotate(-18deg);font:900 11cqw var(--f-body);letter-spacing:.18em;color:rgba(255,255,255,.14);border:.8cqw solid rgba(255,255,255,.14);padding:0 3cqw;border-radius:2cqw}
+.idcard .back-body{display:grid;grid-template-columns:26cqw 1fr;gap:4.5cqw;align-items:center}
+.idcard .qr{width:26cqw;aspect-ratio:1;background:#FFFFFF;border-radius:2cqw;padding:1.6cqw}
+.idcard .qr canvas{width:100%;height:100%;image-rendering:pixelated;display:block}
+.idcard .back-text{display:grid;gap:2cqw;font-size:2.5cqw;line-height:1.35}
+.idcard .back-text b{font-size:3cqw}
+.idcard .disclaimer{font-size:2.2cqw;font-weight:900;letter-spacing:.08em;text-transform:uppercase;background:rgba(0,0,0,.22);border-radius:1.4cqw;padding:1.4cqw 2cqw;text-align:center}
+.notes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.note{border-top:2px solid var(--primary);padding-top:10px;display:grid;gap:4px}
+.note b{font-size:.95rem}
+.note p{font-size:.88rem;color:var(--fg-2)}
+
+/* Responsive */
+@media (max-width:1240px){
+  .split{grid-template-columns:1fr}
+}
+@media (max-width:980px){
+  .kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .notes{grid-template-columns:1fr}
+}
+@media (max-width:860px){
+  .login{grid-template-columns:1fr}
+  .login-side{padding:28px}
+  .reg,.panel{grid-template-columns:1fr}
+  .steps{border-right:0;border-bottom:1px solid var(--border)}
+  .steps ol{grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);overflow-x:auto}
+  .steps li{flex-direction:column;text-align:center;font-size:.78rem;gap:6px}
+  .side{border-right:0;border-bottom:1px solid var(--border)}
+  .nav{grid-auto-flow:column;grid-auto-columns:max-content;overflow-x:auto}
+  .side .eyebrow,.side .brand{display:none}
+  .cards{grid-template-columns:1fr}
+  .grid3{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:520px){
+  .login-form,.reg-main,.main,.cred-stage{padding:20px 16px}
+  .grid3,.grid2{grid-template-columns:1fr}
+  .kpis{grid-template-columns:1fr 1fr}
+  .kpi .val{font-size:1.6rem}
+  .tab{padding:8px 10px;font-size:.82rem}
+}
+
+/* ===== Capa moderna (v2) ===== */
+h1,h2,h3{font-weight:800;letter-spacing:-.02em}
+.frame{border-radius:20px;border-color:var(--border);box-shadow:var(--shadow-lg)}
+.btn{border-radius:10px;transition:background .15s,border-color .15s,transform .15s,box-shadow .15s}
+.btn-primary{background:linear-gradient(180deg,var(--primary-2),var(--primary));box-shadow:0 6px 16px -6px var(--primary-glow)}
+.btn-primary:hover{background:linear-gradient(180deg,var(--primary),var(--primary-hover));transform:translateY(-1px)}
+.btn-accent{box-shadow:0 6px 16px -6px var(--accent-glow)}
+.btn-accent:hover{transform:translateY(-1px)}
+.tab[aria-selected="true"]{background:linear-gradient(180deg,var(--primary-2),var(--primary));box-shadow:0 6px 14px -6px var(--primary-glow)}
+.tabs{border-radius:14px;box-shadow:var(--shadow)}
+input,select{border-radius:10px}
+.kpi{border-radius:14px;background:linear-gradient(180deg,var(--surface),var(--surface-2));box-shadow:var(--shadow)}
+.kpi.alert{background:linear-gradient(180deg,var(--warn-soft),var(--surface))}
+.login-side{background:radial-gradient(120% 90% at 100% 100%,var(--primary-2) 0%,transparent 60%),linear-gradient(160deg,var(--navy) 0%,var(--primary) 100%)}
+.seal{background:linear-gradient(145deg,var(--primary-2),var(--navy));box-shadow:0 4px 10px -4px var(--primary-glow)}
+.log,.table-wrap{border-radius:14px}
+.steps li.now{box-shadow:inset 3px 0 0 var(--primary)}
+
+/* ===== Portal ===== */
+.util{display:flex;justify-content:space-between;align-items:center;gap:8px 16px;flex-wrap:wrap;background:var(--surface-2);border-bottom:1px solid var(--border);padding:6px 24px;font-size:.8rem;color:var(--fg-2)}
+.util .demo-flag{display:flex;gap:8px;align-items:center;font-weight:700;color:var(--demo)}
+.util .demo-flag::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--demo);box-shadow:0 0 0 3px var(--demo-soft)}
+.util-r{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.util-r button{appearance:none;border:1px solid var(--border);background:var(--surface);color:var(--fg-2);font:700 .78rem var(--f-body);border-radius:8px;padding:6px 10px;min-height:32px;cursor:pointer;display:inline-flex;gap:6px;align-items:center}
+.util-r button svg{width:15px;height:15px}
+.util-r .lang{background:var(--navy);color:#FFFFFF;border-color:var(--navy)}
+.phead{display:flex;align-items:center;justify-content:space-between;gap:16px 28px;padding:16px 24px;flex-wrap:wrap;border-bottom:1px solid var(--border);background:var(--surface);position:relative;z-index:2}
+.phead .brand b{font-size:1.25rem}
+.pnav{display:flex;gap:4px;flex-wrap:wrap}
+.pnav a{position:relative;color:var(--fg);text-decoration:none;font:800 1rem var(--f-display);padding:10px 16px;border-radius:10px;min-height:44px;display:flex;align-items:center}
+.pnav a:hover{background:var(--muted)}
+.pnav a[aria-current="page"]{color:var(--primary)}
+.pnav a[aria-current="page"]::after{content:"";position:absolute;left:16px;right:16px;bottom:2px;height:3px;border-radius:3px;background:var(--primary)}
+.clock{text-align:right;font-size:.78rem;color:var(--fg-2);line-height:1.3}
+.clock b{display:block;color:var(--fg);font-size:.8rem}
+.clock time{font:500 .9rem var(--f-mono);color:var(--primary);font-variant-numeric:tabular-nums}
+
+.hero{position:relative;overflow:hidden;padding:36px 24px 40px;background:
+  radial-gradient(60% 80% at 85% 20%,var(--hero-glow) 0%,transparent 60%),
+  radial-gradient(50% 60% at 10% 90%,var(--hero-glow-2) 0%,transparent 70%),
+  linear-gradient(180deg,var(--hero-a) 0%,var(--hero-b) 100%)}
+.hero .skyline{position:absolute;right:-20px;bottom:0;width:min(900px,90%);height:auto;pointer-events:none;color:var(--sky-ink)}
+.hero-grid{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1fr);gap:18px;align-items:stretch}
+.intro{display:grid;gap:12px;align-content:start;padding-right:8px}
+.intro h2{font-size:clamp(1.5rem,2.2vw,1.8rem);line-height:1.12}
+.intro .sub{color:var(--fg-2);font-size:.98rem}
+.facts{list-style:none;margin:0;padding:0;display:grid;gap:6px;color:var(--primary);font-weight:700;font-size:.95rem}
+.facts li{display:flex;gap:8px;align-items:center}
+.facts svg{width:18px;height:18px}
+.dates{display:grid;gap:8px;border-top:2px solid var(--primary);padding-top:12px;max-width:340px}
+.dates p{display:flex;gap:8px;align-items:center;font-weight:800;color:var(--primary);font-size:.92rem}
+.dates p svg{width:18px;height:18px}
+.chips{display:flex;gap:8px}
+.chip{display:grid;text-align:center;border-radius:10px;overflow:hidden;background:var(--surface);border:1px solid var(--border-strong);min-width:58px;box-shadow:var(--shadow)}
+.chip span:first-child{background:var(--navy);color:#FFFFFF;font-size:.72rem;font-weight:800;letter-spacing:.06em;padding:3px 6px}
+.chip b{font:800 1.2rem/1.2 var(--f-display);padding-top:4px;font-variant-numeric:tabular-nums}
+.chip small{font-size:.68rem;color:var(--fg-3);padding-bottom:4px;text-transform:uppercase;font-weight:700}
+
+.gcard{position:relative;background:var(--glass);backdrop-filter:blur(14px) saturate(1.2);-webkit-backdrop-filter:blur(14px) saturate(1.2);border:1px solid var(--glass-border);border-radius:18px;padding:22px;display:flex;flex-direction:column;gap:14px;box-shadow:var(--shadow-lg);transition:transform .2s,box-shadow .2s;min-width:0}
+.gcard:hover{transform:translateY(-2px)}
+.gcard.solid{background:var(--surface)}
+.gcard::before{content:"";position:absolute;left:14px;top:14px;width:10px;height:10px;border-left:3px solid var(--primary);border-top:3px solid var(--primary);border-top-left-radius:3px}
+.gcard .ch{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;padding-left:6px}
+.gcard h3{font-size:1.35rem}
+.gcard .who{color:var(--fg-2);font-size:.92rem;margin-top:4px}
+.ico{width:60px;height:60px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 30% 25%,var(--surface) 0%,var(--primary-soft) 90%);color:var(--primary);flex:none;box-shadow:inset 0 0 0 1px var(--border)}
+.ico svg{width:30px;height:30px;stroke-width:1.6}
+.ico-wrap{display:grid;justify-items:center;gap:6px;font-size:.8rem;font-weight:800;color:var(--fg)}
+.gcard .spacer{flex:1}
+.gcard .btn{width:100%;justify-content:space-between}
+.btn-bright{background:linear-gradient(180deg,var(--bright-2),var(--bright));color:#FFFFFF;box-shadow:0 6px 16px -6px var(--primary-glow)}
+.btn-bright:hover{transform:translateY(-1px);filter:brightness(1.06)}
+.btn-dark{background:linear-gradient(180deg,#5B6474,#434B59);color:#FFFFFF}
+.btn-dark:hover{transform:translateY(-1px);filter:brightness(1.08)}
+.navi{background:radial-gradient(90% 80% at 100% 0%,var(--bright) 0%,transparent 65%),linear-gradient(160deg,var(--primary) 0%,var(--navy) 100%);color:#FFFFFF;border-color:transparent}
+.navi::before{border-color:#FFFFFF}
+.navi h3{color:#FFFFFF;display:flex;gap:10px;align-items:center}
+.navi h3 svg{width:26px;height:26px;color:#FDE68A}
+.navi p{color:#DCE7FF;font-size:.9rem}
+.navi .opts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.navi label{display:flex;gap:8px;align-items:center;color:#FFFFFF;font-size:.86rem;font-weight:700;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.22);border-radius:10px;padding:8px 10px;min-height:44px;cursor:pointer}
+.navi label:has(input:checked){background:rgba(255,255,255,.22);border-color:#FFFFFF}
+.navi input{width:18px;height:18px;min-height:0;accent-color:#FDE68A;margin:0;flex:none}
+.navi .res{color:#FDE68A;font-size:.86rem;font-weight:700;min-height:1.3em}
+.navi .btn{background:#FFFFFF;color:var(--navy-fixed)}
+.navi .btn:hover{background:#EEF3FF;transform:translateY(-1px)}
+.seg2{display:grid;grid-template-columns:1fr 1fr;background:var(--muted);border-radius:10px;padding:4px;gap:4px}
+.seg2 button{appearance:none;border:0;background:transparent;font:700 .85rem var(--f-body);color:var(--fg-2);padding:8px;border-radius:7px;cursor:pointer;min-height:38px}
+.seg2 button[aria-pressed="true"]{background:var(--surface);color:var(--primary);box-shadow:0 1px 3px rgba(12,30,70,.15)}
+.ntabs{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--border);margin-inline:-4px}
+.ntabs button{appearance:none;border:0;background:transparent;font:800 1.05rem var(--f-display);color:var(--fg-3);padding:6px 8px 10px;cursor:pointer;border-bottom:3px solid transparent;min-height:44px}
+.ntabs button[aria-selected="true"]{color:var(--fg);border-bottom-color:var(--primary)}
+.nlist{list-style:none;margin:0;padding:0;display:grid}
+.nlist li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:baseline;padding:9px 0;border-bottom:1px solid var(--border);font-size:.88rem}
+.nlist li:last-child{border-bottom:0}
+.nlist a{color:var(--fg);font-weight:700;text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.nlist a:hover{color:var(--primary);text-decoration:underline}
+.nlist time{font:500 .8rem var(--f-mono);color:var(--fg-3);white-space:nowrap}
+.nlist .new{display:inline-block;background:var(--danger);color:#FFFFFF;font-size:.62rem;font-weight:900;border-radius:4px;padding:1px 5px;margin-right:6px;vertical-align:1px}
+
+.proc{padding:44px 24px 48px;display:grid;gap:30px;background:var(--surface)}
+.sec-title{text-align:center;font-size:clamp(1.4rem,2.4vw,1.8rem);position:relative;justify-self:center;padding-left:14px}
+.sec-title::before{content:"";position:absolute;left:0;top:2px;width:10px;height:10px;border-left:3px solid var(--fg);border-top:3px solid var(--fg)}
+.flow{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;counter-reset:s}
+.flow li{align-content:start;display:grid;justify-items:center;text-align:center;gap:10px;position:relative;padding-inline:6px}
+.flow li:not(:last-child)::after{content:"";position:absolute;top:38px;left:calc(50% + 52px);right:calc(-50% + 52px);height:2px;background:linear-gradient(90deg,var(--border-strong),var(--primary));border-radius:2px}
+.flow li:not(:last-child)::before{content:"";position:absolute;top:33px;right:calc(-50% + 50px);width:10px;height:10px;border-top:2px solid var(--primary);border-right:2px solid var(--primary);transform:rotate(45deg)}
+.flow .bubble{width:78px;height:78px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 30% 25%,var(--surface) 0%,var(--primary-soft) 85%);box-shadow:0 10px 24px -12px var(--primary-glow),inset 0 0 0 1px var(--border);color:var(--primary)}
+.flow .bubble svg{width:34px;height:34px;stroke-width:1.6}
+.flow b{font:800 .95rem var(--f-display);letter-spacing:.04em;text-transform:uppercase;color:var(--fg)}
+.flow span{font-size:.9rem;color:var(--fg-2);line-height:1.35;max-width:22ch}
+.flow small{display:block;color:var(--fg-3);font-size:.8rem}
+
+@media (max-width:1060px){.hero-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.intro{grid-column:1/-1}}
+@media (max-width:760px){.hero-grid{grid-template-columns:1fr}.flow{grid-template-columns:1fr 1fr}.flow li::after,.flow li::before{display:none}.clock{text-align:left}}
+@media (max-width:420px){.flow{grid-template-columns:1fr}.navi .opts{grid-template-columns:1fr}}
+
+/* ===== v3: más cercano a la referencia, rojo · blanco · negro ===== */
+.frame{border-radius:12px}
+.tabs{border-radius:10px}
+.tab{border-radius:7px}
+.tab[aria-selected="true"]{background:var(--primary);color:var(--on-primary);box-shadow:none}
+.btn{border-radius:6px}
+.btn-primary{background:var(--primary);box-shadow:none}
+.btn-primary:hover{background:var(--primary-hover);transform:none}
+.btn-accent{box-shadow:none}.btn-accent:hover{transform:none}
+input,select{border-radius:6px}
+.seal{background:var(--accent);color:#FFFFFF;box-shadow:none}
+.login-side{color:#FFFFFF;background:radial-gradient(90% 70% at 100% 100%,rgba(200,16,46,.55) 0%,transparent 65%),linear-gradient(160deg,#141414 0%,#262020 100%)}
+.login-side h2,.login-side .brand b,.login-side .brand small{color:#FFFFFF}
+.login-side .seal{background:#FFFFFF;color:#C8102E}
+.login-side li svg{color:#FF8FA0}
+.kpi{border-radius:10px}
+.util{background:var(--navy);color:#E9E5E4;border-bottom:0;padding:7px 24px}
+.util .demo-flag{color:#FFFFFF}
+.util .demo-flag::before{background:#E0263F;box-shadow:0 0 0 3px rgba(224,38,63,.3)}
+.util-r button{background:transparent;color:#E9E5E4;border-color:rgba(255,255,255,.22)}
+.util-r .lang{background:#C8102E;border-color:#C8102E;color:#FFFFFF}
+.phead{padding:14px 24px;border-bottom:2px solid var(--primary)}
+@media (min-width:1180px){.phead{flex-wrap:nowrap}.phead .brand small{max-width:24ch}}
+.pnav{gap:0}
+.pnav a{border-radius:0;padding:10px 18px;font-size:1rem}
+.pnav a+a{border-left:1px solid var(--border)}
+.pnav a[aria-current="page"]{color:var(--accent)}
+.pnav a[aria-current="page"]::after{background:var(--accent);left:18px;right:18px}
+.clock time{color:var(--accent)}
+.hero{background:
+  radial-gradient(55% 75% at 92% 95%,var(--hero-glow-2) 0%,transparent 70%),
+  radial-gradient(50% 70% at 20% 10%,var(--hero-glow) 0%,transparent 70%),
+  linear-gradient(180deg,var(--hero-a) 0%,var(--hero-b) 100%)}
+.hero .skyline{width:min(980px,95%)}
+.hero .skyline .b1{opacity:.26}.hero .skyline .b2{opacity:.5}
+.gcard{border-radius:10px;background:var(--surface);border:2px solid var(--card-border);box-shadow:var(--shadow-lg);backdrop-filter:none;-webkit-backdrop-filter:none}
+.gcard:hover{transform:none}
+.gcard.glass{background:var(--glass);border:1px solid var(--glass-border);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.gcard::before{left:12px;top:12px;width:0;height:0;border:0;border-top:9px solid var(--accent);border-right:9px solid transparent;border-radius:0}
+.gcard h3{font-size:1.4rem}
+.ico{background:var(--muted);box-shadow:none;color:var(--fg)}
+.gcard .btn{justify-content:center;position:relative;min-height:48px}
+.gcard .btn svg{position:absolute;right:16px}
+.btn-bright{background:var(--accent);box-shadow:none}
+.btn-bright:hover{background:var(--accent-hover);transform:none;filter:none}
+.btn-dark{background:#555050}
+.btn-dark:hover{background:#433F3F;transform:none;filter:none}
+.navi{background:linear-gradient(165deg,#D0132F 0%,#A30D25 100%);border:0}
+.navi::before{border-top-color:#FFFFFF}
+.navi h3 svg{color:#FFFFFF}
+.navi p{color:#FFE3E7}
+.navi input{accent-color:#111111}
+.navi .res{color:#FFFFFF}
+.navi .btn{background:#FFFFFF;color:#A30D25}
+.navi .btn:hover{background:#FFF1F3;transform:none}
+.chip{border-radius:4px;box-shadow:none;border-color:var(--card-border)}
+.dates{border-top-color:var(--accent)}
+.dates p,.facts{color:var(--accent)}
+.intro h2{font-weight:700}
+.ntabs button[aria-selected="true"]{border-bottom-color:var(--accent)}
+.sec-title::before{width:0;height:0;border:0;border-top:10px solid var(--accent);border-right:10px solid transparent}
+.flow .bubble{background:var(--muted);box-shadow:none;color:var(--fg)}
+.flow .bubble svg{color:var(--fg)}
+.flow li:not(:last-child)::after{background:var(--border-strong)}
+.flow li:not(:last-child)::before{border-color:var(--fg-3)}
+.flow b{color:var(--fg)}
+.vid{padding:8px 24px 48px;display:grid;gap:26px;background:var(--surface)}
+.vids{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;max-width:880px;width:100%;justify-self:center}
+.vids a{display:flex;gap:18px;align-items:center;text-decoration:none;color:var(--fg-2);padding:12px;border-radius:10px}
+.vids a:hover{background:var(--surface-2)}
+.vids .play{width:72px;height:72px;border-radius:50%;background:var(--muted);display:grid;place-items:center;color:var(--accent);flex:none}
+.vids .play svg{width:30px;height:30px}
+.vids b{display:block;color:var(--accent);font-size:1.02rem}
+.idcard{border-radius:14px}
+.idcard::after{content:"";position:absolute;left:0;right:0;top:0;height:1.6cqw;background:linear-gradient(90deg,#C8102E 0 33%,#FFFFFF 33% 66%,#C8102E 66%);opacity:.9}
+@media (max-width:760px){.pnav a{padding:10px 14px}.pnav a[aria-current="page"]::after{left:14px;right:14px}.vids{grid-template-columns:1fr}}
+
+/* ===== v4: verde · blanco · rojo, barra fija, menú desplegable, pie, credencial futurista ===== */
+.frame{overflow:clip;min-width:0}
+.topfix{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;box-shadow:0 6px 16px -12px rgba(0,0,0,.35)}
+.util{background:var(--navy)}
+.util .demo-flag::before{background:#FFFFFF;box-shadow:0 0 0 3px rgba(255,255,255,.25)}
+.util-r button,.util-r select{font:700 .85rem var(--f-body);min-height:38px;padding:6px 12px}
+.util-r button[aria-pressed="true"]{background:#FFFFFF;color:var(--navy-fixed);border-color:#FFFFFF}
+.util-r select{appearance:none;background:#CE1126 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2.5'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") no-repeat right 10px center/14px;color:#FFFFFF;border:1px solid #CE1126;border-radius:6px;padding-right:30px;cursor:pointer;width:auto}
+.util-r select option{color:#121A16;background:#FFFFFF}
+.util .tric{display:inline-flex;height:12px;width:22px;border-radius:2px;overflow:hidden;box-shadow:0 0 0 1px rgba(255,255,255,.4)}
+.util .tric i{flex:1}.util .tric i:nth-child(1){background:#006847}.util .tric i:nth-child(2){background:#FFFFFF}.util .tric i:nth-child(3){background:#CE1126}
+.phead{border-bottom:2px solid var(--primary);position:relative;align-items:stretch;padding-block:0}
+.phead .brand,.phead .clock{align-self:center;padding-block:14px}
+.pnav{align-self:stretch;display:flex}
+.nitem{position:relative;display:flex;align-items:center;min-width:128px;justify-content:center}
+.nitem+.nitem{border-left:1px solid var(--border)}
+.pnav .nitem>a{border-left:0!important;padding:22px 14px}
+.pnav .nitem>a[aria-current="page"]::after{bottom:10px}
+.sub{position:absolute;top:calc(100% + 2px);left:0;min-width:100%;width:max-content;max-width:190px;list-style:none;margin:0;padding:18px 16px 22px;display:none;gap:14px;z-index:2}
+.nitem+.nitem .sub{border-left:1px solid var(--border);left:-1px}
+.sub a{color:var(--fg);font-weight:700;text-decoration:none;font-size:.95rem;line-height:1.3;display:block;padding:2px 0}
+.sub a:hover{color:var(--accent);text-decoration:underline}
+.mega-bg{position:absolute;left:0;right:0;top:calc(100% + 2px);height:var(--mh,210px);background:var(--surface);border-bottom:2px solid var(--primary);box-shadow:0 18px 30px -18px rgba(0,0,0,.35);display:none;z-index:1}
+.phead.mega .sub{display:grid}
+.phead.mega .mega-bg{display:block}
+.pnav a[aria-current="page"]{color:var(--accent)}
+.card-border-note{}
+.gcard{border-color:var(--card-border)}
+.navi{background:radial-gradient(90% 80% at 100% 0%,#0B8A55 0%,transparent 65%),linear-gradient(165deg,#006847 0%,#003D29 100%)}
+.navi p{color:#D8F1E4}
+.navi input{accent-color:#CE1126}
+.navi .btn{background:#FFFFFF;color:#004D33}
+.navi .btn:hover{background:#EAF6EF}
+.btn-primary{background:var(--primary);color:var(--on-primary)}
+.btn-primary:hover{background:var(--primary-hover)}
+.seal{background:linear-gradient(135deg,#006847 0 50%,#CE1126 50%);color:#FFFFFF}
+.login-side{background:radial-gradient(90% 70% at 100% 100%,rgba(206,17,38,.45) 0%,transparent 60%),linear-gradient(160deg,#003D29 0%,#006847 100%)}
+.login-side .seal{background:#FFFFFF;color:#006847}
+.chip span:first-child{background:var(--navy)}
+.hero .skyline .b1{opacity:.22}.hero .skyline .b2{opacity:.42}
+.hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:5px;background:linear-gradient(90deg,#006847 0 33.3%,#FFFFFF 33.3% 66.6%,#CE1126 66.6%)}
+.flow .bubble{color:var(--primary)}.flow .bubble svg{color:var(--primary)}
+.vids .play{color:var(--primary)}.vids b{color:var(--primary)}
+:root.hc{--fg-2:var(--fg);--fg-3:var(--fg);--border:#5F6B65;--border-strong:#3C4741;--glass:var(--surface)}
+:root.hc .gcard{border-width:3px}
+:root.hc a{text-decoration:underline}
+
+/* Pie */
+.rel{padding:8px 24px 34px;background:var(--surface);display:flex;gap:10px;align-items:center}
+.rel-track{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(170px,1fr);gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;flex:1;padding:2px}
+.rel-track::-webkit-scrollbar{display:none}
+.rel-track a{scroll-snap-align:start;display:flex;gap:10px;align-items:center;justify-content:center;border:1px solid var(--border-strong);min-height:62px;padding:10px 14px;color:var(--fg);text-decoration:none;font-weight:800;font-size:.9rem;background:var(--surface)}
+.rel-track a:hover{border-color:var(--primary);color:var(--primary)}
+.rel-track svg{width:24px;height:24px;color:var(--accent)}
+.arrow{appearance:none;border:0;background:transparent;color:var(--fg-2);width:44px;height:44px;border-radius:50%;cursor:pointer;display:grid;place-items:center;flex:none}
+.arrow:hover{background:var(--muted)}
+.arrow svg{width:26px;height:26px}
+.pfoot{background:var(--surface-2);border-top:1px solid var(--border);padding:22px 24px 26px;display:grid;gap:22px;position:relative}
+.pf-row{display:flex;justify-content:space-between;align-items:center;gap:14px 24px;flex-wrap:wrap}
+.pf-links{display:flex;gap:0;flex-wrap:wrap;list-style:none;margin:0;padding:0}
+.pf-links li+li{border-left:1px solid var(--border-strong)}
+.pf-links a{display:block;padding:4px 18px;color:var(--fg);font-weight:800;text-decoration:none;font-size:.92rem}
+.pf-links li:first-child a{padding-left:0}
+.pf-links a.priv{color:var(--accent)}
+.pf-links a.cont{color:var(--primary)}
+.pf-sel{display:flex;gap:8px;flex-wrap:wrap}
+.pf-sel select{width:auto;min-width:170px;min-height:40px;font-size:.88rem;color:var(--fg-2);background:var(--surface)}
+.pf-copy{font-size:.82rem;color:var(--fg-2);font-weight:700;text-align:center;flex:1}
+.pf-soc{display:flex;gap:10px}
+.pf-soc a{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;color:#FFFFFF;background:var(--primary)}
+.pf-soc a:nth-child(2){background:var(--accent)}
+.pf-soc a:nth-child(3){background:#34403A}
+.pf-soc svg{width:20px;height:20px}
+.totop{position:absolute;right:20px;top:-22px;width:46px;height:46px;border-radius:50%;background:var(--surface);border:1px solid var(--border);box-shadow:var(--shadow);display:grid;place-items:center;color:var(--fg);cursor:pointer}
+.totop svg{width:20px;height:20px}
+
+/* Credencial futurista */
+.cred-stage{background:radial-gradient(70% 60% at 50% 40%,var(--primary-soft) 0%,transparent 70%)}
+.fid{position:relative;width:100%;max-width:480px;aspect-ratio:85.6/54;border-radius:18px;overflow:hidden;color:#EAF7F0;container-type:inline-size;
+  background:radial-gradient(110% 90% at 0% 0%,#15573E 0%,transparent 55%),radial-gradient(80% 80% at 100% 100%,#5C0F1D 0%,transparent 62%),linear-gradient(135deg,#051811 0%,#0A2A20 55%,#0F1418 100%);
+  box-shadow:0 24px 44px -22px rgba(0,0,0,.6),inset 0 0 0 1px rgba(255,255,255,.14);
+  transform:perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transition:transform .3s ease}
+.fid canvas.pattern{position:absolute;inset:0;width:100%;height:100%;opacity:.22}
+.fid .holo{position:absolute;inset:-25%;pointer-events:none;mix-blend-mode:screen;opacity:.75;filter:blur(10px);
+  background:conic-gradient(from 200deg at var(--mx,28%) var(--my,30%),transparent 0deg,rgba(0,255,190,.22) 50deg,rgba(120,140,255,.2) 110deg,rgba(255,215,90,.16) 170deg,rgba(255,60,140,.16) 230deg,transparent 300deg)}
+.fid .shine{position:absolute;inset:0;pointer-events:none;background:linear-gradient(115deg,transparent 30%,rgba(255,255,255,.1) 45%,transparent 60%);background-size:250% 100%;background-position:var(--sx,60%) 0}
+.fid .tri{position:absolute;left:0;top:0;bottom:0;width:1.5cqw;background:linear-gradient(180deg,#0B8A55 0 33.3%,#F4F4F4 33.3% 66.6%,#D0132F 66.6%)}
+.fin{position:absolute;inset:0;padding:4.6cqw 5cqw 3.6cqw 6.6cqw;display:grid;grid-template-rows:auto 1fr auto;gap:2.4cqw}
+.f-top{display:flex;justify-content:space-between;align-items:center}
+.f-brand{display:flex;gap:2.2cqw;align-items:center}
+.f-seal{width:7.4cqw;height:7.4cqw;border-radius:2cqw;display:grid;place-items:center;font:700 2.8cqw var(--f-display);background:linear-gradient(135deg,rgba(11,138,85,.9) 0 50%,rgba(208,19,47,.9) 50%);box-shadow:inset 0 0 0 .3cqw rgba(255,255,255,.35)}
+.f-brand b{font:600 3.6cqw/1 "Unbounded",var(--f-display);letter-spacing:.04em;display:block}
+.f-brand small{font-size:1.8cqw;letter-spacing:.22em;text-transform:uppercase;opacity:.7}
+.f-top .nfc{display:flex;gap:1.6cqw;align-items:center;font:500 1.7cqw var(--f-mono);letter-spacing:.14em;opacity:.8}
+.f-top .nfc svg{width:5cqw;height:5cqw;stroke:#EAF7F0;fill:none;stroke-width:1.6;stroke-linecap:round}
+.f-body{display:grid;grid-template-columns:24cqw 1fr;gap:4cqw;position:relative;min-height:0}
+.f-photo{aspect-ratio:3/4;border-radius:3cqw;position:relative;overflow:hidden;background:linear-gradient(160deg,rgba(255,255,255,.2),rgba(255,255,255,.04));box-shadow:inset 0 0 0 .3cqw rgba(255,255,255,.28);display:grid;place-items:end center}
+.f-photo svg{width:90%;fill:rgba(234,247,240,.62)}
+.f-photo::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(255,255,255,.05) 0 .4cqw,transparent .4cqw 1cqw)}
+.f-data{display:grid;gap:2cqw;align-content:start;min-width:0}
+.f-name small,.f-data dt,.b-lbl{font-size:1.7cqw;letter-spacing:.2em;text-transform:uppercase;opacity:.6;font-weight:700}
+.f-name b{display:block;font:800 4.6cqw/1.05 var(--f-display);letter-spacing:-.01em}
+.f-name span{display:block;font:600 3.3cqw/1.2 var(--f-display);opacity:.85}
+.f-data dl{margin:0;display:grid;grid-template-columns:1fr 1fr;gap:1.6cqw 3cqw}
+.f-data dd{margin:0;font:500 2.6cqw var(--f-mono);letter-spacing:.02em}
+.f-data .vig{color:#7CF0B5}
+.f-ghost{position:absolute;right:0;bottom:0;width:9cqw;aspect-ratio:3/4;opacity:.2;display:grid;place-items:end center;border-radius:1.6cqw;box-shadow:inset 0 0 0 .2cqw rgba(255,255,255,.6);overflow:hidden}
+.f-ghost svg{width:90%;fill:#FFFFFF}
+.f-micro{font:500 1.35cqw var(--f-mono);letter-spacing:.24em;white-space:nowrap;overflow:hidden;opacity:.5;border-top:.2cqw solid rgba(255,255,255,.18);padding-top:1.2cqw}
+.fid .wm{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none}
+.fid .wm span{transform:rotate(-16deg);font:900 10cqw var(--f-body);letter-spacing:.2em;color:rgba(255,255,255,.1);border:.7cqw solid rgba(255,255,255,.1);padding:0 3cqw;border-radius:2cqw}
+.b-body{display:grid;grid-template-columns:27cqw 1fr;gap:4.5cqw;align-items:center;min-height:0}
+.b-qr{background:#FFFFFF;border-radius:2.4cqw;padding:1.8cqw;box-shadow:0 0 0 .5cqw rgba(124,240,181,.35),0 0 4cqw rgba(124,240,181,.25)}
+.b-qr canvas{width:100%;aspect-ratio:1;image-rendering:pixelated;display:block}
+.b-txt{display:grid;gap:1.6cqw;min-width:0}
+.b-txt .mono{font:500 2.7cqw var(--f-mono);letter-spacing:.04em;overflow-wrap:anywhere}
+.b-txt p{font-size:2.4cqw;line-height:1.35;opacity:.9}
+.b-sig{font:italic 600 4.2cqw var(--f-display);border-bottom:.25cqw solid rgba(255,255,255,.3);padding:0 1cqw .4cqw;opacity:.9;justify-self:start}
+.b-disc{font-size:2cqw;font-weight:900;letter-spacing:.1em;text-transform:uppercase;text-align:center;background:rgba(206,17,38,.28);border:.2cqw solid rgba(255,255,255,.2);border-radius:99px;padding:1.2cqw 2cqw}
+.chipband{display:flex;justify-content:space-between;align-items:center;gap:2cqw}
+.chip-ic{width:10cqw;height:7.4cqw;border-radius:1.4cqw;background:linear-gradient(135deg,#D9E2DD,#8FA39A 60%,#DDE6E1);position:relative;box-shadow:inset 0 0 0 .25cqw rgba(0,0,0,.25)}
+.chip-ic::before{content:"";position:absolute;inset:1.4cqw 3cqw;border:.25cqw solid rgba(0,0,0,.35);border-radius:.6cqw}
+.chip-ic::after{content:"";position:absolute;left:0;right:0;top:50%;height:.25cqw;background:rgba(0,0,0,.35)}
+@media (prefers-reduced-motion:reduce){.fid{transform:none!important}}
+@media (max-width:1180px){.sub,.mega-bg{display:none!important}.nitem{min-width:0}.pnav .nitem>a{padding:10px 14px}.phead .brand,.phead .clock{padding-block:10px}}
+
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div>
+      <p class="eyebrow">Proyecto académico · Equipo INE · Tlaquepaque</p>
+      <h1>Maqueta visual del sistema</h1>
+      <p>Portada y cuatro pantallas clave. Versión 4: verde, blanco y rojo, barra de accesibilidad fija y credencial digital. Todos los datos son ficticios.</p>
+    </div>
+    <nav class="tabs" role="tablist" aria-label="Pantallas">
+      <button class="tab" role="tab" id="t-portal" aria-controls="portal" aria-selected="true">Portal</button>
+      <button class="tab" role="tab" id="t-login" aria-controls="login" aria-selected="false">Inicio de sesión</button>
+      <button class="tab" role="tab" id="t-registro" aria-controls="registro" aria-selected="false">Registro ciudadano</button>
+      <button class="tab" role="tab" id="t-panel" aria-controls="panel" aria-selected="false">Panel del operador</button>
+      <button class="tab" role="tab" id="t-credencial" aria-controls="credencial" aria-selected="false">Credencial simulada</button>
+    </nav>
+  </header>
+
+
+  <!-- ============ 0. PORTAL ============ -->
+  <section class="frame" role="tabpanel" id="portal" aria-labelledby="t-portal">
+    <div class="topfix">
+    <div class="util">
+      <span class="demo-flag">Sitio de simulación académica · Sin validez oficial</span>
+      <div class="util-r">
+        <button type="button" id="a-text" aria-pressed="false" aria-label="Cambiar tamaño de texto"><svg class="i" viewBox="0 0 24 24"><path d="M4 18L9 6l5 12M5.8 14h6.4M17 10v6M14 13h6"/></svg>Texto <span id="a-text-v">A</span></button>
+        <button type="button" id="a-hc" aria-pressed="false"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 4v16a8 8 0 000-16z" fill="currentColor"/></svg>Alto contraste</button>
+        <span class="tric" aria-hidden="true"><i></i><i></i><i></i></span>
+        <label for="a-lang" class="sr">Idioma</label>
+        <select id="a-lang"><option>Español</option><option>English</option><option>Náhuatl</option><option>Wixárika</option><option>Maya</option></select>
+      </div>
+    </div>
+    <header class="phead" id="phead">
+      <div class="brand"><span class="seal">SI</span><div><b>SIRCS</b><small>Sistema de Registro Ciudadano Simulado</small></div></div>
+      <nav class="pnav" aria-label="Principal" id="pnav">
+        <div class="nitem"><a href="#portal" aria-current="page">Guía</a>
+          <ul class="sub"><li><a href="#portal">Guía del trámite</a></li><li><a href="#portal">¿Quién debe registrarse?</a></li><li><a href="#portal">Cómo es el registro</a></li><li><a href="#portal">Asistente de trámite</a></li></ul></div>
+        <div class="nitem"><a href="#registro" data-go="registro">Registro</a>
+          <ul class="sub"><li><a href="#registro" data-go="registro">Nuevo registro</a></li><li><a href="#portal">Agendar cita en módulo</a></li><li><a href="#portal">Requisitos y documentos</a></li></ul></div>
+        <div class="nitem"><a href="#portal">Consulta</a>
+          <ul class="sub"><li><a href="#portal">Consultar y corregir</a></li><li><a href="#credencial" data-go="credencial">Mi credencial</a></li></ul></div>
+        <div class="nitem"><a href="#portal">Avisos</a>
+          <ul class="sub"><li><a href="#portal">Avisos</a></li><li><a href="#portal">Preguntas frecuentes</a></li><li><a href="#portal">Módulos de atención</a></li></ul></div>
+      </nav>
+      <div class="clock"><b>Hora del centro de México</b><time id="clk">28/09/2026 · 17:51</time></div>
+      <div class="mega-bg" aria-hidden="true"></div>
+    </header>
+    </div>
+
+    <div class="hero">
+      <svg class="skyline" viewBox="0 0 760 262" aria-hidden="true">
+<defs><mask id="arc"><rect width="760" height="262" fill="#fff"/><g fill="#000"><path d="M200 262V206a19 19 0 0 1 38 0V262Z"/><path d="M256 262V206a19 19 0 0 1 38 0V262Z"/><path d="M312 262V206a19 19 0 0 1 38 0V262Z"/><path d="M368 262V206a19 19 0 0 1 38 0V262Z"/><path d="M424 262V206a19 19 0 0 1 38 0V262Z"/><path d="M480 262V206a19 19 0 0 1 38 0V262Z"/><path d="M536 262V206a19 19 0 0 1 38 0V262Z"/><path d="M592 262V206a19 19 0 0 1 38 0V262Z"/><path d="M648 262V206a19 19 0 0 1 38 0V262Z"/><path d="M704 262V206a19 19 0 0 1 38 0V262Z"/><path d="M206 176v-14a13 13 0 0 1 26 0v14Z"/><path d="M262 176v-14a13 13 0 0 1 26 0v14Z"/><path d="M318 176v-14a13 13 0 0 1 26 0v14Z"/><path d="M374 176v-14a13 13 0 0 1 26 0v14Z"/><path d="M430 176v-14a13 13 0 0 1 26 0v14Z"/><path d="M486 176v-14a13 13 0 0 1 26 0v14Z"/><path d="M542 176v-14a13 13 0 0 1 26 0v14Z"/><path d="M598 176v-14a13 13 0 0 1 26 0v14Z"/><path d="M654 176v-14a13 13 0 0 1 26 0v14Z"/><path d="M710 176v-14a13 13 0 0 1 26 0v14Z"/></g></mask>
+<linearGradient id="fade" x1="0" x2="1"><stop offset="0" stop-color="currentColor" stop-opacity="0"/><stop offset=".25" stop-color="currentColor" stop-opacity="1"/></linearGradient></defs>
+<g class="b1" fill="currentColor">
+<path d="M468 262V70h10V52l14-22 14 22v18h10v192Z"/><path d="M584 262V70h10V52l14-22 14 22v18h10v192Z"/>
+<path d="M516 262V112l34-26 34 26v150Z"/><path d="M528 110a22 22 0 0 1 44 0Z"/><rect x="546" y="60" width="8" height="24"/><rect x="540" y="66" width="20" height="4"/>
+<path d="M330 262V150h40l10-14h50l10 14h30v112Z"/><path d="M660 262V140h60l14 20h26v102Z"/>
+</g>
+<g class="b2" fill="url(#fade)" mask="url(#arc)"><rect x="180" y="148" width="580" height="114"/><rect x="176" y="140" width="588" height="10"/></g>
+</svg>
+      <div class="hero-grid">
+        <div class="intro">
+          <p class="eyebrow">Portal ciudadano</p>
+          <h2>Registro de identificación ciudadana</h2>
+                    <ul class="facts">
+            <li><svg class="i" viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg>Trámite gratuito</li>
+            <li><svg class="i" viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg>Se llena en unos 10 minutos</li>
+            <li><svg class="i" viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg>Recoge tu credencial con tu folio</li>
+          </ul>
+          <div class="dates">
+            <p><svg class="i" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Próximas fechas con citas disponibles</p>
+            <div class="chips" id="chips"></div>
+          </div>
+        </div>
+
+        <article class="gcard">
+          <div class="ch">
+            <div><h3>Nuevo registro</h3><p class="who">Ciudadanía · primera vez</p></div>
+            <div class="ico-wrap"><span class="ico"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/></svg></span>Mayores de 18</div>
+          </div>
+          <p style="color:var(--fg-2);font-size:.9rem;padding-left:6px">Ten a la mano tu acta de nacimiento, un comprobante de domicilio y un correo.</p>
+          <div class="spacer"></div>
+          <a class="btn btn-primary" href="#registro" data-go="registro">Iniciar registro <svg class="i" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></a>
+        </article>
+
+        <article class="gcard">
+          <div class="ch">
+            <div><h3>Acceso operativo</h3><p class="who">Personal de módulo y supervisión</p></div>
+            <div class="ico-wrap"><span class="ico"><svg class="i" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.5 3.3-5 6.5-5s5.7 1.5 6.5 5M17 11a3 3 0 100-6M21.5 19c-.4-2-1.6-3.4-3.5-4"/></svg></span>Con credenciales</div>
+          </div>
+          <p style="color:var(--fg-2);font-size:.9rem;padding-left:6px">Valida registros, emite credenciales y revisa la bitácora del módulo.</p>
+          <div class="spacer"></div>
+          <a class="btn btn-bright" href="#login" data-go="login">Entrar al panel <svg class="i" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></a>
+        </article>
+
+        <article class="gcard navi">
+          <h3><svg class="i" viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4z"/></svg>¿Qué trámite necesito?</h3>
+          <p>Marca lo que aplica a tu caso y te decimos qué hacer.</p>
+          <div class="opts">
+            <label for="nv-1"><input type="checkbox" id="nv-1" data-t="Nuevo registro"> Primera vez</label>
+            <label for="nv-2"><input type="checkbox" id="nv-2" data-t="Cambio de domicilio"> Me mudé</label>
+            <label for="nv-3"><input type="checkbox" id="nv-3" data-t="Reposición"> La perdí</label>
+            <label for="nv-4"><input type="checkbox" id="nv-4" data-t="Corrección de datos"> Hay un error</label>
+          </div>
+          <p class="res" id="nv-res" aria-live="polite">Marca al menos una opción.</p>
+          <button class="btn" type="button" id="nv-go">Ver mi trámite <svg class="i" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></button>
+        </article>
+
+        <article class="gcard glass">
+          <div class="ch"><div><h3>Consultar mi trámite</h3><p class="who">Revisa el avance o corrige tus datos</p></div></div>
+          <div class="seg2" role="group" aria-label="Buscar por">
+            <button type="button" aria-pressed="true" data-s2="Folio de trámite" data-ph="TR-2026-004817">Folio</button>
+            <button type="button" aria-pressed="false" data-s2="Correo electrónico" data-ph="tu.correo@ejemplo.mx">Correo</button>
+          </div>
+          <div class="field"><label for="cq" id="cq-l">Folio de trámite</label><input id="cq" class="mono" placeholder="TR-2026-004817"></div>
+          <div class="spacer"></div>
+          <button class="btn btn-dark" type="button">Consultar <svg class="i" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></button>
+        </article>
+
+        <article class="gcard glass">
+          <div class="ntabs" role="tablist" aria-label="Avisos y preguntas">
+            <button role="tab" aria-selected="true" data-nt="av">Avisos</button>
+            <button role="tab" aria-selected="false" data-nt="fq">Preguntas</button>
+          </div>
+          <ul class="nlist" data-np="av">
+            <li><a href="#portal"><span class="new">Nuevo</span>Mantenimiento programado del sistema el 3 de octubre</a><time>26/09/28</time></li>
+            <li><a href="#portal">Horario extendido en el Módulo 03 de Tlaquepaque</a><time>26/09/15</time></li>
+            <li><a href="#portal">Cambios en la verificación por correo electrónico</a><time>26/08/30</time></li>
+            <li><a href="#portal">Aviso de privacidad simplificado</a><time>26/08/01</time></li>
+          </ul>
+          <ul class="nlist" data-np="fq" hidden>
+            <li><a href="#portal">¿Cuánto tarda la validación de mi registro?</a><time>FAQ</time></li>
+            <li><a href="#portal">¿Qué hago si el sistema detecta un duplicado?</a><time>FAQ</time></li>
+            <li><a href="#portal">¿Puedo cambiar mi cita?</a><time>FAQ</time></li>
+            <li><a href="#portal">¿Por qué mi credencial dice MUESTRA?</a><time>FAQ</time></li>
+          </ul>
+        </article>
+      </div>
+    </div>
+
+    <div class="proc">
+      <h2 class="sec-title">Cómo es el registro</h2>
+      <ol class="flow">
+        <li><span class="bubble"><svg class="i" viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6z"/><path d="M9 12l2 2 4-4"/></svg></span><b>Paso 1</b><span>Aviso de privacidad y consentimiento<small>(correo electrónico)</small></span></li>
+        <li><span class="bubble"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2.5"/><path d="M5.5 16.5c.6-1.8 2-2.5 3.5-2.5s2.9.7 3.5 2.5M15 10h4M15 13h3"/></svg></span><b>Paso 2</b><span>Datos personales<small>(acta de nacimiento)</small></span></li>
+        <li><span class="bubble"><svg class="i" viewBox="0 0 24 24"><path d="M12 21s-7-6-7-11a7 7 0 0114 0c0 5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></span><b>Paso 3</b><span>Domicilio<small>(comprobante reciente)</small></span></li>
+        <li><span class="bubble"><svg class="i" viewBox="0 0 24 24"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg></span><b>Paso 4</b><span>Fotografía y firma<small>(en línea o en módulo)</small></span></li>
+        <li><span class="bubble"><svg class="i" viewBox="0 0 24 24"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"/><path d="M9 12l2 2 4-4"/></svg></span><b>Paso 5</b><span>Revisión y envío<small>(recibes tu folio)</small></span></li>
+      </ol>
+    </div>
+
+    <div class="vid">
+      <h2 class="sec-title">Guía en video</h2>
+      <div class="vids">
+        <a href="#portal"><span class="play"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M10 9l5 3-5 3z" fill="currentColor"/></svg></span><span>Conoce el trámite paso a paso.<b>Ver video (español)</b></span></a>
+        <a href="#portal"><span class="play"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M10 9l5 3-5 3z" fill="currentColor"/></svg></span><span>El mismo recorrido, interpretado.<b>Ver video (lengua de señas)</b></span></a>
+      </div>
+    </div>
+    <div class="rel">
+      <button class="arrow" type="button" data-rel="-1" aria-label="Sitios anteriores"><svg class="i" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
+      <div class="rel-track" id="rel">
+        <a href="#portal"><svg class="i" viewBox="0 0 24 24"><path d="M12 21s-7-6-7-11a7 7 0 0114 0c0 5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Módulos de atención</a>
+        <a href="#portal"><svg class="i" viewBox="0 0 24 24"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"/><path d="M9 12l2 2 4-4"/></svg>Consulta de vigencia</a>
+        <a href="#portal"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 015 .5c0 1.7-2.5 2-2.5 3.5M12 17h.01"/></svg>Centro de ayuda</a>
+        <a href="#portal"><svg class="i" viewBox="0 0 24 24"><path d="M4 19V5M4 19h16M8 15v-4M12 15V8M16 15v-6"/></svg>Datos abiertos</a>
+        <a href="#portal"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="5" r="2"/><path d="M5 9h14M12 9v12M8 21l4-7 4 7"/></svg>Accesibilidad</a>
+        <a href="#portal"><svg class="i" viewBox="0 0 24 24"><path d="M3 9l9-5 9 5-9 5z"/><path d="M7 11v5c3 2 7 2 10 0v-5"/></svg>Proyecto académico</a>
+      </div>
+      <button class="arrow" type="button" data-rel="1" aria-label="Sitios siguientes"><svg class="i" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
+    </div>
+    <footer class="pfoot">
+      <button class="totop" type="button" id="totop" aria-label="Volver arriba"><svg class="i" viewBox="0 0 24 24"><path d="M6 15l6-6 6 6"/></svg></button>
+      <div class="pf-row">
+        <ul class="pf-links"><li><a href="#portal">Términos de uso</a></li><li><a href="#portal" class="priv">Aviso de privacidad</a></li><li><a href="#portal" class="cont">Contacto</a></li></ul>
+        <div class="pf-sel">
+          <label for="pf-1" class="sr">Documentación</label><select id="pf-1"><option>Documentación</option><option>Plan maestro</option><option>Análisis legal</option><option>DSD / FEL</option></select>
+          <label for="pf-2" class="sr">Sitios del proyecto</label><select id="pf-2"><option>Sitios del proyecto</option><option>Portal ciudadano</option><option>Panel operativo</option></select>
+          <label for="pf-3" class="sr">Equipo</label><select id="pf-3"><option>Equipo</option><option>Equipo INE · Tlaquepaque</option></select>
+        </div>
+      </div>
+      <div class="pf-row">
+        <div class="brand"><span class="seal">SI</span><div><b>SIRCS</b><small>Proyecto académico</small></div></div>
+        <p class="pf-copy">© 2026 Equipo INE · Tlaquepaque. Proyecto escolar de simulación, sin relación con ninguna institución pública.</p>
+        <div class="pf-soc">
+          <a href="#portal" aria-label="Correo del equipo"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></a>
+          <a href="#portal" aria-label="Videos del proyecto"><svg class="i" viewBox="0 0 24 24"><path d="M8 6l10 6-10 6z" fill="currentColor"/></svg></a>
+          <a href="#portal" aria-label="Repositorio de código"><svg class="i" viewBox="0 0 24 24"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5"/></svg></a>
+        </div>
+      </div>
+    </footer>
+  </section>
+
+  <!-- ============ 1. LOGIN ============ -->
+  <section class="frame" role="tabpanel" id="login" aria-labelledby="t-login" hidden>
+    <div class="demo-bar">Simulación académica · Sin validez oficial</div>
+    <div class="login">
+      <div class="login-side">
+        <div class="brand"><span class="seal">SI</span><div><b>SIRCS</b><small>Sistema de Registro Ciudadano Simulado</small></div></div>
+        <div>
+          <h2>Tu identidad, registrada con orden y transparencia.</h2>
+          <p>Consulta el estado de tu registro, actualiza tu domicilio y descarga tu credencial de muestra desde un solo lugar.</p>
+        </div>
+        <ul>
+          <li><svg class="i" viewBox="0 0 24 24"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"/><path d="M9 12l2 2 4-4"/></svg>Detección de registros duplicados en tiempo real</li>
+          <li><svg class="i" viewBox="0 0 24 24"><path d="M4 5h16v14H4z"/><path d="M8 9h8M8 13h5"/></svg>Bitácora de cada cambio, con fecha y responsable</li>
+          <li><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/></svg>Accesos separados para ciudadanía y personal operativo</li>
+        </ul>
+        <svg class="guilloche" viewBox="0 0 200 200" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width=".6"><circle cx="100" cy="100" r="95"/><circle cx="100" cy="100" r="80"/><circle cx="100" cy="100" r="65"/><circle cx="100" cy="100" r="50"/><circle cx="100" cy="100" r="35"/><ellipse cx="100" cy="100" rx="95" ry="40"/><ellipse cx="100" cy="100" rx="40" ry="95"/><ellipse cx="100" cy="100" rx="95" ry="40" transform="rotate(45 100 100)"/><ellipse cx="100" cy="100" rx="95" ry="40" transform="rotate(-45 100 100)"/></g></svg>
+      </div>
+      <form class="login-form" id="f-login" novalidate>
+        <div>
+          <p class="eyebrow">Bienvenido</p>
+          <h3>Inicia sesión</h3>
+        </div>
+        <div class="seg" role="group" aria-label="Tipo de acceso">
+          <button type="button" aria-pressed="true" data-seg>Ciudadano</button>
+          <button type="button" aria-pressed="false" data-seg>Personal operativo</button>
+        </div>
+        <div class="field">
+          <label for="l-user">Correo electrónico</label>
+          <input id="l-user" type="email" autocomplete="username" value="mfernanda.ochoa@correo-demo.mx">
+        </div>
+        <div class="field">
+          <label for="l-pass">Contraseña</label>
+          <div class="pw">
+            <input id="l-pass" type="password" autocomplete="current-password" value="demo-demo-2026">
+            <button type="button" id="l-eye" aria-label="Mostrar contraseña"><svg class="i" viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></button>
+          </div>
+        </div>
+        <div class="row-between">
+          <label class="check" for="l-rem"><input id="l-rem" type="checkbox" checked> Mantener sesión en este equipo</label>
+          <a href="#login">Olvidé mi contraseña</a>
+        </div>
+        <button class="btn btn-primary" type="submit" id="l-submit">Entrar</button>
+        <p class="ok-msg" id="l-ok" hidden><svg class="i" viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg>Acceso correcto. Abriendo tu panel…</p>
+        <p class="foot-note">¿Aún no tienes registro? <a href="#registro" data-go="registro" style="color:var(--primary);font-weight:700">Inicia tu trámite en línea</a>. Puedes pegar tu contraseña o usar el gestor de contraseñas de tu navegador.</p>
+      </form>
+    </div>
+  </section>
+
+  <!-- ============ 2. REGISTRO ============ -->
+  <section class="frame" role="tabpanel" id="registro" aria-labelledby="t-registro" hidden>
+    <div class="demo-bar">Simulación académica · Sin validez oficial</div>
+    <div class="appbar">
+      <div class="brand"><span class="seal">SI</span><div><b>SIRCS</b><small>Portal ciudadano</small></div></div>
+      <div class="user-chip"><span>Folio de trámite <span class="mono">TR-2026-004817</span></span></div>
+    </div>
+    <div class="reg">
+      <aside class="steps" aria-label="Pasos del trámite">
+        <p class="eyebrow">Nuevo registro</p>
+        <ol>
+          <li class="now" aria-current="step"><span class="n">1</span>Datos personales</li>
+          <li><span class="n">2</span>Domicilio</li>
+          <li><span class="n">3</span>Fotografía y firma</li>
+          <li><span class="n">4</span>Revisión y envío</li>
+        </ol>
+      </aside>
+      <form class="reg-main" id="f-reg" novalidate>
+        <div style="display:grid;gap:10px">
+          <p class="eyebrow">Paso 1 de 4</p>
+          <h2>Datos personales</h2>
+          <div class="progress" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" aria-label="Avance del trámite"><span></span></div>
+          <p style="color:var(--fg-3);font-size:.92rem">Escribe tus datos tal como aparecen en tu acta de nacimiento. Los campos con * son obligatorios.</p>
+        </div>
+
+        <div class="grid3">
+          <div class="field"><label for="r-nom">Nombre(s) *</label><input id="r-nom" value="María Fernanda" autocomplete="given-name"></div>
+          <div class="field"><label for="r-ap1">Primer apellido *</label><input id="r-ap1" value="Ochoa" autocomplete="family-name"></div>
+          <div class="field"><label for="r-ap2">Segundo apellido</label><input id="r-ap2" value="Ruelas"></div>
+        </div>
+
+        <div class="grid3">
+          <div class="field"><label for="r-fn">Fecha de nacimiento *</label><input id="r-fn" type="date" value="2003-04-17"></div>
+          <div class="field"><label for="r-ent">Entidad de nacimiento *</label>
+            <select id="r-ent"><option>Jalisco</option><option>Aguascalientes</option><option>Colima</option><option>Michoacán</option><option>Nayarit</option><option>Zacatecas</option></select></div>
+          <div class="field"><span id="r-sx-l" style="font-weight:700;font-size:.9rem">Sexo *</span>
+            <div class="radio-row" role="radiogroup" aria-labelledby="r-sx-l">
+              <label class="radio" for="r-sx-m"><input type="radio" id="r-sx-m" name="sx" checked> Mujer</label>
+              <label class="radio" for="r-sx-h"><input type="radio" id="r-sx-h" name="sx"> Hombre</label>
+              <label class="radio" for="r-sx-x"><input type="radio" id="r-sx-x" name="sx"> No binario</label>
+            </div></div>
+        </div>
+
+        <div class="grid2">
+          <div class="field err" id="fld-curp">
+            <label for="r-curp">Clave de población (ficticia) *</label>
+            <input id="r-curp" class="mono" value="OORM030417MJLCLR" maxlength="18" aria-describedby="curp-err curp-hint" aria-invalid="true" style="text-transform:uppercase">
+            <p class="err-msg" id="curp-err"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg><span>La clave debe tener 18 caracteres. Te faltan 2.</span></p>
+            <p class="hint" id="curp-hint">En la simulación se genera a partir de tus datos. Puedes corregirla.</p>
+          </div>
+          <div class="field">
+            <label for="r-mail">Correo electrónico *</label>
+            <input id="r-mail" type="email" value="mfernanda.ochoa@correo-demo.mx" autocomplete="email">
+            <p class="hint">Te avisaremos aquí cuando tu registro sea validado.</p>
+          </div>
+        </div>
+
+        <div class="dup" role="status">
+          <svg class="i" viewBox="0 0 24 24"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"/><path d="M9 12l2 2 4-4"/></svg>
+          <div><b>Sin coincidencias en el registro</b><span>Revisamos nombre, fecha y entidad de nacimiento mientras escribías. No hay otra persona registrada con estos datos.</span></div>
+        </div>
+
+        <div class="form-actions">
+          <button class="btn btn-ghost" type="button">Guardar y continuar después</button>
+          <button class="btn btn-accent" type="submit">Continuar a domicilio <svg class="i" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- ============ 3. PANEL ============ -->
+  <section class="frame" role="tabpanel" id="panel" aria-labelledby="t-panel" hidden>
+    <div class="demo-bar">Simulación académica · Sin validez oficial</div>
+    <div class="panel">
+      <aside class="side">
+        <div class="brand"><span class="seal">SI</span><div><b>SIRCS</b><small>Panel operativo</small></div></div>
+        <div style="display:grid;gap:6px">
+          <p class="eyebrow">Operación</p>
+          <nav class="nav" aria-label="Secciones">
+            <a href="#panel" aria-current="page"><svg class="i" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg>Registro de personas</a>
+            <a href="#panel"><svg class="i" viewBox="0 0 24 24"><path d="M9 11l3 3 8-8"/><path d="M20 12v7H4V5h11"/></svg>Validaciones<span class="count">37</span></a>
+            <a href="#panel"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M7 10h4M7 14h7"/></svg>Credenciales</a>
+            <a href="#panel"><svg class="i" viewBox="0 0 24 24"><path d="M12 8v4l3 2"/><circle cx="12" cy="12" r="9"/></svg>Bitácora</a>
+            <a href="#panel"><svg class="i" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.5 3.3-5 6.5-5s5.7 1.5 6.5 5M17 11a3 3 0 100-6M21.5 19c-.4-2-1.6-3.4-3.5-4"/></svg>Usuarios y roles</a>
+          </nav>
+        </div>
+        <div class="user-chip" style="margin-top:auto;padding-inline:12px"><span class="avatar">JR</span><div><b style="display:block;color:var(--fg)">Jorge Ramírez</b><small style="color:var(--fg-3)">Operador · Módulo 03</small></div></div>
+      </aside>
+
+      <div class="main">
+        <div class="main-head">
+          <div><h2>Registro de personas</h2><p>Lunes 28 de septiembre de 2026 · Datos de muestra</p></div>
+          <button class="btn btn-primary"><svg class="i" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Nuevo registro</button>
+        </div>
+
+        <div class="kpis">
+          <div class="kpi"><span class="lbl">Registros activos</span><span class="val">12,486</span><span class="delta">+214 esta semana</span></div>
+          <div class="kpi"><span class="lbl">Pendientes de validar</span><span class="val">37</span><span class="delta">9 con más de 48 h</span></div>
+          <div class="kpi alert"><span class="lbl">Posibles duplicados</span><span class="val">4</span><span class="delta">Requieren revisión manual</span></div>
+          <div class="kpi"><span class="lbl">Credenciales emitidas hoy</span><span class="val">58</span>
+            <svg class="spark" viewBox="0 0 120 28" preserveAspectRatio="none" aria-label="Tendencia de 7 días: de 31 a 58"><path d="M0 22 L20 19 L40 21 L60 14 L80 15 L100 9 L120 5 L120 28 L0 28Z" fill="var(--primary-soft)"/><path d="M0 22 L20 19 L40 21 L60 14 L80 15 L100 9 L120 5" fill="none" stroke="var(--primary)" stroke-width="2"/><circle cx="118" cy="5.3" r="2.6" fill="var(--primary)"/></svg></div>
+        </div>
+
+        <div class="split">
+          <div style="display:grid;gap:12px;min-width:0">
+            <div class="toolbar">
+              <div class="search"><svg class="i" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg><label for="p-q" class="sr">Buscar</label><input id="p-q" placeholder="Buscar por nombre, folio o clave"></div>
+              <label for="p-st" class="sr">Estado</label>
+              <select id="p-st"><option>Todos los estados</option><option>Activo</option><option>Pendiente</option><option>Posible duplicado</option><option>Dado de baja</option></select>
+              <label for="p-mun" class="sr">Municipio</label>
+              <select id="p-mun"><option>Todos los municipios</option><option>San Pedro Tlaquepaque</option><option>Guadalajara</option><option>Zapopan</option><option>Tonalá</option></select>
+            </div>
+            <div class="bulk" id="bulk"><span id="bulk-n">2 seleccionados</span><button class="btn btn-sm btn-ghost" type="button">Validar</button><button class="btn btn-sm btn-ghost" type="button">Exportar</button></div>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th><input type="checkbox" id="p-all" aria-label="Seleccionar todos"></th><th>Persona</th><th>Folio</th><th>Municipio</th><th>Última actualización</th><th>Estado</th><th></th></tr></thead>
+                <tbody id="p-rows">
+                  <tr class="sel"><td><input type="checkbox" checked aria-label="Seleccionar a María Fernanda Ochoa Ruelas"></td><td><b>María Fernanda Ochoa Ruelas</b><small>22 años · Mujer</small></td><td class="mono">RG-26-004817</td><td>San Pedro Tlaquepaque</td><td class="num">28/09/2026 16:42</td><td><span class="pill p-warn">Pendiente</span></td><td><button class="btn btn-sm btn-ghost">Revisar</button></td></tr>
+                  <tr class="sel"><td><input type="checkbox" checked aria-label="Seleccionar a Luis Ángel Cárdenas Íñiguez"></td><td><b>Luis Ángel Cárdenas Íñiguez</b><small>34 años · Hombre</small></td><td class="mono">RG-26-004809</td><td>Tonalá</td><td class="num">28/09/2026 15:10</td><td><span class="pill p-bad">Posible duplicado</span></td><td><button class="btn btn-sm btn-ghost">Comparar</button></td></tr>
+                  <tr><td><input type="checkbox" aria-label="Seleccionar a Ximena Guadalupe Robles Plascencia"></td><td><b>Ximena Guadalupe Robles Plascencia</b><small>19 años · Mujer</small></td><td class="mono">RG-26-004795</td><td>Zapopan</td><td class="num">28/09/2026 12:03</td><td><span class="pill p-ok">Activo</span></td><td><button class="btn btn-sm btn-ghost">Ver</button></td></tr>
+                  <tr><td><input type="checkbox" aria-label="Seleccionar a Ramón Esteban Villaseñor Gómez"></td><td><b>Ramón Esteban Villaseñor Gómez</b><small>61 años · Hombre</small></td><td class="mono">RG-26-004771</td><td>Guadalajara</td><td class="num">27/09/2026 18:55</td><td><span class="pill p-info">Credencial emitida</span></td><td><button class="btn btn-sm btn-ghost">Ver</button></td></tr>
+                  <tr><td><input type="checkbox" aria-label="Seleccionar a Sofía Anahí Delgado Barajas"></td><td><b>Sofía Anahí Delgado Barajas</b><small>27 años · Mujer</small></td><td class="mono">RG-26-004760</td><td>San Pedro Tlaquepaque</td><td class="num">27/09/2026 11:20</td><td><span class="pill p-ok">Activo</span></td><td><button class="btn btn-sm btn-ghost">Ver</button></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="tbl-foot"><span>Mostrando 1–5 de 12,486 registros</span><div class="pager"><button aria-label="Anterior">‹</button><button aria-current="page">1</button><button>2</button><button>3</button><button aria-label="Siguiente">›</button></div></div>
+          </div>
+
+          <aside class="log">
+            <h3>Bitácora reciente</h3>
+            <ol>
+              <li style="--dot:var(--danger)"><div><p><b>Alerta de duplicado</b> en RG-26-004809 · coincide 94% con RG-24-011302</p><time>15:10 · sistema</time></div></li>
+              <li style="--dot:var(--ok)"><div><p><b>Credencial emitida</b> para RG-26-004771</p><time>14:37 · J. Ramírez</time></div></li>
+              <li style="--dot:var(--primary)"><div><p><b>Domicilio actualizado</b> en RG-25-008654</p><time>13:02 · A. Navarro</time></div></li>
+              <li style="--dot:var(--warn)"><div><p><b>Rol modificado</b>: C. Peña pasó a Supervisor</p><time>10:48 · admin</time></div></li>
+            </ol>
+            <a href="#panel" class="btn btn-sm btn-ghost">Ver bitácora completa</a>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 4. CREDENCIAL ============ -->
+  <section class="frame" role="tabpanel" id="credencial" aria-labelledby="t-credencial" hidden>
+    <div class="demo-bar">Simulación académica · Sin validez oficial</div>
+    <div class="cred-stage">
+      <div class="cred-head">
+        <div><p class="eyebrow">Diseño propio · 85.6 × 54 mm</p><h2>Credencial digital simulada</h2>
+        <p>Formato tarjeta estándar. La marca MUESTRA y la leyenda del reverso van siempre impresas; no se pueden desactivar.</p></div>
+        <button class="btn btn-primary" type="button"><svg class="i" viewBox="0 0 24 24"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Descargar PDF de muestra</button>
+      </div>
+      <div class="cards">
+        <div class="cardcap">
+          <p class="eyebrow">Anverso · pasa el mouse encima</p>
+          <div class="fid" role="img" aria-label="Anverso de la credencial simulada de María Fernanda Ochoa Ruelas">
+            <canvas class="pattern" aria-hidden="true"></canvas><div class="holo"></div><div class="shine"></div><div class="tri"></div>
+            <div class="fin">
+              <div class="f-top">
+                <div class="f-brand"><span class="f-seal">SI</span><div><b>SIRCS</b><small>Identidad digital simulada</small></div></div>
+                <span class="nfc"><svg viewBox="0 0 24 24"><path d="M8.5 7.5a6.5 6.5 0 010 9M12 5a10 10 0 010 14M15.5 3a13 13 0 010 18M5 10a2.5 2.5 0 010 4"/></svg>NFC</span>
+              </div>
+              <div class="f-body">
+                <div class="f-photo"><svg viewBox="0 0 60 70" aria-hidden="true"><circle cx="30" cy="24" r="13"/><path d="M4 70c2-16 13-24 26-24s24 8 26 24z"/></svg></div>
+                <div class="f-data">
+                  <div class="f-name"><small>Nombre</small><b>María Fernanda</b><span>Ochoa Ruelas</span></div>
+                  <dl>
+                    <div><dt>Folio</dt><dd>RG-26-004817</dd></div>
+                    <div><dt>Nacimiento</dt><dd>17·04·2003</dd></div>
+                    <div><dt>Sexo</dt><dd>M</dd></div>
+                    <div><dt>Vigencia</dt><dd class="vig">2026–2036</dd></div>
+                  </dl>
+                </div>
+                <div class="f-ghost" aria-hidden="true"><svg viewBox="0 0 60 70" aria-hidden="true"><circle cx="30" cy="24" r="13"/><path d="M4 70c2-16 13-24 26-24s24 8 26 24z"/></svg></div>
+              </div>
+              <div class="f-micro" aria-hidden="true">SIRCS · SIMULACIÓN ACADÉMICA · SIN VALIDEZ OFICIAL · SIRCS · SIMULACIÓN ACADÉMICA · SIN VALIDEZ OFICIAL · SIRCS · SIMULACIÓN ACADÉMICA · SIN VALIDEZ OFICIAL · SIRCS · SIMULACIÓN ACADÉMICA · SIN VALIDEZ OFICIAL · </div>
+            </div>
+            <div class="wm" aria-hidden="true"><span>MUESTRA</span></div>
+          </div>
+        </div>
+        <div class="cardcap">
+          <p class="eyebrow">Reverso</p>
+          <div class="fid" role="img" aria-label="Reverso de la credencial simulada con código QR de verificación">
+            <canvas class="pattern" aria-hidden="true"></canvas><div class="holo"></div><div class="shine"></div><div class="tri"></div>
+            <div class="fin">
+              <div class="chipband">
+                <div class="f-brand"><div><b>Verificación</b><small>Escanea para consultar vigencia</small></div></div>
+                <span class="chip-ic" aria-hidden="true"></span>
+              </div>
+              <div class="b-body">
+                <div class="b-qr"><canvas id="qr" width="25" height="25" aria-hidden="true"></canvas></div>
+                <div class="b-txt">
+                  <span class="b-lbl">Clave ficticia</span>
+                  <span class="mono">OORM030417MJLCLR07</span>
+                  <p>C. Independencia 214, Centro, San Pedro Tlaquepaque, Jal.<br>Emitida en Módulo 03 · 28·09·2026</p>
+                  <span class="b-sig">M. F. Ochoa</span>
+                </div>
+              </div>
+              <p class="b-disc">Simulación académica · Sin validez oficial</p>
+            </div>
+            <div class="wm" aria-hidden="true"><span>MUESTRA</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="notes">
+        <div class="note"><b>Seguridad simulada</b><p>Holograma que cambia con el movimiento, imagen fantasma de la foto, microtexto y chip. Son efectos visuales para la demostración.</p></div>
+        <div class="note"><b>Nomenclatura segura</b><p>“Folio de registro” y “clave ficticia” en lugar de términos electorales, como acordamos en el análisis legal.</p></div>
+        <div class="note"><b>Identidad propia</b><p>Franja verde, blanco y rojo, pero sin escudo ni composición de ninguna credencial oficial. La marca MUESTRA no se puede quitar.</p></div>
+        <div class="note" hidden><b>QR de verificación</b><p>En el sistema real apuntará a la consulta de vigencia del propio SIRCS. Aquí es un patrón decorativo.</p></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+(function(){
+  // Pestañas con deep link (#login, #registro, #panel, #credencial)
+  var tabs=[].slice.call(document.querySelectorAll('.tab'));
+  function show(id){
+    var found=tabs.some(function(t){return t.getAttribute('aria-controls')===id});
+    if(!found) id='portal';
+    tabs.forEach(function(t){
+      var on=t.getAttribute('aria-controls')===id;
+      t.setAttribute('aria-selected',on);
+      t.tabIndex=on?0:-1;
+      document.getElementById(t.getAttribute('aria-controls')).hidden=!on;
+    });
+    if(id==='credencial') drawCards();
+  }
+  tabs.forEach(function(t,i){
+    t.addEventListener('click',function(){show(t.getAttribute('aria-controls'));try{history.replaceState(null,'','#'+t.getAttribute('aria-controls'))}catch(e){}});
+    t.addEventListener('keydown',function(e){
+      if(e.key!=='ArrowRight'&&e.key!=='ArrowLeft')return;
+      var n=tabs[(i+(e.key==='ArrowRight'?1:tabs.length-1))%tabs.length];n.focus();n.click();
+    });
+  });
+  document.querySelectorAll('[data-go]').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();show(a.dataset.go);window.scrollTo({top:0})})});
+  show((location.hash||'').slice(1));
+
+  // Login: segmento, mostrar contraseña, envío simulado
+  var segs=[].slice.call(document.querySelectorAll('[data-seg]'));
+  segs.forEach(function(b){b.addEventListener('click',function(){segs.forEach(function(x){x.setAttribute('aria-pressed',x===b)})})});
+  var eye=document.getElementById('l-eye'),pw=document.getElementById('l-pass');
+  eye.addEventListener('click',function(){var s=pw.type==='password';pw.type=s?'text':'password';eye.setAttribute('aria-label',s?'Ocultar contraseña':'Mostrar contraseña')});
+  document.getElementById('f-login').addEventListener('submit',function(e){
+    e.preventDefault();var b=document.getElementById('l-submit');b.textContent='Verificando…';b.disabled=true;
+    setTimeout(function(){b.textContent='Entrar';b.disabled=false;document.getElementById('l-ok').hidden=false},700);
+  });
+
+  // Registro: validación de la clave al salir del campo
+  var curp=document.getElementById('r-curp'),fld=document.getElementById('fld-curp'),msg=document.querySelector('#curp-err span');
+  function checkCurp(){
+    var v=curp.value.trim().toUpperCase(),left=18-v.length;
+    var bad=left!==0;
+    fld.classList.toggle('err',bad);curp.setAttribute('aria-invalid',bad);
+    document.getElementById('curp-err').hidden=!bad;
+    if(bad) msg.textContent=left>0?('La clave debe tener 18 caracteres. Te faltan '+left+'.'):'La clave debe tener 18 caracteres. Sobran '+(-left)+'.';
+  }
+  curp.addEventListener('blur',checkCurp);
+  document.getElementById('f-reg').addEventListener('submit',function(e){e.preventDefault();checkCurp();if(fld.classList.contains('err'))curp.focus()});
+
+  // Panel: selección masiva
+  var all=document.getElementById('p-all'),rows=[].slice.call(document.querySelectorAll('#p-rows input[type=checkbox]'));
+  function sync(){var n=rows.filter(function(r){return r.checked}).length;
+    rows.forEach(function(r){r.closest('tr').classList.toggle('sel',r.checked)});
+    document.getElementById('bulk').hidden=n===0;document.getElementById('bulk-n').textContent=n+(n===1?' seleccionado':' seleccionados');
+    all.checked=n===rows.length;all.indeterminate=n>0&&n<rows.length;}
+  rows.forEach(function(r){r.addEventListener('change',sync)});
+  all.addEventListener('change',function(){rows.forEach(function(r){r.checked=all.checked});sync()});
+  sync();
+
+
+  // Portal: reloj, fechas, asistente, consulta, avisos
+  var clk=document.getElementById('clk');
+  function tick(){try{var d=new Date();var f=new Intl.DateTimeFormat('es-MX',{timeZone:'America/Mexico_City',day:'2-digit',month:'2-digit',year:'numeric'}).format(d);var h=new Intl.DateTimeFormat('es-MX',{timeZone:'America/Mexico_City',hour:'2-digit',minute:'2-digit',hour12:false}).format(d);clk.textContent=f+' · '+h}catch(e){}}
+  tick();setInterval(tick,20000);
+  (function(){var M=['ENE','FEB','MAR','ABR','MAY','JUN','JUL','AGO','SEP','OCT','NOV','DIC'],D=['dom','lun','mar','mié','jue','vie','sáb'];var d=new Date(),n=0,h='';
+    while(n<3){d.setDate(d.getDate()+1);if(d.getDay()===0)continue;h+='<span class="chip"><span>'+M[d.getMonth()]+'</span><b>'+d.getDate()+'</b><small>'+D[d.getDay()]+'</small></span>';n++}
+    document.getElementById('chips').innerHTML=h})();
+  var nv=[].slice.call(document.querySelectorAll('.navi input')),res=document.getElementById('nv-res');
+  document.getElementById('nv-go').addEventListener('click',function(){var t=nv.filter(function(i){return i.checked}).map(function(i){return i.dataset.t});
+    res.textContent=t.length?('Tu trámite: '+t.join(' + ')+'. Puedes hacerlo en línea.'):'Marca al menos una opción.'});
+  var s2=[].slice.call(document.querySelectorAll('[data-s2]'));
+  s2.forEach(function(b){b.addEventListener('click',function(){s2.forEach(function(x){x.setAttribute('aria-pressed',x===b)});document.getElementById('cq-l').textContent=b.dataset.s2;var q=document.getElementById('cq');q.placeholder=b.dataset.ph;q.classList.toggle('mono',b.dataset.s2.indexOf('Folio')===0);q.type=b.dataset.s2.indexOf('Correo')===0?'email':'text'})});
+  var nt=[].slice.call(document.querySelectorAll('[data-nt]'));
+  nt.forEach(function(b){b.addEventListener('click',function(){nt.forEach(function(x){x.setAttribute('aria-selected',x===b)});document.querySelectorAll('[data-np]').forEach(function(u){u.hidden=u.dataset.np!==b.dataset.nt})})});
+
+
+  // Accesibilidad: tamaño de texto y alto contraste
+  var sizes=['100%','112.5%','125%'],lab=['A','A+','A++'],si=0;
+  document.getElementById('a-text').addEventListener('click',function(){si=(si+1)%3;document.documentElement.style.fontSize=sizes[si];document.getElementById('a-text-v').textContent=lab[si];this.setAttribute('aria-pressed',si>0)});
+  document.getElementById('a-hc').addEventListener('click',function(){var on=document.documentElement.classList.toggle('hc');this.setAttribute('aria-pressed',on)});
+  // Menú desplegable
+  var ph=document.getElementById('phead'),pn=document.getElementById('pnav'),mt;
+  function megaOn(){clearTimeout(mt);var h=0;ph.querySelectorAll('.sub').forEach(function(u){u.style.display='grid';h=Math.max(h,u.offsetHeight);u.style.display=''});ph.style.setProperty('--mh',h+'px');ph.classList.add('mega')}
+  function megaOff(){mt=setTimeout(function(){ph.classList.remove('mega')},120)}
+  pn.addEventListener('mouseenter',megaOn);ph.addEventListener('mouseleave',megaOff);
+  pn.addEventListener('focusin',megaOn);pn.addEventListener('focusout',function(e){if(!pn.contains(e.relatedTarget))megaOff()});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')ph.classList.remove('mega')});
+  // Carrusel de sitios y volver arriba
+  document.querySelectorAll('[data-rel]').forEach(function(b){b.addEventListener('click',function(){document.getElementById('rel').scrollBy({left:+b.dataset.rel*200,behavior:'smooth'})})});
+  document.getElementById('totop').addEventListener('click',function(){document.getElementById('portal').scrollIntoView({behavior:'smooth'})});
+  // Credencial: inclinación y holograma
+  var rm=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.querySelectorAll('.fid').forEach(function(c){
+    c.addEventListener('pointermove',function(e){var r=c.getBoundingClientRect(),x=(e.clientX-r.left)/r.width,y=(e.clientY-r.top)/r.height;
+      c.style.setProperty('--mx',(x*100)+'%');c.style.setProperty('--my',(y*100)+'%');c.style.setProperty('--sx',(100-x*100)+'%');
+      if(!rm){c.style.setProperty('--ry',((x-.5)*14)+'deg');c.style.setProperty('--rx',((.5-y)*10)+'deg')}});
+    c.addEventListener('pointerleave',function(){c.style.setProperty('--rx','0deg');c.style.setProperty('--ry','0deg')});
+  });
+
+  // Credencial: trama tipo guilloché y QR decorativo (determinístico)
+  var drawn=false;
+  function drawCards(){
+    if(drawn) return; drawn=true;
+    document.querySelectorAll('canvas.pattern').forEach(function(c){
+      var w=c.clientWidth||480,h=c.clientHeight||300,d=2;c.width=w*d;c.height=h*d;var g=c.getContext('2d');g.scale(d,d);
+      g.strokeStyle='rgba(255,255,255,.55)';g.lineWidth=.5;
+      for(var k=0;k<18;k++){g.beginPath();for(var x=0;x<=w;x+=4){var y=h*.55+Math.sin(x/38+k*.35)*(18+k*2)+Math.cos(x/91+k)*10-k*6;x?g.lineTo(x,y):g.moveTo(x,y)}g.stroke()}
+      var cx=w*.86,cy=h*.2;for(var r=6;r<90;r+=7){g.beginPath();g.ellipse(cx,cy,r,r*.62,r/40,0,Math.PI*2);g.stroke()}
+    });
+    var q=document.getElementById('qr'),x=q.getContext('2d'),n=25,s=20260928;
+    function rnd(){s=(s*1103515245+12345)&0x7fffffff;return s/0x7fffffff}
+    x.fillStyle='#fff';x.fillRect(0,0,n,n);x.fillStyle='#062117';
+    for(var i=0;i<n;i++)for(var j=0;j<n;j++){if(rnd()>.52)x.fillRect(i,j,1,1)}
+    [[0,0],[n-7,0],[0,n-7]].forEach(function(p){x.fillStyle='#fff';x.fillRect(p[0],p[1],8>n-p[0]?7:8,8);x.fillStyle='#062117';x.fillRect(p[0],p[1],7,7);x.fillStyle='#fff';x.fillRect(p[0]+1,p[1]+1,5,5);x.fillStyle='#062117';x.fillRect(p[0]+2,p[1]+2,3,3)});
+  }
+  window.addEventListener('resize',function(){if(!document.getElementById('credencial').hidden){drawn=false;drawCards()}});
+})();
+</script>

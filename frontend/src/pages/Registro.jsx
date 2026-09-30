@@ -182,7 +182,7 @@ export default function Registro() {
                 <div className="field">
                   <span id="r-sexo-l" className="label">Sexo *</span>
                   <div className="radio-row" role="radiogroup" aria-labelledby="r-sexo-l">
-                    {['Mujer', 'Hombre', 'No binario'].map((x, i) => (
+                    {['Mujer', 'Hombre'].map((x, i) => (
                       <label className="radio" key={x} htmlFor={`r-sx-${i}`}><input type="radio" id={`r-sx-${i}`} name="sexo" value={x} checked={d.sexo === x} onChange={set('sexo')} /> {x}</label>
                     ))}
                   </div>

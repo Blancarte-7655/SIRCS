@@ -33,6 +33,10 @@ Elegido entre tres propuestas. **Autoridad, confianza y estabilidad** sin verse 
 
 Encabezado editorial (título, datos clave en columnas y credencial en marco tipo documento) → servicios en línea → pasos del registro → franja de garantías → guía en video → pie institucional en columnas.
 
+## Menú
+
+Cada sección del menú principal abre **solo su propio menú desplegable** (con descripción breve de cada opción) al pasar el cursor o enfocarla con teclado; se cierra con Escape. En pantallas de menos de 1100 px se usa el menú de celular.
+
 ## Movimiento (`styles/motion.css`)
 
 Solo 3 tipos, discretos: aparición suave al cargar y al entrar en pantalla (`.reveal`, `hooks/useReveal.js`); microinteracciones en botones y tarjetas; transiciones entre páginas, pestañas y pasos. Sin parallax ni movimiento continuo. Todo se apaga con "reducir movimiento".
@@ -45,6 +49,7 @@ Elementos de seguridad (todos decorativos en esta etapa):
 - **Anverso:** trama guilloche, microtexto, marca de agua **MUESTRA**, QR pequeño, imagen fantasma, NFC y sello con el **glifo maya Kin** (sol) sobre la foto.
 - **Reverso:** QR de verificación, QR secundario, sello Kin, código de barras (en la versión real: PDF417 con datos firmados), firma y chip.
 - **Datos del reverso:** clave de registro, RFC, domicilio, C.P., municipio, estado, distrito, sección, localidad, año de registro y módulo de emisión.
+- **Movimiento:** entra girando suavemente al cargar; con mouse se inclina siguiendo el cursor; en celular se inclina un poco al hacer scroll.
 - **Brillo holográfico** solo en 3 zonas (sello, franja lateral e imagen fantasma): sigue al cursor al pasar por encima; en celular recorre esas zonas lentamente.
 
 ## Accesibilidad (obligatorio)

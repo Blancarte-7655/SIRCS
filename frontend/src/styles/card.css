@@ -76,3 +76,11 @@
 .id-card .c-qr-sm canvas { width: 100%; aspect-ratio: 1; image-rendering: pixelated; display: block; }
 .id-card .c-seal-back { width: 7.4cqw; flex: none; }
 .id-card .c-sign { font-size: 3.8cqw; }
+
+/* ---------- Movimiento ---------- */
+.doc-card, .card-cap { perspective: 1100px; }
+.id-card { transform-style: preserve-3d; transition: transform .6s var(--ease), box-shadow .6s var(--ease); animation: cardIn .9s var(--ease) both; }
+.id-card.tilting { transition: transform .12s linear, box-shadow .3s; box-shadow: 0 34px 50px -26px rgba(20, 20, 30, .55), inset 0 0 0 1px rgba(15, 59, 74, .14); }
+.card-cap:nth-child(2) .id-card { animation-delay: .12s; }
+@keyframes cardIn { from { opacity: 0; rotate: y -24deg; translate: 0 10px; } to { opacity: 1; rotate: y 0deg; translate: 0 0; } }
+@media (prefers-reduced-motion: reduce) { .id-card { animation: none; transition: none; } }

@@ -10,24 +10,24 @@ import LogoMark from './LogoMark.jsx'
 // Menú principal. Cada sección abre sus subsecciones en el panel desplegable.
 const MENU = [
   { label: 'Guía', to: '/', match: ['/'], items: [
-    { label: 'Guía del trámite', to: '/' },
-    { label: '¿Quién debe registrarse?', to: '/' },
-    { label: 'Cómo es el registro', to: '/#pasos' },
-    { label: 'Asistente de trámite', to: '/#asistente' },
+    { label: 'Guía del trámite', nota: 'Qué es y para qué sirve', to: '/' },
+    { label: '¿Quién debe registrarse?', nota: 'Requisitos por edad y situación', to: '/' },
+    { label: 'Cómo es el registro', nota: 'Los cinco pasos', to: '/#pasos' },
+    { label: 'Asistente de trámite', nota: 'Descubre qué trámite necesitas', to: '/#asistente' },
   ] },
   { label: 'Registro', to: '/registro', match: ['/registro'], items: [
-    { label: 'Nuevo registro', to: '/registro' },
-    { label: 'Agendar cita en módulo', to: '/registro' },
-    { label: 'Requisitos y documentos', to: '/' },
+    { label: 'Nuevo registro', nota: 'Primera vez o reposición', to: '/registro' },
+    { label: 'Agendar cita en módulo', nota: 'Elige día y horario', to: '/registro' },
+    { label: 'Requisitos y documentos', nota: 'Qué debes tener a la mano', to: '/' },
   ] },
   { label: 'Consulta', to: '/credencial', match: ['/credencial'], items: [
-    { label: 'Consultar y corregir', to: '/#consulta' },
-    { label: 'Mi credencial', to: '/credencial' },
+    { label: 'Consultar y corregir', nota: 'Con tu folio o correo', to: '/#consulta' },
+    { label: 'Mi credencial', nota: 'Ver, descargar y verificar', to: '/credencial' },
   ] },
   { label: 'Avisos', to: '/#avisos', match: [], items: [
-    { label: 'Avisos', to: '/#avisos' },
-    { label: 'Preguntas frecuentes', to: '/#avisos' },
-    { label: 'Módulos de atención', to: '/' },
+    { label: 'Avisos', nota: 'Novedades del servicio', to: '/#avisos' },
+    { label: 'Preguntas frecuentes', nota: 'Respuestas rápidas', to: '/#avisos' },
+    { label: 'Módulos de atención', nota: 'Direcciones y horarios', to: '/' },
   ] },
 ]
 
@@ -38,8 +38,7 @@ export default function TopBar() {
   const clock = useClock()
   const { isDark, toggleTheme } = useTheme()
   const { pathname } = useLocation()
-  const [mega, setMega] = useState(false)
-  const [megaHeight, setMegaHeight] = useState(210)
+  const [open, setOpen] = useState(-1) // menú desplegable abierto (índice) o -1
   const [drawer, setDrawer] = useState(false)
 
   // Cierra el menú de celular al cambiar de página
@@ -50,25 +49,12 @@ export default function TopBar() {
     document.addEventListener('keydown', onKey)
     return () => document.removeEventListener('keydown', onKey)
   }, [drawer])
-  const navRef = useRef(null)
   const closeTimer = useRef(null)
+  useEffect(() => { setOpen(-1) }, [pathname])
 
-  function openMega() {
-    clearTimeout(closeTimer.current)
-    // Mide la columna más alta para que el fondo blanco las cubra todas
-    const subs = navRef.current?.querySelectorAll('.submenu') ?? []
-    let h = 0
-    subs.forEach((ul) => {
-      ul.style.display = 'grid'
-      h = Math.max(h, ul.offsetHeight)
-      ul.style.display = ''
-    })
-    if (h) setMegaHeight(h)
-    setMega(true)
-  }
-  function closeMega() {
-    closeTimer.current = setTimeout(() => setMega(false), 120)
-  }
+  // Abre el menú de la sección al pasar el cursor o al enfocarla con teclado
+  const openAt = (i) => { clearTimeout(closeTimer.current); setOpen(i) }
+  const closeSoon = () => { clearTimeout(closeTimer.current); closeTimer.current = setTimeout(() => setOpen(-1), 160) }
 
   return (
     <div className="topfix">
@@ -99,42 +85,36 @@ export default function TopBar() {
         </div>
       </div>
 
-      <header
-        className={`site-header${mega ? ' mega-open' : ''}`}
-        style={{ '--mega-h': `${megaHeight}px` }}
-        onMouseLeave={closeMega}
-        onKeyDown={(e) => e.key === 'Escape' && setMega(false)}
-      >
+      <header className="site-header" onKeyDown={(e) => e.key === 'Escape' && setOpen(-1)}>
         <div className="container">
           <Link to="/" className="brand" aria-label="SIS, inicio">
             <LogoMark />
             <span><b>SIS</b><small>Sistema de Identidad Simulado</small></span>
           </Link>
 
-          <nav
-            className="main-nav"
-            aria-label="Principal"
-            ref={navRef}
-            onMouseEnter={openMega}
-            onFocus={openMega}
-            onBlur={(e) => { if (!navRef.current.contains(e.relatedTarget)) closeMega() }}
-          >
-            {MENU.map((sec) => (
-              <div className="nav-item" key={sec.label}>
-                <Link
-                  to={sec.to}
-                  className={sec.match.includes(pathname) ? 'active' : undefined}
-                  aria-current={sec.match.includes(pathname) ? 'page' : undefined}
+          <nav className="main-nav" aria-label="Principal">
+            {MENU.map((sec, i) => {
+              const activo = sec.match.includes(pathname)
+              return (
+                <div
+                  className={`nav-item${open === i ? ' open' : ''}`} key={sec.label}
+                  onMouseEnter={() => openAt(i)} onMouseLeave={closeSoon}
+                  onFocus={() => openAt(i)}
+                  onBlur={(e) => { if (!e.currentTarget.contains(e.relatedTarget)) closeSoon() }}
                 >
-                  {sec.label}
-                </Link>
-                <ul className="submenu">
-                  {sec.items.map((it) => (
-                    <li key={it.label}><Link to={it.to} onClick={() => setMega(false)}>{it.label}</Link></li>
-                  ))}
-                </ul>
-              </div>
-            ))}
+                  <Link to={sec.to} className={activo ? 'active' : undefined} aria-current={activo ? 'page' : undefined} aria-haspopup="true" aria-expanded={open === i}>
+                    {sec.label}<Icon name="chevronDown" />
+                  </Link>
+                  <div className="dropdown">
+                    <ul>
+                      {sec.items.map((it) => (
+                        <li key={it.label}><Link to={it.to} onClick={() => setOpen(-1)}><b>{it.label}</b><small>{it.nota}</small></Link></li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              )
+            })}
           </nav>
 
           <div className="clock">
@@ -149,7 +129,6 @@ export default function TopBar() {
             <Icon name={drawer ? 'close' : 'menu'} /><span>Menú</span>
           </button>
         </div>
-        <div className="mega-bg" aria-hidden="true" />
 
         {/* Menú de celular: todas las secciones con sus subsecciones */}
         <nav id="menu-movil" className={`drawer${drawer ? ' open' : ''}`} aria-label="Menú" hidden={!drawer}>

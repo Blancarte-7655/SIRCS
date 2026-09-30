@@ -132,8 +132,8 @@ td.nowrap { white-space: nowrap; }
   position: relative; width: 100%; max-width: 480px; aspect-ratio: 85.6 / 54; border-radius: 18px; overflow: hidden;
   color: #13202A; container-type: inline-size; background: var(--card-paper);
   box-shadow: 0 24px 44px -24px rgba(8, 30, 40, .55), inset 0 0 0 1px rgba(15, 59, 74, .14);
-  transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
-  transition: transform .3s ease;
+  transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+
 }
 .id-card canvas.pattern { position: absolute; inset: 0; width: 100%; height: 100%; opacity: .5; }
 /* Destellos verde y rojo en las esquinas inferiores */
@@ -277,3 +277,14 @@ td.nowrap { white-space: nowrap; }
 .swatch i { width: 28px; height: 28px; border-radius: 2px; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .25); }
 .swatch:has(input:checked) { border-color: var(--fg); color: var(--fg); box-shadow: 0 0 0 1px var(--fg); }
 .swatch:has(input:focus-visible) { outline: 3px solid var(--ring); outline-offset: 2px; }
+
+/* Celular pequeño: en los pasos del registro solo se lee el nombre del paso actual */
+@media (max-width: 480px) {
+  .reg-steps li:not(.current) .step-btn { font-size: 0; gap: 0; justify-content: center; }
+  .reg-steps { padding: 20px 14px; }
+  .reg-steps ol { display: flex; gap: 4px; overflow: visible; }
+  .reg-steps li { padding: 8px 6px; flex: none; }
+  .reg-steps li.current { flex: 1 1 auto; flex-direction: row; text-align: left; font-size: .85rem; }
+  .reg-steps li.current .step-btn { gap: 10px; }
+  .reg-steps .n { font-size: .8rem; }
+}

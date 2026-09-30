@@ -97,34 +97,55 @@ function Seal({ className = '' }) {
   )
 }
 
-// Inclinación discreta y holograma que siguen al puntero (solo con mouse; sin movimiento automático)
+// Movimiento de la tarjeta:
+// - con mouse: se inclina siguiendo el cursor y el brillo holográfico se desplaza;
+// - en celular: se inclina suavemente según su posición al hacer scroll.
+// Todo se desactiva con "reducir movimiento".
 function useTilt(ref) {
   useEffect(() => {
     const el = ref.current
     if (!el) return
     const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
+    const set = (k, v) => el.style.setProperty(k, v)
     const move = (e) => {
       const r = el.getBoundingClientRect()
-      const x = (e.clientX - r.left) / r.width
-      const y = (e.clientY - r.top) / r.height
-      el.style.setProperty('--mx', `${x * 100}%`)
-      el.style.setProperty('--my', `${y * 100}%`)
-      el.style.setProperty('--sx', `${100 - x * 100}%`)
+      const x = Math.min(1, Math.max(0, (e.clientX - r.left) / r.width))
+      const y = Math.min(1, Math.max(0, (e.clientY - r.top) / r.height))
+      set('--mx', `${x * 100}%`)
+      set('--my', `${y * 100}%`)
       if (!reduce && e.pointerType === 'mouse') {
-        el.style.setProperty('--ry', `${(x - 0.5) * 6}deg`)
-        el.style.setProperty('--rx', `${(0.5 - y) * 4}deg`)
+        el.classList.add('tilting')
+        set('--ry', `${(x - 0.5) * 12}deg`)
+        set('--rx', `${(0.5 - y) * 9}deg`)
       }
     }
     const leave = () => {
-      el.style.setProperty('--rx', '0deg')
-      el.style.setProperty('--ry', '0deg')
+      el.classList.remove('tilting')
+      set('--rx', '0deg')
+      set('--ry', '0deg')
     }
     el.addEventListener('pointermove', move)
     el.addEventListener('pointerleave', leave)
 
+    let frame = 0
+    const touch = window.matchMedia?.('(hover: none)').matches
+    const onScroll = () => {
+      if (frame) return
+      frame = requestAnimationFrame(() => {
+        frame = 0
+        const r = el.getBoundingClientRect()
+        const t = Math.max(-1, Math.min(1, (r.top + r.height / 2 - window.innerHeight / 2) / (window.innerHeight / 2)))
+        set('--rx', `${t * 7}deg`)
+        set('--ry', `${-t * 4}deg`)
+      })
+    }
+    if (touch && !reduce) { window.addEventListener('scroll', onScroll, { passive: true }); onScroll() }
+
     return () => {
       el.removeEventListener('pointermove', move)
       el.removeEventListener('pointerleave', leave)
+      window.removeEventListener('scroll', onScroll)
+      cancelAnimationFrame(frame)
     }
   }, [ref])
 }

@@ -28,8 +28,6 @@
 .notice-list, .reg-main, .state { animation: stateIn var(--t-med) var(--ease) both; }
 @keyframes stateIn { from { opacity: 0; } to { opacity: 1; } }
 
-/* Sin movimientos constantes: la tarjeta ya no flota ni brilla sola */
-.id-card .shine { animation: none; }
 
 
 @media (prefers-reduced-motion: reduce) {

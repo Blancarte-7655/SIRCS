@@ -139,12 +139,6 @@ td.nowrap { white-space: nowrap; }
 /* Destellos verde y rojo en las esquinas inferiores */
 .id-card .glow { position: absolute; inset: 0; pointer-events: none;
   background: radial-gradient(45% 55% at 0% 100%, rgba(63, 143, 107, .16), transparent 70%), radial-gradient(45% 55% at 100% 100%, rgba(196, 71, 79, .14), transparent 70%); }
-/* Holograma iridiscente (sobre blanco se mezcla con multiply) */
-.id-card .holo {
-  position: absolute; inset: -25%; pointer-events: none; mix-blend-mode: multiply; opacity: .35; filter: blur(12px);
-  background: conic-gradient(from 200deg at var(--mx, 70%) var(--my, 60%), transparent 0deg, rgba(0, 200, 170, .35) 50deg, rgba(110, 130, 255, .3) 110deg, rgba(255, 200, 80, .28) 170deg, rgba(255, 80, 150, .25) 230deg, transparent 300deg);
-}
-.id-card .shine { position: absolute; inset: 0; pointer-events: none; background: linear-gradient(115deg, transparent 30%, rgba(255, 255, 255, .5) 45%, transparent 60%); background-size: 250% 100%; background-position: var(--sx, 60%) 0; mix-blend-mode: soft-light; }
 .id-card .inner { position: absolute; inset: 0; display: grid; grid-template-rows: auto 1fr auto; }
 
 /* Franja azul maya */

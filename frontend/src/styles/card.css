@@ -34,19 +34,45 @@
 .id-card .c-mini-qr canvas { width: 100%; aspect-ratio: 1; image-rendering: pixelated; display: block; }
 .id-card .c-ghost { position: static; width: 7cqw; }
 
-.c-seal { display: block; aspect-ratio: 1; border-radius: 50%; position: relative; overflow: hidden;
-  background: radial-gradient(circle, rgba(255, 255, 255, .85) 0 55%, rgba(255, 255, 255, .45) 70%); box-shadow: 0 .3cqw 1cqw -.3cqw rgba(20, 30, 40, .35); }
+.c-seal { display: block; aspect-ratio: 1; border-radius: 24%; position: relative; background: rgba(255, 255, 255, .7); }
 .c-seal svg { width: 100%; height: 100%; display: block; }
-.c-seal .s-ring { fill: none; stroke: var(--card-maya); stroke-width: .8; }
-.c-seal .s-text { font: 700 6.4px "IBM Plex Mono", monospace; letter-spacing: .6px; fill: var(--card-maya); }
-.c-seal .s-rose { fill: none; stroke: var(--card-maya); stroke-width: .35; opacity: .55; }
-.c-seal .s-pyr { fill: var(--card-a); }
-/* Reflejo iridiscente que cambia con el puntero */
-.c-seal::after { content: ""; position: absolute; inset: 0; border-radius: 50%; mix-blend-mode: multiply; opacity: .45;
-  background: conic-gradient(from calc(var(--ry, 0deg) * 20) at 50% 50%, #7FE0D0, #9DB4FF, #FFD58A, #FF9EC8, #7FE0D0); }
-.id-card .c-seal-front { position: absolute; width: 10.5cqw; right: -3.4cqw; bottom: -2.6cqw; }
-.id-card .c-sign-row { display: flex; justify-content: space-between; align-items: end; gap: 2cqw; }
-.id-card .c-seal-back { width: 9cqw; flex: none; }
-.id-card .c-barcode { width: 100%; height: 4cqw; image-rendering: pixelated; opacity: .85; }
-.id-card .c-back .c-text { gap: 1.1cqw; }
-.id-card .c-back .c-text p { font-size: 2.2cqw; }
+.c-seal .s-line { fill: none; stroke: var(--card-maya); stroke-width: 3.2; }
+.c-seal .s-thin { fill: none; stroke: var(--card-maya); stroke-width: 1.2; opacity: .7; }
+.c-seal .s-fill { fill: var(--card-maya); }
+.id-card .c-seal-front { position: absolute; width: 9.5cqw; right: -3cqw; bottom: -2.4cqw; box-shadow: 0 .3cqw 1cqw -.3cqw rgba(20, 30, 40, .35); }
+.id-card .c-ghost { position: relative; }
+
+/* ---------- Brillo holográfico: solo en 3 zonas (sello, franja lateral e imagen fantasma) ---------- */
+.id-card .c-strip { position: absolute; left: 0; top: 0; bottom: 0; width: 9cqw; pointer-events: none; }
+.id-card .foil::after {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+  background: linear-gradient(115deg, transparent 18%, rgba(110, 225, 205, .75) 32%, rgba(150, 175, 255, .75) 42%, rgba(255, 210, 130, .75) 52%, rgba(255, 150, 195, .7) 62%, transparent 78%);
+  background-size: 320% 320%; background-position: var(--mx, 30%) var(--my, 40%);
+  mix-blend-mode: multiply; opacity: .22; transition: opacity .35s ease, background-position .12s linear;
+}
+.id-card .c-strip::after { mix-blend-mode: screen; opacity: .12; }
+.id-card:hover .foil::after { opacity: .9; }
+.id-card:hover .c-strip::after { opacity: .55; }
+/* En celular (sin cursor) el brillo recorre esas zonas lentamente por sí solo */
+@media (hover: none) and (prefers-reduced-motion: no-preference) {
+  .id-card .foil::after { opacity: .6; animation: foilSweep 5.5s ease-in-out infinite alternate; }
+  .id-card .c-strip::after { opacity: .35; }
+}
+@keyframes foilSweep { from { background-position: 0% 30%; } to { background-position: 100% 70%; } }
+
+/* ---------- Reverso: QR, datos, firma, código de barras, QR secundario y sello ---------- */
+.id-card .c-back { grid-template-columns: 19cqw minmax(0, 1fr); grid-template-areas: "qr grid" "foot foot"; gap: 1.8cqw 3cqw; align-items: start; padding-top: 2.4cqw; }
+.id-card .c-back .c-qr { grid-area: qr; padding: 1.2cqw; }
+.id-card .c-grid { grid-area: grid; margin: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .9cqw 2.2cqw; }
+.id-card .c-grid .span-2 { grid-column: span 2; }
+.id-card .c-grid div { border-top: .15cqw solid rgba(20, 30, 40, .14); padding-top: .45cqw; min-width: 0; }
+.id-card .c-grid dt { font-size: 1.4cqw; letter-spacing: .18em; text-transform: uppercase; color: #5E6E77; font-weight: 800; }
+.id-card .c-grid dd { margin: .2cqw 0 0; font: 500 2.05cqw/1.2 var(--f-mono); color: #13202A; overflow-wrap: anywhere; }
+.id-card .c-back-foot { grid-area: foot; display: flex; align-items: end; gap: 2.4cqw; }
+.id-card .c-signed { display: grid; gap: .5cqw; flex: none; }
+.id-card .c-signed small { font: 500 1.3cqw var(--f-mono); letter-spacing: .06em; color: #5E6E77; }
+.id-card .c-back-foot .c-barcode { flex: 1; min-width: 0; height: 5cqw; image-rendering: pixelated; opacity: .85; }
+.id-card .c-qr-sm { width: 7.4cqw; flex: none; background: #FFFFFF; padding: .5cqw; border-radius: .5cqw; box-shadow: 0 0 0 .2cqw rgba(20, 30, 40, .18); }
+.id-card .c-qr-sm canvas { width: 100%; aspect-ratio: 1; image-rendering: pixelated; display: block; }
+.id-card .c-seal-back { width: 7.4cqw; flex: none; }
+.id-card .c-sign { font-size: 3.8cqw; }

@@ -79,22 +79,19 @@ function drawBarcode(canvas) {
   }
 }
 
-// Sello de seguridad: anillo con microtexto, rosetas finas y pirámide escalonada al centro.
-// Lleva un reflejo iridiscente (CSS) como los hologramas de los documentos reales.
+// Sello de seguridad: glifo maya Kin (sol) en su cartucho, con reflejo holográfico.
 function Seal({ className = '' }) {
-  const id = useId().replace(/:/g, '')
   return (
-    <span className={`c-seal ${className}`} aria-hidden="true">
+    <span className={`c-seal foil ${className}`} aria-hidden="true">
       <svg viewBox="0 0 100 100">
-        <defs><path id={`sr-${id}`} d="M50 50m-38 0a38 38 0 1 1 76 0a38 38 0 1 1 -76 0" /></defs>
-        <circle cx="50" cy="50" r="47" className="s-ring" />
-        <circle cx="50" cy="50" r="30" className="s-ring" />
-        <text className="s-text"><textPath href={`#sr-${id}`}>SIS · IDENTIDAD VERIFICADA · MÉXICO · SIS · IDENTIDAD VERIFICADA · MÉXICO ·</textPath></text>
-        {Array.from({ length: 24 }, (_, i) => (
-          <ellipse key={i} cx="50" cy="50" rx="27" ry="9" className="s-rose" transform={`rotate(${i * 7.5} 50 50)`} />
-        ))}
-        <path className="s-pyr" d="M31 64h38v-5h-5v-5h-5v-5h-5v-5h-8v5h-5v5h-5v5h-5z" />
-        <rect className="s-pyr" x="46" y="38" width="8" height="6" />
+        <rect x="8" y="8" width="84" height="84" rx="24" className="s-line" />
+        <rect x="16" y="16" width="68" height="68" rx="18" className="s-thin" />
+        <circle cx="50" cy="33" r="10" className="s-line" />
+        <circle cx="67" cy="50" r="10" className="s-line" />
+        <circle cx="50" cy="67" r="10" className="s-line" />
+        <circle cx="33" cy="50" r="10" className="s-line" />
+        <circle cx="50" cy="50" r="5.5" className="s-fill" />
+        {[[26, 26], [74, 26], [26, 74], [74, 74]].map(([x, y]) => <circle key={x + '-' + y} cx={x} cy={y} r="2.6" className="s-fill" />)}
       </svg>
     </span>
   )
@@ -107,14 +104,13 @@ function useTilt(ref) {
     if (!el) return
     const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
     const move = (e) => {
-      if (e.pointerType !== 'mouse') return
       const r = el.getBoundingClientRect()
       const x = (e.clientX - r.left) / r.width
       const y = (e.clientY - r.top) / r.height
       el.style.setProperty('--mx', `${x * 100}%`)
       el.style.setProperty('--my', `${y * 100}%`)
       el.style.setProperty('--sx', `${100 - x * 100}%`)
-      if (!reduce) {
+      if (!reduce && e.pointerType === 'mouse') {
         el.style.setProperty('--ry', `${(x - 0.5) * 6}deg`)
         el.style.setProperty('--rx', `${(0.5 - y) * 4}deg`)
       }
@@ -156,8 +152,7 @@ function CardShell({ label, band, children }) {
         {children}
         <div className="c-foot"><Greca className="c-greca" /><div className="c-micro" aria-hidden="true">{MICROTEXTO}</div></div>
       </div>
-      <div className="holo" />
-      <div className="shine" />
+      <div className="c-strip foil" aria-hidden="true" />
       <div className="c-watermark" aria-hidden="true"><span>MUESTRA</span></div>
     </div>
   )
@@ -200,7 +195,7 @@ export function IdCardFront({ data }) {
         </div>
         <div className="c-side" aria-hidden="true">
           <div className="c-mini-qr"><canvas ref={miniQrRef} width="25" height="25" /></div>
-          <div className="c-ghost">{PERSONA}</div>
+          <div className="c-ghost foil">{PERSONA}</div>
         </div>
       </div>
     </CardShell>
@@ -210,8 +205,10 @@ export function IdCardFront({ data }) {
 export function IdCardBack({ data }) {
   const qrRef = useRef(null)
   const barRef = useRef(null)
+  const qr2Ref = useRef(null)
   useEffect(() => {
     if (qrRef.current) drawFakeQr(qrRef.current)
+    if (qr2Ref.current) drawFakeQr(qr2Ref.current, 1452, '#1A1C1E')
     if (barRef.current) drawBarcode(barRef.current)
   }, [])
   return (
@@ -224,12 +221,22 @@ export function IdCardBack({ data }) {
     >
       <div className="c-body c-back">
         <div className="c-qr"><canvas ref={qrRef} width="25" height="25" aria-hidden="true" /></div>
-        <div className="c-text">
-          <span className="c-label">Clave de registro</span>
-          <span className="mono">{data.clave}</span>
-          <p>{data.domicilio}<br />Emitida en {data.emision}</p>
-          <div className="c-sign-row"><span className="c-sign">{data.firma}</span><Seal className="c-seal-back" /></div>
+        <dl className="c-grid">
+          <div className="span-2"><dt>Clave de registro</dt><dd>{data.clave}</dd></div>
+          <div><dt>RFC</dt><dd>{data.rfc}</dd></div>
+          <div className="span-2"><dt>Domicilio</dt><dd>{data.domicilio}</dd></div>
+          <div><dt>C.P.</dt><dd>{data.cp}</dd></div>
+          <div className="span-2"><dt>Municipio</dt><dd>{data.municipio}</dd></div>
+          <div><dt>Estado</dt><dd>{data.estado}</dd></div>
+          <div><dt>Distrito</dt><dd>{data.distrito}</dd></div>
+          <div><dt>Sección</dt><dd>{data.seccion}</dd></div>
+          <div><dt>Localidad</dt><dd>{data.localidad}</dd></div>
+        </dl>
+        <div className="c-back-foot">
+          <div className="c-signed"><span className="c-sign">{data.firma}</span><small>Registro {data.registro} · {data.emision}</small></div>
           <canvas className="c-barcode" ref={barRef} aria-hidden="true" />
+          <div className="c-qr-sm"><canvas ref={qr2Ref} width="25" height="25" aria-hidden="true" /></div>
+          <Seal className="c-seal-back" />
         </div>
       </div>
     </CardShell>

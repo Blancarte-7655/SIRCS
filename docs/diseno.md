@@ -42,11 +42,10 @@ Solo 3 tipos, discretos: aparición suave al cargar y al entrar en pantalla (`.r
 Objeto físico: igual en día y noche (`styles/card.css`). Cuerpo claro `--card-paper`, franja lateral en el color que elige la persona (**Guinda**, Grafito, Marino, Pizarra, Musgo) con **MÉXICO** en vertical, nombre en serif y filetes finos entre datos. Datos de muestra: **Olivia Elizabeth Apellido**.
 
 Elementos de seguridad (todos decorativos en esta etapa):
-- Trama guilloche y líneas finas de fondo; microtexto; marca de agua **MUESTRA**.
-- **QR pequeño** en el anverso y QR de verificación en el reverso.
-- **Sello de seguridad** (anillo con microtexto, roseta y pirámide escalonada, con reflejo iridiscente) sobre la foto y junto a la firma.
-- **Código de barras** en el reverso (en la versión real: PDF417 con datos firmados).
-- Imagen fantasma, NFC y chip; greca en azul maya.
+- **Anverso:** trama guilloche, microtexto, marca de agua **MUESTRA**, QR pequeño, imagen fantasma, NFC y sello con el **glifo maya Kin** (sol) sobre la foto.
+- **Reverso:** QR de verificación, QR secundario, sello Kin, código de barras (en la versión real: PDF417 con datos firmados), firma y chip.
+- **Datos del reverso:** clave de registro, RFC, domicilio, C.P., municipio, estado, distrito, sección, localidad, año de registro y módulo de emisión.
+- **Brillo holográfico** solo en 3 zonas (sello, franja lateral e imagen fantasma): sigue al cursor al pasar por encima; en celular recorre esas zonas lentamente.
 
 ## Accesibilidad (obligatorio)
 

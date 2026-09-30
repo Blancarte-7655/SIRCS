@@ -1,83 +1,55 @@
-# Sistema de diseño SIRCS
+# Sistema de diseño SIS · Institucional mexicano
 
-Base: estilo **“Accesible y ético”** sugerido por la skill UI UX Pro Max para sistemas de gobierno y servicios públicos, con paleta verde · blanco · rojo elegida por el equipo. La estructura del portal se inspira en portales de trámites en línea (barra superior fija, encabezado con reloj, tarjetas sobre el encabezado, pasos y guía en video).
+Elegido entre tres propuestas. **Autoridad, confianza y estabilidad** sin verse frío ni anticuado: composición editorial, mucho aire, filetes finos y un solo acento de color.
 
-## Colores (tokens)
+## Color (`styles/tokens.css`)
 
-**Estilo formal.** El color casi no se ve en reposo; aparece al pasar el cursor.
-
-- **Día:** grafito cálido (ligeramente café) con **bronce** al pasar el cursor, sobre tonos piedra.
-- **Noche:** carbón con **jade** al pasar el cursor, sobre negro.
-- **Credencial:** cuerpo crema y franja formal en uno de **4 colores que elige la persona** (Grafito, Marino, Pizarra, Musgo). El azul maya solo aparece en la greca y la trama. La elección se guarda en el navegador (`hooks/useCardColor.js`) y se ve igual en la portada.
-- Destellos verde y rojo de la bandera solo en detalles pequeños (subrayado del título, quetzal, bandera en recuadro).
-
-| Token | Día | Noche | Uso |
-|---|---|---|---|
-| `--primary` | `#2E2A26` | `#ECE8E2` | botones (grafito de día, claro de noche) |
-| `--primary-hover` / `--hover-ink` | `#8C6239` (bronce) | `#1F7F63` / `#6FCBA8` (jade) | solo al pasar el cursor; también el subrayado del menú activo |
-| `--primary-ink` | `#2E2A26` | `#ECE8E2` | texto de enlaces e íconos activos |
-| `--deep` / `--feature-a` | `#2E2A26` / `#36302A` | `#262A2E` | piezas oscuras |
-| `--card-a` / `--card-b` | según el color elegido | | franja de la credencial |
-| `--card-maya` | `#2A7FA0` | | azul maya: greca y trama de la credencial |
-| `--surface-2` / `--muted` | `#F7F5F2` / `#EFEBE6` | | neutros cálidos (piedra) para fondos e íconos |
-| `--flag-green` | `#3F8F6B` | `#4FBF8B` | destellos verdes |
-| `--flag-red` / `--accent` | `#C4474F` | `#F0616B` | destellos rojos, subrayado del menú |
-| `--bg` | `#FFFFFF` | `#08090A` | fondo |
-
-Regla: usa el azul con moderación (acciones principales y enlaces). `--primary` para fondos (con texto `--on-primary`) y `--primary-ink` para texto o íconos. **No escribas colores sueltos en los componentes.**
-
-## Detalles mayas y de la bandera (`components/Maya.jsx`)
-
-- **Greca escalonada** (`<Greca />`): separadores, pie de página y base de la credencial.
-- **Numeración maya** (`<MayaNumber n={3} />`): punto = 1, barra = 5. Se usa en los pasos del registro.
-- **Ilustración panorámica** (`components/Panorama.jsx`): fondo de la portada con sol, pirámide alta, pirámide de Kukulkán (tableros, escalinata con alfardas y serpientes, templo con puertas y friso), Ángel de la Independencia (estrías, anillos, capitel y Victoria alada dorada), quetzal (cresta, ojo, plumas de la cola) y agaves y nopal con tunas. Luz y sombra con dos tonos. En celular se recorta al centro.
-
-## Movimiento
-
-- **Profundidad al hacer scroll** (parallax): cada capa del fondo se mueve a su ritmo (`--k` en `Maya.jsx`, `useParallax` en `Portal.jsx`).
-- **Animaciones suaves**: el quetzal planea y aletea y el brillo de la credencial pasa solo.
-- **Credencial**: con mouse se inclina siguiendo el puntero; en celular se inclina y brilla según el scroll.
-- Todo se desactiva si la persona tiene activado “reducir movimiento” en su sistema.
-- **Bandera en recuadro** (`<FlagBadge />`): barra superior, separadores y pie. **Siempre sin escudo**: su uso está reservado a documentos oficiales.
-
-## Credencial
-
-Color crema con franja carbón arriba y detalles mayas en azul (con greca), texto oscuro para que se lea bien, y la palabra **MÉXICO** en lugar de bandera. Conserva destellos verde y rojo en las esquinas, holograma iridiscente, imagen fantasma, microtexto y la marca de agua **MUESTRA**. Se ve igual en tema día y noche porque representa un objeto físico.
-
-## Logotipo
-
-Solo el texto **SIRCS** en Unbounded, color `--primary-ink`. Sin sello.
+- **Día · Guinda:** fondo blanco cálido `#FAF8F6`, guinda `#5C1A2B` en botones y enlaces (hover `#7A2438`), dorado sobrio `#A8864F` solo en filetes y marcas pequeñas. Piezas oscuras en guinda profundo `#4A1522`.
+- **Noche · Grafito y pino:** casi negro `#0C0D0E`, texto claro y verde pino (`#2F6B5A` / `#9CCBBB`) al pasar el cursor y en acentos.
+- Roles de acento: `--accent` (filetes), `--accent-ink` (texto), `--accent-solid` (fondo con texto blanco), `--accent-on-dark` (sobre piezas oscuras).
+- Estados (`--ok`, `--warn`, `--danger`) no son color de marca. **No escribas colores sueltos en los componentes.**
 
 ## Tipografía
 
-- Títulos: **Manrope** 700–800
-- Texto: **Public Sans**
-- Folios, claves y horas: **IBM Plex Mono**
-- Logotipo SIRCS y marca en la credencial: **Unbounded**
+- Títulos: **Source Serif 4** 600 (serif institucional); cursiva en el color de acento para la palabra clave del título.
+- Texto e interfaz: **Public Sans**.
+- Folios, claves y horas: **IBM Plex Mono**.
+- Etiquetas: mayúsculas pequeñas con espaciado amplio (`.eyebrow`), precedidas por un cuadro de acento.
+
+## Formas
+
+- Esquinas de 3–4 px, sombras casi nulas; la estructura se marca con filetes de 1 px.
+- Piezas importantes con **filete superior de 3 px en el color de acento** (dorado de día, pino de noche).
+- Encabezados de sección alineados a la izquierda con descripción a la derecha y filete inferior.
+
+## Identidad maya y mexicana (discreta)
+
+- **Marca** (`components/LogoMark.jsx`): sello de línea fina con greca escalonada y un punto de acento.
+- **Greca** (`<Greca />`) solo como filete fino: bajo la portada, separadores, pie y 404.
+- **Numeración maya** (`<MayaNumber />`) en los pasos del registro.
+- **Bandera en recuadro** (`<FlagBadge />`), siempre sin escudo.
+
+## Portada
+
+Encabezado editorial (título, datos clave en columnas y credencial en marco tipo documento) → servicios en línea → pasos del registro → franja de garantías → guía en video → pie institucional en columnas.
+
+## Movimiento (`styles/motion.css`)
+
+Solo 3 tipos, discretos: aparición suave al cargar y al entrar en pantalla (`.reveal`, `hooks/useReveal.js`); microinteracciones en botones y tarjetas; transiciones entre páginas, pestañas y pasos. Sin parallax ni movimiento continuo. Todo se apaga con "reducir movimiento".
+
+## Credencial (modelo Documento)
+
+Objeto físico: igual en día y noche (`styles/card.css`). Cuerpo claro `--card-paper`, franja lateral en el color que elige la persona (**Guinda**, Grafito, Marino, Pizarra, Musgo) con **MÉXICO** en vertical, nombre en serif y filetes finos entre datos. Datos de muestra: **Olivia Elizabeth Apellido**.
+
+Elementos de seguridad (todos decorativos en esta etapa):
+- Trama guilloche y líneas finas de fondo; microtexto; marca de agua **MUESTRA**.
+- **QR pequeño** en el anverso y QR de verificación en el reverso.
+- **Sello de seguridad** (anillo con microtexto, roseta y pirámide escalonada, con reflejo iridiscente) sobre la foto y junto a la firma.
+- **Código de barras** en el reverso (en la versión real: PDF417 con datos firmados).
+- Imagen fantasma, NFC y chip; greca en azul maya.
 
 ## Accesibilidad (obligatorio)
 
-- Contraste mínimo 4.5:1 en texto.
-- Barra superior fija con **tamaño de texto** (3 niveles), **alto contraste** y **tema día/noche**, pensada para personas mayores.
-- Foco visible con teclado, enlace “Saltar al contenido”, etiquetas en todos los campos.
-- Errores junto al campo, explicando cómo corregirlos.
-- Áreas táctiles de al menos 44 × 44 px.
-- En celular la barra superior muestra solo íconos (con nombre accesible) y los pasos se vuelven línea de tiempo vertical.
-- Se respeta `prefers-reduced-motion` (la credencial no se inclina).
-
-## Referencia visual
-
-`docs/maqueta-v4.html` es la maqueta original en un solo archivo. Ábrela en el navegador para comparar.
-
-## Estados de la interfaz (`components/States.jsx`)
-
-- **Carga**: `<Skeleton />` (bloques grises animados) mientras llegan los datos.
-- **Vacío**: `<EmptyState />` cuando una búsqueda no encuentra nada, con una acción para salir (p. ej. “Limpiar filtros”).
-- **Error**: `<ErrorState />` con botón “Reintentar”.
-- `hooks/useFakeRequest.js` simula la API con retraso; al tener backend se cambia por `fetch`.
-
-## Navegación
-
-- Escritorio: menú grande con todas las subsecciones al pasar el mouse.
-- Celular y tableta: botón **Menú** que abre un panel con todas las secciones y subsecciones.
-- Transición suave al cambiar de página y página 404 propia.
+- Contraste mínimo 4.5:1 en texto; barra superior con tamaño de texto, alto contraste, tema y lengua siempre visible.
+- Foco visible en todos los controles; objetivos táctiles de 44 px o más.
+- Estados de carga, vacío y error en todo lo que viene de la API.

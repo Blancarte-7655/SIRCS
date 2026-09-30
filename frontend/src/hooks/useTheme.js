@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-const KEY = 'sircs:theme'
+const KEY = 'sis:theme'
 
 function systemTheme() {
   return window.matchMedia?.('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'

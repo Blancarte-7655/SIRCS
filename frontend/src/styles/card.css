@@ -1,0 +1,52 @@
+/*
+  Credencial · modelo "Documento" (elegido): franja lateral con MÉXICO vertical,
+  nombre en serif, filetes finos entre datos y trama guilloche. Complementa las
+  reglas base de .id-card en pages.css. El color de la franja lo elige la persona.
+*/
+.id-card .glow { opacity: .5; }
+.id-card .inner { grid-template-columns: 9cqw minmax(0, 1fr); }
+.id-card .inner::before { content: ""; grid-column: 1; grid-row: 1 / -1; background: linear-gradient(180deg, var(--card-a), var(--card-b)); }
+.id-card .c-band, .id-card .c-body, .id-card .c-foot { grid-column: 2; }
+.id-card .c-band { position: static; overflow: visible; background: none; color: var(--card-name); padding: 3.6cqw 0 2.2cqw; margin-inline: 4.5cqw 5cqw; border-bottom: .2cqw solid rgba(20, 30, 40, .2); }
+.id-card .c-band-greca { display: none; }
+.id-card .c-brand b { font: 600 4.8cqw/1 "Source Serif 4", Georgia, serif; letter-spacing: .1em; }
+.id-card .c-brand small { color: #5E6E77; opacity: 1; letter-spacing: .24em; }
+.id-card .c-right { position: absolute; left: 0; top: 0; bottom: 0; width: 9cqw; flex-direction: column; justify-content: space-between; align-items: center; padding: 3.6cqw 0; gap: 0; color: #FFFFFF; }
+.id-card .c-country { writing-mode: vertical-rl; transform: rotate(180deg); font-size: 2.5cqw; letter-spacing: .5em; }
+.id-card .c-nfc svg { width: 4cqw; height: 4cqw; }
+.id-card .c-chip { width: 6.2cqw; height: 5cqw; border-radius: 1cqw; }
+.id-card .c-chip::before { inset: 1cqw 1.8cqw; }
+.id-card .c-body { padding: 3cqw 5cqw 0 4.5cqw; grid-template-columns: 20cqw minmax(0, 1fr) 10cqw; gap: 3.4cqw; }
+.id-card .c-photo { border-radius: .8cqw; }
+.id-card .c-name b { font: 500 5cqw/1.05 "Source Serif 4", Georgia, serif; }
+.id-card .c-name span:last-child { font: 400 3.4cqw/1.2 "Source Serif 4", Georgia, serif; color: #243844; }
+.id-card .c-data { gap: 2cqw; }
+.id-card .c-data dl { gap: 1.6cqw 3cqw; }
+.id-card .c-data dl div { border-top: .15cqw solid rgba(20, 30, 40, .16); padding-top: .8cqw; }
+.id-card .c-foot { padding: 0 5cqw 3cqw 4.5cqw; }
+.id-card .c-greca { height: 1.4cqw; opacity: .7; -webkit-mask-size: 2.8cqw 1.4cqw; mask-size: 2.8cqw 1.4cqw; }
+.id-card .c-back { grid-template-columns: 22cqw minmax(0, 1fr); align-items: start; padding-top: 2.6cqw; }
+
+/* ---------- Elementos de seguridad ---------- */
+.id-card .c-photo-wrap { position: relative; align-self: start; }
+.id-card .c-side { display: grid; align-content: space-between; justify-items: end; height: 100%; padding-bottom: .6cqw; }
+.id-card .c-mini-qr { width: 10cqw; background: #FFFFFF; padding: .7cqw; border-radius: .6cqw; box-shadow: 0 0 0 .2cqw rgba(20, 30, 40, .18); }
+.id-card .c-mini-qr canvas { width: 100%; aspect-ratio: 1; image-rendering: pixelated; display: block; }
+.id-card .c-ghost { position: static; width: 7cqw; }
+
+.c-seal { display: block; aspect-ratio: 1; border-radius: 50%; position: relative; overflow: hidden;
+  background: radial-gradient(circle, rgba(255, 255, 255, .85) 0 55%, rgba(255, 255, 255, .45) 70%); box-shadow: 0 .3cqw 1cqw -.3cqw rgba(20, 30, 40, .35); }
+.c-seal svg { width: 100%; height: 100%; display: block; }
+.c-seal .s-ring { fill: none; stroke: var(--card-maya); stroke-width: .8; }
+.c-seal .s-text { font: 700 6.4px "IBM Plex Mono", monospace; letter-spacing: .6px; fill: var(--card-maya); }
+.c-seal .s-rose { fill: none; stroke: var(--card-maya); stroke-width: .35; opacity: .55; }
+.c-seal .s-pyr { fill: var(--card-a); }
+/* Reflejo iridiscente que cambia con el puntero */
+.c-seal::after { content: ""; position: absolute; inset: 0; border-radius: 50%; mix-blend-mode: multiply; opacity: .45;
+  background: conic-gradient(from calc(var(--ry, 0deg) * 20) at 50% 50%, #7FE0D0, #9DB4FF, #FFD58A, #FF9EC8, #7FE0D0); }
+.id-card .c-seal-front { position: absolute; width: 10.5cqw; right: -3.4cqw; bottom: -2.6cqw; }
+.id-card .c-sign-row { display: flex; justify-content: space-between; align-items: end; gap: 2cqw; }
+.id-card .c-seal-back { width: 9cqw; flex: none; }
+.id-card .c-barcode { width: 100%; height: 4cqw; image-rendering: pixelated; opacity: .85; }
+.id-card .c-back .c-text { gap: 1.1cqw; }
+.id-card .c-back .c-text p { font-size: 2.2cqw; }

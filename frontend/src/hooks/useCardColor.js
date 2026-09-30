@@ -2,17 +2,18 @@ import { useEffect, useState } from 'react'
 
 // Colores que la persona puede elegir para la franja de su credencial
 export const CARD_COLORS = [
+  { id: 'guinda', nombre: 'Guinda', a: '#6A2233', b: '#3E1220' },
   { id: 'grafito', nombre: 'Grafito', a: '#36312B', b: '#1E1B17' },
   { id: 'marino', nombre: 'Marino', a: '#24365A', b: '#131E36' },
   { id: 'pizarra', nombre: 'Pizarra', a: '#414D5B', b: '#232A33' },
   { id: 'musgo', nombre: 'Musgo', a: '#37443A', b: '#1E2620' },
 ]
 
-const KEY = 'sircs:card'
-const EVENT = 'sircs:card-color'
+const KEY = 'sis:card'
+const EVENT = 'sis:card-color'
 
 function read() {
-  try { return localStorage.getItem(KEY) || 'grafito' } catch { return 'grafito' }
+  try { return localStorage.getItem(KEY) || 'guinda' } catch { return 'guinda' }
 }
 
 // Devuelve el color elegido y el estilo (variables CSS) para envolver la tarjeta.

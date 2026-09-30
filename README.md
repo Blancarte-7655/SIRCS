@@ -1,4 +1,4 @@
-# SIRCS · Sistema de Registro Ciudadano Simulado
+# SIS · Sistema de Identidad Simulado
 
 Proyecto académico del **Equipo INE · Tlaquepaque**. Simula el registro y la credencialización de personas con **datos 100 % ficticios**.
 
@@ -75,4 +75,4 @@ En el servidor, usa `deploy/nginx-sircs.conf` como base: sirve la carpeta, manda
 
 ## Diseño
 
-Sistema de diseño en `frontend/src/styles/tokens.css` (formal: de día grafito y bronce, de noche carbón y jade; el color aparece al pasar el cursor; credencial crema con 4 colores a elegir). Ver `docs/diseno.md`.
+Estilo **institucional mexicano**: de día guinda con filetes dorado sobrio, de noche grafito y pino; títulos en serif, filetes finos y greca discreta. Credencial modelo Documento con 5 colores y elementos de seguridad (QR, sellos, código de barras). Ver `docs/diseno.md`.

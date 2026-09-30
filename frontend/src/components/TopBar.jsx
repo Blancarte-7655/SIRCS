@@ -5,6 +5,7 @@ import useAccessibility from '../hooks/useAccessibility.js'
 import useClock from '../hooks/useClock.js'
 import useTheme from '../hooks/useTheme.js'
 import { FlagBadge } from './Maya.jsx'
+import LogoMark from './LogoMark.jsx'
 
 // Menú principal. Cada sección abre sus subsecciones en el panel desplegable.
 const MENU = [
@@ -105,8 +106,9 @@ export default function TopBar() {
         onKeyDown={(e) => e.key === 'Escape' && setMega(false)}
       >
         <div className="container">
-          <Link to="/" className="brand" aria-label="SIRCS, inicio">
-            <span><b>SIRCS</b><small>Sistema de Registro Ciudadano Simulado</small></span>
+          <Link to="/" className="brand" aria-label="SIS, inicio">
+            <LogoMark />
+            <span><b>SIS</b><small>Sistema de Identidad Simulado</small></span>
           </Link>
 
           <nav

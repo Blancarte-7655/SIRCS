@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import Icon from '../components/Icon.jsx'
+import LogoMark from '../components/LogoMark.jsx'
+import { Greca } from '../components/Maya.jsx'
 
 export default function Login() {
   const navigate = useNavigate()
@@ -19,7 +21,7 @@ export default function Login() {
     <div className="container page">
       <div className="panel-box login">
         <div className="login-side">
-          <div className="brand"><span><b>SIRCS</b><small>Sistema de Registro Ciudadano Simulado</small></span></div>
+          <div className="brand"><LogoMark /><span><b>SIS</b><small>Sistema de Identidad Simulado</small></span></div>
           <div>
             <h1>Tu identidad, registrada con orden y transparencia.</h1>
             <p>Consulta el estado de tu registro, actualiza tu domicilio y descarga tu credencial de muestra desde un solo lugar.</p>
@@ -29,15 +31,7 @@ export default function Login() {
             <li><Icon name="log" />Bitácora de cada cambio, con fecha y responsable</li>
             <li><Icon name="user" />Accesos separados para ciudadanía y personal operativo</li>
           </ul>
-          <svg className="rings" viewBox="0 0 200 200" aria-hidden="true">
-            <g fill="none" stroke="currentColor" strokeWidth=".6">
-              {[95, 80, 65, 50, 35].map((r) => <circle key={r} cx="100" cy="100" r={r} />)}
-              <ellipse cx="100" cy="100" rx="95" ry="40" />
-              <ellipse cx="100" cy="100" rx="40" ry="95" />
-              <ellipse cx="100" cy="100" rx="95" ry="40" transform="rotate(45 100 100)" />
-              <ellipse cx="100" cy="100" rx="95" ry="40" transform="rotate(-45 100 100)" />
-            </g>
-          </svg>
+          <Greca className="login-greca" />
         </div>
 
         <form className="login-form" onSubmit={onSubmit} noValidate>
@@ -51,7 +45,7 @@ export default function Login() {
           </div>
           <div className="field">
             <label htmlFor="login-correo">Correo electrónico</label>
-            <input id="login-correo" type="email" autoComplete="username" defaultValue="mfernanda.ochoa@correo-demo.mx" />
+            <input id="login-correo" type="email" autoComplete="username" defaultValue="olivia.apellido@correo-demo.mx" />
           </div>
           <div className="field">
             <label htmlFor="login-pass">Contraseña</label>

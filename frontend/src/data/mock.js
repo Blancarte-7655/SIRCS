@@ -39,7 +39,7 @@ export const tramites = [
 
 // GET /api/registros?q=&estado=&municipio=
 export const registros = [
-  { folio: 'RG-26-004817', nombre: 'María Fernanda Ochoa Ruelas', edad: 22, sexo: 'Mujer', municipio: 'San Pedro Tlaquepaque', actualizado: '28/09/2026 16:42', estado: 'pendiente' },
+  { folio: 'RG-26-004817', nombre: 'Olivia Elizabeth Apellido', edad: 22, sexo: 'Mujer', municipio: 'San Pedro Tlaquepaque', actualizado: '28/09/2026 16:42', estado: 'pendiente' },
   { folio: 'RG-26-004809', nombre: 'Luis Ángel Cárdenas Íñiguez', edad: 34, sexo: 'Hombre', municipio: 'Tonalá', actualizado: '28/09/2026 15:10', estado: 'duplicado' },
   { folio: 'RG-26-004795', nombre: 'Ximena Guadalupe Robles Plascencia', edad: 19, sexo: 'Mujer', municipio: 'Zapopan', actualizado: '28/09/2026 12:03', estado: 'activo' },
   { folio: 'RG-26-004771', nombre: 'Ramón Esteban Villaseñor Gómez', edad: 61, sexo: 'Hombre', municipio: 'Guadalajara', actualizado: '27/09/2026 18:55', estado: 'emitida' },
@@ -74,16 +74,16 @@ export const bitacora = [
 
 // GET /api/credencial/:folio
 export const credencial = {
-  nombres: 'María Fernanda',
-  apellidos: 'Ochoa Ruelas',
+  nombres: 'Olivia Elizabeth',
+  apellidos: 'Apellido',
   folio: 'RG-26-004817',
   nacimiento: '17·04·2003',
   sexo: 'M',
   vigencia: '2026–2036',
-  clave: 'OORM030417MJLCLR07',
+  clave: 'AEXO030417MJLPXL04',
   domicilio: 'C. Independencia 214, Centro, San Pedro Tlaquepaque, Jal.',
   emision: 'Módulo 03 · 28·09·2026',
-  firma: 'M. F. Ochoa',
+  firma: 'O. E. Apellido',
 }
 
 export const operador = { nombre: 'Jorge Ramírez', iniciales: 'JR', puesto: 'Operador · Módulo 03' }

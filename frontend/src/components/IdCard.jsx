@@ -1,15 +1,20 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useId, useRef } from 'react'
 import { Greca } from './Maya.jsx'
+import useCardColor from '../hooks/useCardColor.js'
 
 const PERSONA = (
   <svg viewBox="0 0 60 70" aria-hidden="true"><circle cx="30" cy="24" r="13" /><path d="M4 70c2-16 13-24 26-24s24 8 26 24z" /></svg>
 )
-const MICROTEXTO = 'SIRCS · SISTEMA DE REGISTRO CIUDADANO · '.repeat(4)
+const MICROTEXTO = 'SIS · SISTEMA DE IDENTIDAD SIMULADO · '.repeat(4)
 const NFC = (
   <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.5 7.5a6.5 6.5 0 010 9M12 5a10 10 0 010 14M15.5 3a13 13 0 010 18M5 10a2.5 2.5 0 010 4" /></svg>
 )
 
-// Trama de fondo: líneas onduladas y cuadros escalonados (pirámide vista desde arriba)
+// Trama guilloche (papel de seguridad) en el color de la franja elegida
+function css(el, name, fallback) {
+  return getComputedStyle(el).getPropertyValue(name).trim() || fallback
+}
+
 function drawPattern(canvas) {
   const w = canvas.clientWidth || 480
   const h = canvas.clientHeight || 300
@@ -18,31 +23,33 @@ function drawPattern(canvas) {
   canvas.height = h * dpr
   const g = canvas.getContext('2d')
   g.scale(dpr, dpr)
-  const acc = getComputedStyle(canvas).getPropertyValue('--card-maya').trim() || '#2A7FA0'
-  g.strokeStyle = acc
-  g.globalAlpha = 0.35
+  const tint = css(canvas, '--card-a', '#36312B')
   g.lineWidth = 0.5
-  for (let k = 0; k < 14; k++) {
+  // Guilloche: óvalos ondulados concéntricos, como en papel de seguridad
+  g.strokeStyle = tint
+  g.globalAlpha = 0.22
+  const cx = w * 0.78
+  const cy = h * 0.55
+  for (let k = 0; k < 18; k++) {
     g.beginPath()
-    for (let x = 0; x <= w; x += 4) {
-      const y = h * 0.78 + Math.sin(x / 38 + k * 0.35) * (14 + k * 2) + Math.cos(x / 91 + k) * 8 - k * 7
-      x ? g.lineTo(x, y) : g.moveTo(x, y)
+    for (let t = 0; t <= Math.PI * 2 + 0.01; t += 0.02) {
+      const r = 30 + k * 6 + Math.sin(t * 12 + k * 0.6) * 3
+      const x = cx + Math.cos(t) * r * 1.5
+      const y = cy + Math.sin(t) * r * 0.8
+      t ? g.lineTo(x, y) : g.moveTo(x, y)
     }
     g.stroke()
   }
-  const cx = w * 0.86
-  const cy = h * 0.62
-  for (let r = 8; r < 100; r += 8) g.strokeRect(cx - r, cy - r * 0.8, r * 2, r * 1.6)
+  g.globalAlpha = 0.08
+  for (let y = 8; y < h; y += 3.2) { g.beginPath(); g.moveTo(0, y); g.lineTo(w, y); g.stroke() }
 }
 
 // QR DECORATIVO: no codifica nada. En la versión real se genera con una librería de QR
-// que apunte a la consulta de vigencia del propio SIRCS.
-function drawFakeQr(canvas) {
+// que apunte a la consulta de vigencia del propio SIS.
+function drawFakeQr(canvas, seed = 20260928, ink = '#0F3B4A') {
   const n = 25
   const x = canvas.getContext('2d')
-  let seed = 20260928
   const rnd = () => ((seed = (seed * 1103515245 + 12345) & 0x7fffffff) / 0x7fffffff)
-  const ink = '#0F3B4A'
   x.fillStyle = '#fff'
   x.fillRect(0, 0, n, n)
   x.fillStyle = ink
@@ -55,13 +62,52 @@ function drawFakeQr(canvas) {
   })
 }
 
-// Inclinación 3D y holograma que siguen al puntero
+// Código de barras DECORATIVO (en la versión real: PDF417 con los datos firmados)
+function drawBarcode(canvas) {
+  const w = 240
+  const h = 30
+  canvas.width = w
+  canvas.height = h
+  const x = canvas.getContext('2d')
+  let seed = 4817
+  const rnd = () => ((seed = (seed * 1103515245 + 12345) & 0x7fffffff) / 0x7fffffff)
+  x.fillStyle = '#1A1C1E'
+  for (let i = 4; i < w - 4;) {
+    const bw = 1 + Math.floor(rnd() * 3)
+    if (rnd() > 0.22) x.fillRect(i, 0, bw, h)
+    i += bw + 1
+  }
+}
+
+// Sello de seguridad: anillo con microtexto, rosetas finas y pirámide escalonada al centro.
+// Lleva un reflejo iridiscente (CSS) como los hologramas de los documentos reales.
+function Seal({ className = '' }) {
+  const id = useId().replace(/:/g, '')
+  return (
+    <span className={`c-seal ${className}`} aria-hidden="true">
+      <svg viewBox="0 0 100 100">
+        <defs><path id={`sr-${id}`} d="M50 50m-38 0a38 38 0 1 1 76 0a38 38 0 1 1 -76 0" /></defs>
+        <circle cx="50" cy="50" r="47" className="s-ring" />
+        <circle cx="50" cy="50" r="30" className="s-ring" />
+        <text className="s-text"><textPath href={`#sr-${id}`}>SIS · IDENTIDAD VERIFICADA · MÉXICO · SIS · IDENTIDAD VERIFICADA · MÉXICO ·</textPath></text>
+        {Array.from({ length: 24 }, (_, i) => (
+          <ellipse key={i} cx="50" cy="50" rx="27" ry="9" className="s-rose" transform={`rotate(${i * 7.5} 50 50)`} />
+        ))}
+        <path className="s-pyr" d="M31 64h38v-5h-5v-5h-5v-5h-5v-5h-8v5h-5v5h-5v5h-5z" />
+        <rect className="s-pyr" x="46" y="38" width="8" height="6" />
+      </svg>
+    </span>
+  )
+}
+
+// Inclinación discreta y holograma que siguen al puntero (solo con mouse; sin movimiento automático)
 function useTilt(ref) {
   useEffect(() => {
     const el = ref.current
     if (!el) return
     const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
     const move = (e) => {
+      if (e.pointerType !== 'mouse') return
       const r = el.getBoundingClientRect()
       const x = (e.clientX - r.left) / r.width
       const y = (e.clientY - r.top) / r.height
@@ -69,8 +115,8 @@ function useTilt(ref) {
       el.style.setProperty('--my', `${y * 100}%`)
       el.style.setProperty('--sx', `${100 - x * 100}%`)
       if (!reduce) {
-        el.style.setProperty('--ry', `${(x - 0.5) * 14}deg`)
-        el.style.setProperty('--rx', `${(0.5 - y) * 10}deg`)
+        el.style.setProperty('--ry', `${(x - 0.5) * 6}deg`)
+        el.style.setProperty('--rx', `${(0.5 - y) * 4}deg`)
       }
     }
     const leave = () => {
@@ -80,31 +126,9 @@ function useTilt(ref) {
     el.addEventListener('pointermove', move)
     el.addEventListener('pointerleave', leave)
 
-    // En celular (sin mouse) la tarjeta se inclina y brilla según su posición al hacer scroll
-    const touch = window.matchMedia?.('(hover: none)').matches
-    let frame = 0
-    const onScroll = () => {
-      if (frame) return
-      frame = requestAnimationFrame(() => {
-        frame = 0
-        const r = el.getBoundingClientRect()
-        const t = Math.max(-1, Math.min(1, (r.top + r.height / 2 - window.innerHeight / 2) / (window.innerHeight / 2)))
-        el.style.setProperty('--mx', `${50 + t * 40}%`)
-        el.style.setProperty('--my', `${50 - t * 30}%`)
-        el.style.setProperty('--sx', `${50 + t * 50}%`)
-        if (!reduce) {
-          el.style.setProperty('--rx', `${t * 8}deg`)
-          el.style.setProperty('--ry', `${-t * 6}deg`)
-        }
-      })
-    }
-    if (touch) { window.addEventListener('scroll', onScroll, { passive: true }); onScroll() }
-
     return () => {
       el.removeEventListener('pointermove', move)
       el.removeEventListener('pointerleave', leave)
-      window.removeEventListener('scroll', onScroll)
-      cancelAnimationFrame(frame)
     }
   }, [ref])
 }
@@ -112,15 +136,17 @@ function useTilt(ref) {
 function CardShell({ label, band, children }) {
   const ref = useRef(null)
   const patternRef = useRef(null)
+  const { color } = useCardColor()
   useTilt(ref)
   useEffect(() => {
     const c = patternRef.current
     if (!c) return
-    drawPattern(c)
+    // Espera un cuadro para que el color elegido ya esté aplicado
+    const frame = requestAnimationFrame(() => drawPattern(c))
     const onResize = () => drawPattern(c)
     window.addEventListener('resize', onResize)
-    return () => window.removeEventListener('resize', onResize)
-  }, [])
+    return () => { cancelAnimationFrame(frame); window.removeEventListener('resize', onResize) }
+  }, [color.id])
   return (
     <div className="id-card" ref={ref} role="img" aria-label={label}>
       <canvas className="pattern" ref={patternRef} aria-hidden="true" />
@@ -147,16 +173,18 @@ function Mexico({ extra }) {
 }
 
 export function IdCardFront({ data }) {
+  const miniQrRef = useRef(null)
+  useEffect(() => { if (miniQrRef.current) drawFakeQr(miniQrRef.current, 4817, '#1A1C1E') }, [])
   return (
     <CardShell
       label={`Anverso de la credencial de ${data.nombres} ${data.apellidos}`}
       band={<>
-        <div className="c-brand"><b>SIRCS</b><small>Identidad digital</small></div>
+        <div className="c-brand"><b>SIS</b><small>Identidad digital</small></div>
         <Mexico extra={<span className="c-nfc">{NFC}</span>} />
       </>}
     >
       <div className="c-body">
-        <div className="c-photo">{PERSONA}</div>
+        <div className="c-photo-wrap"><div className="c-photo">{PERSONA}</div><Seal className="c-seal-front" /></div>
         <div className="c-data">
           <div className="c-name">
             <span className="c-label">Nombre</span>
@@ -170,7 +198,10 @@ export function IdCardFront({ data }) {
             <div><dt>Vigencia</dt><dd className="valid">{data.vigencia}</dd></div>
           </dl>
         </div>
-        <div className="c-ghost" aria-hidden="true">{PERSONA}</div>
+        <div className="c-side" aria-hidden="true">
+          <div className="c-mini-qr"><canvas ref={miniQrRef} width="25" height="25" /></div>
+          <div className="c-ghost">{PERSONA}</div>
+        </div>
       </div>
     </CardShell>
   )
@@ -178,7 +209,11 @@ export function IdCardFront({ data }) {
 
 export function IdCardBack({ data }) {
   const qrRef = useRef(null)
-  useEffect(() => { if (qrRef.current) drawFakeQr(qrRef.current) }, [])
+  const barRef = useRef(null)
+  useEffect(() => {
+    if (qrRef.current) drawFakeQr(qrRef.current)
+    if (barRef.current) drawBarcode(barRef.current)
+  }, [])
   return (
     <CardShell
       label="Reverso de la credencial con código QR de verificación"
@@ -193,7 +228,8 @@ export function IdCardBack({ data }) {
           <span className="c-label">Clave de registro</span>
           <span className="mono">{data.clave}</span>
           <p>{data.domicilio}<br />Emitida en {data.emision}</p>
-          <span className="c-sign">{data.firma}</span>
+          <div className="c-sign-row"><span className="c-sign">{data.firma}</span><Seal className="c-seal-back" /></div>
+          <canvas className="c-barcode" ref={barRef} aria-hidden="true" />
         </div>
       </div>
     </CardShell>

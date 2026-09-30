@@ -8,8 +8,8 @@ const PASOS = ['Datos personales', 'Domicilio', 'Fotografía y firma', 'Revisió
 const ENTIDADES = ['Jalisco', 'Aguascalientes', 'Colima', 'Michoacán', 'Nayarit', 'Zacatecas']
 
 const INICIAL = {
-  nombre: 'María Fernanda', ap1: 'Ochoa', ap2: 'Ruelas', fecha: '2003-04-17', entidad: 'Jalisco', sexo: 'Mujer',
-  clave: 'OORM030417MJLCLR07', correo: 'mfernanda.ochoa@correo-demo.mx',
+  nombre: 'Olivia Elizabeth', ap1: 'Apellido', ap2: '', fecha: '2003-04-17', entidad: 'Jalisco', sexo: 'Mujer',
+  clave: 'AEXO030417MJLPXL04', correo: 'olivia.apellido@correo-demo.mx',
   calle: 'C. Independencia', numero: '214', colonia: 'Centro', cp: '45500', municipio: 'San Pedro Tlaquepaque', comprobante: '',
   foto: '', firma: '', confirmo: false,
 }

@@ -1,0 +1,38 @@
+/*
+  Movimiento.
+  Solo 3 tipos de animación, todas discretas:
+  1) aparición suave al cargar / al entrar en pantalla
+  2) microinteracciones en botones y tarjetas
+  3) transiciones suaves entre páginas, pestañas y pasos
+*/
+
+/* 1 · Aparición al cargar (portada) */
+.hero-in { animation: heroIn .7s var(--ease) both; }
+.hero-in:nth-child(2) { animation-delay: .12s; }
+@keyframes heroIn { from { opacity: 0; translate: 0 14px; } to { opacity: 1; translate: 0 0; } }
+
+/* 1 · Aparición al entrar en pantalla (solo si el navegador lo soporta y hay JS) */
+.reveal-ready .reveal { transition: opacity .6s var(--ease), translate .6s var(--ease); transition-delay: var(--d, 0ms); }
+.reveal-ready .reveal:not(.in) { opacity: 0; translate: 0 16px; }
+
+/* 2 · Microinteracciones */
+.btn { transition: background-color var(--t-fast), color var(--t-fast), border-color var(--t-fast), box-shadow var(--t-fast), translate var(--t-fast) var(--ease), scale var(--t-fast); }
+.btn:not(:disabled):hover { translate: 0 -1px; }
+.btn:not(:disabled):active { translate: 0 0; scale: .98; }
+.btn .icon { transition: translate var(--t-fast) var(--ease); }
+.btn:not(:disabled):hover .icon:last-child { translate: 2px 0; }
+.tile, .videos a, .related-grid a, .kpi, .swatch { transition: border-color .2s, box-shadow .2s, translate .2s var(--ease), background-color .2s; }
+.videos a:hover, .related-grid a:hover { translate: 0 -2px; }
+
+/* 3 · Transiciones de estado */
+.notice-list, .reg-main, .state { animation: stateIn var(--t-med) var(--ease) both; }
+@keyframes stateIn { from { opacity: 0; } to { opacity: 1; } }
+
+/* Sin movimientos constantes: la tarjeta ya no flota ni brilla sola */
+.id-card .shine { animation: none; }
+
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-ready .reveal:not(.in) { opacity: 1; translate: none; }
+  .btn:not(:disabled):hover, .videos a:hover, .related-grid a:hover { translate: none; }
+}

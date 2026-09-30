@@ -17,17 +17,17 @@ function write(key, value) {
 
 // Tamaño de letra (3 niveles) y alto contraste. Se recuerdan en este navegador.
 export default function useAccessibility() {
-  const [size, setSize] = useState(() => read('sircs:text', 0))
-  const [contrast, setContrast] = useState(() => read('sircs:hc', false))
+  const [size, setSize] = useState(() => read('sis:text', 0))
+  const [contrast, setContrast] = useState(() => read('sis:hc', false))
 
   useEffect(() => {
     document.documentElement.style.fontSize = SIZES[size]
-    write('sircs:text', size)
+    write('sis:text', size)
   }, [size])
 
   useEffect(() => {
     document.documentElement.classList.toggle('hc', contrast)
-    write('sircs:hc', contrast)
+    write('sis:hc', contrast)
   }, [contrast])
 
   return {

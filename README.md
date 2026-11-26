@@ -76,3 +76,4 @@ En el servidor, usa `deploy/nginx-sircs.conf` como base: sirve la carpeta, manda
 ## Diseño
 
 Estilo **institucional mexicano**: de día guinda con filetes dorado sobrio, de noche grafito y pino; títulos en serif, filetes finos y greca discreta. Credencial modelo Documento con 5 colores y elementos de seguridad (QR, sellos, código de barras). Ver `docs/diseno.md`.
+.......
